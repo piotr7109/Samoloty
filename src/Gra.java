@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -21,7 +22,7 @@ import modules.Pocisk;
 import modules.Samolot;
 import modules.TypGry;
 
-public class Gra extends JPanel implements KeyListener, ActionListener
+public class Gra extends JPanel implements KeyListener
 {
 	protected ArrayList<Gracz> gracze;
 	protected Gracz gracz;
@@ -30,35 +31,33 @@ public class Gra extends JPanel implements KeyListener, ActionListener
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
 	protected static int WIDTH, HEIGHT;
-	protected int fps = 60;
+	protected final int FPS = 20;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
-	
-	
-	Timer timer = new Timer(1000/fps, this);
+
 
 	public Gra(int width, int height)
 	{
 		HEIGHT = height;
 		WIDTH = width;
-		timer.start();
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
 		gracz = new Gracz(100, 100, 0);
 		samolot = gracz.getSamolot();
+		startTimer();
 
 	}
 
 	@Override
 	protected void paintComponent(Graphics g)
 	{
-		super.paintComponent(g);
+		// super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, WIDTH, HEIGHT);
 		g2d.setColor(Color.BLACK);
-		
+
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociski(g2d);
 		/*
@@ -75,23 +74,23 @@ public class Gra extends JPanel implements KeyListener, ActionListener
 	{
 
 		samolot.aktualizujWspolrzedne();
-		g2d.drawOval((int)samolot.x, (int)samolot.y, 15, 15);
+		g2d.drawOval((int) samolot.x, (int) samolot.y, 15, 15);
 	}
+
 	protected void rysujPociski(Graphics g2d)
 	{
 		int size = samolot.pociski.size();
-		for(int i=0; i< size; i++)
+		for (int i = 0; i < size; i++)
 		{
 			Pocisk pocisk = samolot.pociski.get(i);
-			if(pocisk.aktualizujWspolrzedne())
+			if (pocisk.aktualizujWspolrzedne())
 			{
-				g2d.drawOval((int)pocisk.x, (int)pocisk.y, 5, 5);
-			}
-			else
+				g2d.drawOval((int) pocisk.x, (int) pocisk.y, 5, 5);
+			} else
 			{
 				samolot.pociski.remove(i);
 				size--;
-				
+
 			}
 		}
 	}
@@ -99,9 +98,10 @@ public class Gra extends JPanel implements KeyListener, ActionListener
 	public void keyTyped(KeyEvent e)
 	{
 	}
-	
+
 	protected boolean key_pressed = false;
 	protected int key;
+
 	public void keyReleased(KeyEvent e)
 	{
 		key_pressed = false;
@@ -111,75 +111,89 @@ public class Gra extends JPanel implements KeyListener, ActionListener
 	{
 		key = e.getKeyCode();
 		key_pressed = true;
-		
-		//System.out.println(e.getKeyCode());
-		
+
+		// System.out.println(e.getKeyCode());
+
 	}
+
 	private int bullet_time_index = 0;
-	
+
 	private void strzel()
 	{
-		if(bullet_time_index<bullet_time)
+		if (bullet_time_index < bullet_time)
 		{
 			bullet_time_index++;
-		}
-		else
+		} else
 		{
-			bullet_time_index =0;
+			bullet_time_index = 0;
 			samolot.dodajPocisk("normalny");
 		}
-		
+
 	}
+
 	private int bullet_time_bomb_index = 0;
+
 	private void strzelBomba()
 	{
-		if(bullet_time_bomb_index<bullet_time_bomb)
+		if (bullet_time_bomb_index < bullet_time_bomb)
 		{
 			bullet_time_bomb_index++;
-		}
-		else
+		} else
 		{
-			bullet_time_bomb_index =0;
+			bullet_time_bomb_index = 0;
 			samolot.dodajPocisk("bomba");
 		}
-		
+
 	}
-	
+
 	private void zmien_kierunek()
 	{
 		switch (key)
 		{
-		case 39: //skrêæ w lewo
-			samolot.kat+=4;
-			
+		case 39: // skrêæ w lewo
+			samolot.kat += 4;
+
 			break;
-		case 37: //skrêæ w prawo
-			samolot.kat-=4;
+		case 37: // skrêæ w prawo
+			samolot.kat -= 4;
 			break;
 		}
 	}
 
-	public void actionPerformed(ActionEvent ev)
+	void startTimer()
 	{
-		if (ev.getSource() == timer)
+		// use java.util Timer rather than javax.swing Timer
+		// to avoid running intensive simulation code on the swing thread
+		java.util.Timer timer = new java.util.Timer();
+		TimerTask timerTask = new TimerTask()
 		{
-			repaint();
-			if(key_pressed) //sprawdz, czy klawisz klawiatury jest wciœniêty
+			@Override
+			public void run()
 			{
-				if(key == 39 || key == 37) // zmieñ kierunek samolotu
-				{
-					zmien_kierunek();
-				}
-				if(key == 32 )
-				{
-					strzel();
-				}
-				if( key == 17)
-				{
-					strzelBomba();
-				}
+				procesTimera();
 			}
-			
+		};
+		timer.scheduleAtFixedRate(timerTask, 0, FPS);
+	}
+
+	public void procesTimera()
+	{
+		repaint();
+		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
+		{
+			if (key == 39 || key == 37) // zmieñ kierunek samolotu
+			{
+				zmien_kierunek();
+			}
+			if (key == 32)
+			{
+				strzel();
+			}
+			if (key == 17)
+			{
+				strzelBomba();
+			}
+
 		}
 	}
 
