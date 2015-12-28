@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +35,6 @@ public class Gra extends JPanel implements KeyListener
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
 
-
 	public Gra(int width, int height)
 	{
 		HEIGHT = height;
@@ -59,22 +59,22 @@ public class Gra extends JPanel implements KeyListener
 
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
-		/*
-		 * BufferedImage imageA; try { imageA = ImageIO.read(new
-		 * File("indeks.jpeg")); AffineTransform at = new AffineTransform();
-		 * //at.translate(getWidth() / 2, getHeight() / 2);
-		 * at.rotate(Math.PI/4); at.translate(-imageA.getWidth()/2+200,
-		 * -imageA.getHeight()/2+100); g2d.drawImage(imageA, at, null); } catch
-		 * (IOException e) { e.printStackTrace(); }
-		 */
-	}
+		
 
-	protected void rysujSamolotGracza(Graphics g2d)
+	}
+	
+	
+	
+
+	protected void rysujSamolotGracza(Graphics2D g2d)
 	{
-		g2d.drawOval((int) samolot.x, (int) samolot.y, 15, 15);
+		int x =(int)(samolot.x - samolot.width);
+		int y =(int)(samolot.y - samolot.height);
+		g2d.drawImage(samolot.transformacja_op.filter(samolot.obrazekSamolot, null), x, y, null);
+		
 	}
 
-	protected void rysujPociskiGracza(Graphics g2d)
+	protected void rysujPociskiGracza(Graphics2D g2d)
 	{
 		int size = samolot.pociski.size();
 		for (int i = 0; i < size; i++)
@@ -83,10 +83,14 @@ public class Gra extends JPanel implements KeyListener
 			g2d.drawOval((int) pocisk.x, (int) pocisk.y, 5, 5);
 		}
 	}
+	protected void aktualizujWspolrzedne()
+	{
+		samolot.aktualizujWspolrzedne();
+		
+	}
 
 	public void keyTyped(KeyEvent e)
-	{
-	}
+	{}
 
 	protected boolean key_pressed = false;
 	protected int key;
@@ -112,7 +116,8 @@ public class Gra extends JPanel implements KeyListener
 		if (bullet_time_index < bullet_time)
 		{
 			bullet_time_index++;
-		} else
+		}
+		else
 		{
 			bullet_time_index = 0;
 			samolot.dodajPocisk("normalny");
@@ -127,7 +132,8 @@ public class Gra extends JPanel implements KeyListener
 		if (bullet_time_bomb_index < bullet_time_bomb)
 		{
 			bullet_time_bomb_index++;
-		} else
+		}
+		else
 		{
 			bullet_time_bomb_index = 0;
 			samolot.dodajPocisk("bomba");
@@ -135,19 +141,6 @@ public class Gra extends JPanel implements KeyListener
 
 	}
 
-	private void zmien_kierunek()
-	{
-		switch (key)
-		{
-		case 39: // skrêæ w lewo
-			samolot.kat += 4;
-
-			break;
-		case 37: // skrêæ w prawo
-			samolot.kat -= 4;
-			break;
-		}
-	}
 
 	void startTimer()
 	{
@@ -165,14 +158,19 @@ public class Gra extends JPanel implements KeyListener
 
 	public void procesTimera()
 	{
-		samolot.aktualizujWspolrzedne();
+		this.aktualizujWspolrzedne();
 		repaint();
 		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
 		{
-			if (key == 39 || key == 37) // zmieñ kierunek samolotu
+			if (key == 39 ) // zmieñ kierunek samolotu
 			{
-				zmien_kierunek();
+				samolot.kat+=4;
 			}
+			else if(key == 37)
+			{
+				samolot.kat-=4;
+			}
+			
 			if (key == 32)
 			{
 				strzel();

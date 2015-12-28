@@ -34,7 +34,7 @@ public class PanelGlowny extends JFrame {
         Gra gra = new Gra(600,600);
         tab_panel.addKeyListener(gra);
         tab_panel.setFocusable(true);
-        tab_panel.add(gra);
+        tab_panel.add(gra, "Fajt");
         
         panel.add(tab_panel, BorderLayout.CENTER);
         

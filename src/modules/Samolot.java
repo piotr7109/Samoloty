@@ -1,14 +1,23 @@
 package modules;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 
 public class Samolot 
 {
-	public double x, y;
-	private int punkty_zycia;
+	public double x, y, width, height, kat;
+	private int punkty_zycia, ilosc_bomb;
 	public ArrayList<Pocisk> pociski;
-	private int ilosc_bomb;
-	public double kat;
+	
+	public BufferedImage obrazekSamolot;
+	private AffineTransform rotacja;
+	public AffineTransformOp transformacja_op;
 	
 	public Samolot( int x, int y, double kat)
 	{
@@ -18,11 +27,16 @@ public class Samolot
 		this.x = x;
 		this.y = y;
 		pociski = new ArrayList<Pocisk>();
+		ladujObrazek();
+		
+		
 	}
 	public void aktualizujWspolrzedne()
 	{
 		this.x += Math.cos(Math.toRadians(this.kat))*3;
-		this.y += Math.sin(Math.toRadians(this.kat))*3;
+		this.y += Math.sin(Math.toRadians(this.kat))*3; 
+		rotacja = AffineTransform.getRotateInstance(Math.toRadians(this.kat+90), width, height);
+		transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 		
 		//aktualizacja wspó³rzêdnych pocisków
 		int size = pociski.size();
@@ -37,20 +51,34 @@ public class Samolot
 		}
 		
 	}
+	protected void ladujObrazek()
+	{
+		try
+		{
+			obrazekSamolot = ImageIO.read(new File("gfx/samolot.png"));
+			
+			width = obrazekSamolot.getWidth() / 2;
+			height = obrazekSamolot.getHeight() / 2;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 	
 	public int getPunkty_zycia()
 	{
 		return punkty_zycia; 
 	}
-	public void setPunkty_zycia(int punkty_zycia)
+	public void setPunktyZycia(int punkty_zycia)
 	{
 		this.punkty_zycia = punkty_zycia;
 	}
-	public int getIlosc_bomb()
+	public int getIloscBomb()
 	{
 		return ilosc_bomb;
 	}
-	public void setIlosc_bomb(int ilosc_bomb)
+	public void setIloscBomb(int ilosc_bomb)
 	{
 		this.ilosc_bomb = ilosc_bomb;
 	}
