@@ -23,6 +23,7 @@ public class PanelGlowny extends JFrame {
 		
 		this.add(inicjalizujKomponenty());
 		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 
 	}

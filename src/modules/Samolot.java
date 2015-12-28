@@ -24,6 +24,18 @@ public class Samolot
 		this.x += Math.cos(Math.toRadians(this.kat))*3;
 		this.y += Math.sin(Math.toRadians(this.kat))*3;
 		
+		//aktualizacja wspó³rzêdnych pocisków
+		int size = pociski.size();
+		for (int i = 0; i < size; i++)
+		{
+			Pocisk pocisk = pociski.get(i);
+			if (!pocisk.aktualizujWspolrzedne())
+			{
+				pociski.remove(i);
+				size--;
+			}
+		}
+		
 	}
 	
 	public int getPunkty_zycia()

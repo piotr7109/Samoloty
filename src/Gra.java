@@ -30,7 +30,7 @@ public class Gra extends JPanel implements KeyListener
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
 	protected static int WIDTH, HEIGHT;
-	protected final int FPS = 20;
+	protected final int FPS = 15;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
 
@@ -58,7 +58,7 @@ public class Gra extends JPanel implements KeyListener
 		g2d.setColor(Color.BLACK);
 
 		this.rysujSamolotGracza(g2d);
-		this.rysujPociski(g2d);
+		this.rysujPociskiGracza(g2d);
 		/*
 		 * BufferedImage imageA; try { imageA = ImageIO.read(new
 		 * File("indeks.jpeg")); AffineTransform at = new AffineTransform();
@@ -71,26 +71,16 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void rysujSamolotGracza(Graphics g2d)
 	{
-
-		samolot.aktualizujWspolrzedne();
 		g2d.drawOval((int) samolot.x, (int) samolot.y, 15, 15);
 	}
 
-	protected void rysujPociski(Graphics g2d)
+	protected void rysujPociskiGracza(Graphics g2d)
 	{
 		int size = samolot.pociski.size();
 		for (int i = 0; i < size; i++)
 		{
 			Pocisk pocisk = samolot.pociski.get(i);
-			if (pocisk.aktualizujWspolrzedne())
-			{
-				g2d.drawOval((int) pocisk.x, (int) pocisk.y, 5, 5);
-			} else
-			{
-				samolot.pociski.remove(i);
-				size--;
-
-			}
+			g2d.drawOval((int) pocisk.x, (int) pocisk.y, 5, 5);
 		}
 	}
 
@@ -161,8 +151,6 @@ public class Gra extends JPanel implements KeyListener
 
 	void startTimer()
 	{
-		// use java.util Timer rather than javax.swing Timer
-		// to avoid running intensive simulation code on the swing thread
 		java.util.Timer timer = new java.util.Timer();
 		TimerTask timerTask = new TimerTask()
 		{
@@ -177,6 +165,7 @@ public class Gra extends JPanel implements KeyListener
 
 	public void procesTimera()
 	{
+		samolot.aktualizujWspolrzedne();
 		repaint();
 		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
 		{
