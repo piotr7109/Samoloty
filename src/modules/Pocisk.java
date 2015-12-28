@@ -18,7 +18,7 @@ public class Pocisk
 		this.kat = kat;
 		this.typ =typ;
 		
-		switch(typ)
+		switch(this.typ)
 		{
 			case "normalny":
 				speed = 6;

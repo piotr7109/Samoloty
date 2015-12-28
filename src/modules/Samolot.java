@@ -31,10 +31,29 @@ public class Samolot
 		
 		
 	}
+	
+	public int getPunkty_zycia()
+	{
+		return punkty_zycia; 
+	}
+	public void setPunktyZycia(int punkty_zycia)
+	{
+		this.punkty_zycia = punkty_zycia;
+	}
+	public int getIloscBomb()
+	{
+		return ilosc_bomb;
+	}
+	public void setIloscBomb(int ilosc_bomb)
+	{
+		this.ilosc_bomb = ilosc_bomb;
+	}
 	public void aktualizujWspolrzedne()
 	{
 		this.x += Math.cos(Math.toRadians(this.kat))*3;
 		this.y += Math.sin(Math.toRadians(this.kat))*3; 
+		
+		//obrót obrazka o k¹t
 		rotacja = AffineTransform.getRotateInstance(Math.toRadians(this.kat+90), width, height);
 		transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 		
@@ -65,24 +84,6 @@ public class Samolot
 			e.printStackTrace();
 		}
 	}
-	
-	public int getPunkty_zycia()
-	{
-		return punkty_zycia; 
-	}
-	public void setPunktyZycia(int punkty_zycia)
-	{
-		this.punkty_zycia = punkty_zycia;
-	}
-	public int getIloscBomb()
-	{
-		return ilosc_bomb;
-	}
-	public void setIloscBomb(int ilosc_bomb)
-	{
-		this.ilosc_bomb = ilosc_bomb;
-	}
-	
 	
 	public ArrayList<Pocisk> getPociski()
 	{
