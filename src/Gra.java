@@ -15,7 +15,6 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import modules.Gracz;
 import modules.Pocisk;
