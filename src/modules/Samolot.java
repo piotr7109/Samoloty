@@ -28,7 +28,7 @@ public class Samolot
 	
 	public int getPunkty_zycia()
 	{
-		return punkty_zycia;
+		return punkty_zycia; 
 	}
 	public void setPunkty_zycia(int punkty_zycia)
 	{
