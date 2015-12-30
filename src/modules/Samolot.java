@@ -32,7 +32,7 @@ public class Samolot
 		
 	}
 	
-	public int getPunkty_zycia()
+	public int getPunktyZycia()
 	{
 		return punkty_zycia; 
 	}
