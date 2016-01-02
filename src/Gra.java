@@ -26,7 +26,7 @@ public class Gra extends JPanel implements KeyListener
 	
 	protected ArrayList<Gracz> gracze;
 	protected Gracz gracz;
-	protected Samolot samolot;
+	protected Samolot samolot; 
 	protected String mapa;
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
