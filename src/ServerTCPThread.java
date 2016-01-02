@@ -34,10 +34,6 @@ public class ServerTCPThread extends Thread implements Runnable
 			{
 				try
 				{
-					/*
-					 * o = (Obj)in.readObject(); o.nazwa+="tutaj by³em";
-					 * out.writeObject(o);
-					 */
 					this.gracz = (Gracz) in.readObject();
 
 					if (this.i == Bufor.gracze.size())
@@ -49,7 +45,6 @@ public class ServerTCPThread extends Thread implements Runnable
 					{
 						Bufor.gracze.set(this.i, this.gracz);
 					}
-					// System.out.println("ddd "+ this.gracz.getSamolot().x);
 
 				}
 				catch (Exception e)
@@ -58,8 +53,9 @@ public class ServerTCPThread extends Thread implements Runnable
 
 				}
 				out.writeObject(Bufor.gracze);
-				sleep(50);
-
+				out.reset();
+				
+				
 			}
 
 			mySocket.close();

@@ -23,17 +23,13 @@ public class ClientTCP extends Thread
 
 			while (!koniec)
 			{
+				out.writeObject(gracz);
+				out.reset();
+				sleep(50);
 				try
 				{
-					System.out.println("Wczytaj");
-					Object o = (Object) in.readObject();
-					
+					Object o = in.readObject();
 					gracze = (ArrayList<Gracz>) o;
-
-					System.out.println("gracze wczytaj");
-					// Obj o2 = (Obj) in.readObject();
-					// System.out.println(o2.toString());
-					// sleep(100);
 
 				}
 				catch (Exception e)
@@ -41,10 +37,7 @@ public class ClientTCP extends Thread
 					System.out.println("Exception");
 					continue;
 				}
-				// System.out.println(gracz.getSamolot().x);
-				out.writeObject(gracz);
-				out.reset();
-				sleep(50);
+				
 
 			}
 			socket.close();
