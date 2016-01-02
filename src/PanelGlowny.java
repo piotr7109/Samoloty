@@ -11,6 +11,12 @@ public class PanelGlowny extends JFrame
 	private static final long serialVersionUID = 1L;
 	private static PanelGlowny frame;
 	private int width, height;
+	private int id_gracza;
+	
+	public void setIdGracza(int id_gracza)
+	{
+		this.id_gracza = id_gracza;
+	}
 
 	public PanelGlowny()
 	{
@@ -19,9 +25,11 @@ public class PanelGlowny extends JFrame
 		this.setTitle("Samoloty");
 		this.setSize(new Dimension(width, height));
 
-		this.add(inicjalizujKomponenty(1));
+		this.add(inicjalizujKomponenty(id_gracza));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 
 	}
 
@@ -43,6 +51,7 @@ public class PanelGlowny extends JFrame
 	public static void createAndShowGui()
 	{
 		frame = new PanelGlowny();
+		frame.setIdGracza(1111);
 		frame.setVisible(true);
 	}
 }
