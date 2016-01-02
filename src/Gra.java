@@ -77,10 +77,14 @@ public class Gra extends JPanel implements KeyListener
 	protected void rysujPociskiGracza(Graphics2D g2d)
 	{
 		int size = samolot.pociski.size();
+		int x;
+		int y;
 		for (int i = 0; i < size; i++)
 		{
 			Pocisk pocisk = samolot.pociski.get(i);
-			g2d.drawOval((int) pocisk.x, (int) pocisk.y, 5, 5);
+			x = (int)(pocisk.x - pocisk.width);
+			y = (int)(pocisk.y - pocisk.height);
+			g2d.drawImage(pocisk.transformacja_op.filter(pocisk.obrazekPocisk, null), x, y, null);
 		}
 	}
 	protected void aktualizujWspolrzedne()

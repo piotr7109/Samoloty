@@ -19,6 +19,8 @@ public class Samolot
 	private AffineTransform rotacja;
 	public AffineTransformOp transformacja_op;
 	
+	private BufferedImage obrazekPocisk;
+	
 	public Samolot( int x, int y, double kat)
 	{
 		punkty_zycia = 100;
@@ -75,6 +77,7 @@ public class Samolot
 		try
 		{
 			obrazekSamolot = ImageIO.read(new File("gfx/samolot.png"));
+			obrazekPocisk = ImageIO.read(new File("gfx/pocisk.png"));
 			
 			width = obrazekSamolot.getWidth() / 2;
 			height = obrazekSamolot.getHeight() / 2;
@@ -91,7 +94,7 @@ public class Samolot
 	}
 	public void dodajPocisk(String typ)
 	{
-		Pocisk pocisk = new Pocisk(this.x, this.y, this.kat, typ);
+		Pocisk pocisk = new Pocisk(this.x, this.y, this.kat, typ, obrazekPocisk);
 		this.pociski.add(pocisk);
 	}
 	
