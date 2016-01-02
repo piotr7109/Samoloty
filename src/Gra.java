@@ -175,11 +175,11 @@ public class Gra extends JPanel implements KeyListener
 				samolot.kat-=4;
 			}
 			
-			if (key == 32)
+			if (key == 32)  //spacja
 			{
 				strzel();
 			}
-			if (key == 17)
+			if (key == 17)  //lewy CTRL
 			{
 				strzelBomba();
 			}
