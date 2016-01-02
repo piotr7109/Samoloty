@@ -35,7 +35,7 @@ public class Gra extends JPanel implements KeyListener
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
 
-	public Gra(int width, int height)
+	public Gra(int width, int height, int id_gracza)
 	{
 		HEIGHT = height;
 		WIDTH = width;
@@ -43,6 +43,7 @@ public class Gra extends JPanel implements KeyListener
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
 		gracz = new Gracz(100, 100, 0);
+		gracz.setId(id_gracza);
 		samolot = gracz.getSamolot();
 		startTimer();
 
