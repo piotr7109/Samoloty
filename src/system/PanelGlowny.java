@@ -17,7 +17,6 @@ public class PanelGlowny extends JFrame
 
 	private static final long serialVersionUID = 1L;
 	private static PanelGlowny frame;
-	private int width, height;
 	private int id_gracza;
 	JTabbedPane tab_panel;
 	private Ustawienia ustawienia;
@@ -25,10 +24,8 @@ public class PanelGlowny extends JFrame
 
 	public PanelGlowny()
 	{
-		width = 1200;
-		height = 900;
 		this.setTitle("Samoloty");
-		this.setSize(new Dimension(width, height));
+		this.setSize(new Dimension(SETTINGS.width, SETTINGS.height));
 		this.id_gracza = (int)(Math.random()*1000);
 		//this.add(EkranGry());
 		this.add(inicjalizujKomponenty());
