@@ -25,6 +25,7 @@ public class ServerTCP extends Thread
 					i++;
 				}
 			}
+			//serverSocket.close();
 
 		}
 		catch (Exception e)

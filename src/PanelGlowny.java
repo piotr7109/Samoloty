@@ -24,7 +24,7 @@ public class PanelGlowny extends JFrame
 		height = 900;
 		this.setTitle("Samoloty");
 		this.setSize(new Dimension(width, height));
-
+		this.id_gracza = (int)(Math.random()*100);
 		this.add(inicjalizujKomponenty(id_gracza));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -4,7 +4,6 @@ import java.io.ObjectOutputStream;
 import java.net.*;
 
 import modules.Gracz;
-import modules.Samolot;
 
 public class ServerTCPThread extends Thread implements Runnable
 {
