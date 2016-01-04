@@ -51,7 +51,7 @@ public class Gra extends JPanel implements KeyListener
 		gracz = new Gracz(100, 100, 0);
 		gracz.setId(id_gracza);
 		samolot = gracz.getSamolot();
-		//startClientTcpThread();
+		startClientTcpThread();
 		
 		startTimer();
 
@@ -68,8 +68,7 @@ public class Gra extends JPanel implements KeyListener
 
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
-		//this.rysujSamolotyGraczy(g2d);
-		//this.rysujSamolotyGraczy(g2d);
+		this.rysujSamolotyGraczy(g2d);
 		
 
 	}
@@ -100,13 +99,19 @@ public class Gra extends JPanel implements KeyListener
 		int size = gracze.size();
 		int x;
 		int y;
+		AffineTransform rotacja;
+		AffineTransformOp transformacja_op;
 		for(int i=0; i<size; i++)
 		{
+			//if(gracze.get(i).getId() == gracz.getId())
+				//continue;
 			Samolot s = gracze.get(i).getSamolot();
 			x =(int)(s.x - s.width);
 			y =(int)(s.y - s.height);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(s.kat + 90), s.width, s.height);
+			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 			//System.out.println(s.transformacja_op);
-			//g2d.drawImage(s.transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 		}
 	}
 
@@ -129,7 +134,7 @@ public class Gra extends JPanel implements KeyListener
 	}
 	protected void aktualizujWspolrzedne()
 	{
-		//this.klient.gracz = this.gracz;
+		this.klient.gracz = this.gracz;
 		samolot.aktualizujWspolrzedne();
 		
 	}
