@@ -1,3 +1,4 @@
+package ekrany;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -19,6 +20,7 @@ import modules.Obrazki;
 import modules.Pocisk;
 import modules.Samolot;
 import modules.TypGry;
+import system.ClientTCP;
 
 public class Gra extends JPanel implements KeyListener
 {

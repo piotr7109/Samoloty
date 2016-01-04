@@ -1,9 +1,12 @@
+package system;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import ekrany.Gra;
 
 public class PanelGlowny extends JFrame
 {
