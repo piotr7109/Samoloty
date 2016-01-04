@@ -27,10 +27,10 @@ public class Gra extends JPanel implements KeyListener
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	protected ArrayList<Gracz> gracze;
 	protected Gracz gracz;
-	protected Samolot samolot; 
+	protected Samolot samolot;
 	protected String mapa;
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
@@ -38,7 +38,7 @@ public class Gra extends JPanel implements KeyListener
 	protected final int FPS = 40;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
-	
+
 	protected ClientTCP klient;
 
 	public Gra(int width, int height, int id_gracza)
@@ -52,7 +52,7 @@ public class Gra extends JPanel implements KeyListener
 		gracz.setId(id_gracza);
 		samolot = gracz.getSamolot();
 		startClientTcpThread();
-		
+
 		startTimer();
 
 	}
@@ -69,30 +69,30 @@ public class Gra extends JPanel implements KeyListener
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
 		this.rysujSamolotyGraczy(g2d);
-		
 
 	}
+
 	protected void startClientTcpThread()
 	{
 		Executor exe = Executors.newFixedThreadPool(10);
-		
+
 		klient = new ClientTCP();
 		klient.gracz = this.gracz;
 		exe.execute(klient);
 	}
-	
-	
 
 	protected void rysujSamolotGracza(Graphics2D g2d)
 	{
-		int x =(int)(samolot.x - samolot.width);
-		int y =(int)(samolot.y - samolot.height);
-		AffineTransform rotacja = AffineTransform.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
-		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
+		int x = (int) (samolot.x - samolot.width);
+		int y = (int) (samolot.y - samolot.height);
+		AffineTransform rotacja = AffineTransform
+				.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
+		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja,
+				AffineTransformOp.TYPE_BILINEAR);
 		g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
-		
-		
+
 	}
+
 	protected void rysujSamolotyGraczy(Graphics2D g2d)
 	{
 		gracze = klient.gracze;
@@ -101,16 +101,16 @@ public class Gra extends JPanel implements KeyListener
 		int y;
 		AffineTransform rotacja;
 		AffineTransformOp transformacja_op;
-		for(int i=0; i<size; i++)
+		for (int i = 0; i < size; i++)
 		{
-			//if(gracze.get(i).getId() == gracz.getId())
-				//continue;
+			// if(gracze.get(i).getId() == gracz.getId())
+			// continue;
 			Samolot s = gracze.get(i).getSamolot();
-			x =(int)(s.x - s.width);
-			y =(int)(s.y - s.height);
+			x = (int) (s.x - s.width);
+			y = (int) (s.y - s.height);
 			rotacja = AffineTransform.getRotateInstance(Math.toRadians(s.kat + 90), s.width, s.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
-			//System.out.println(s.transformacja_op);
+			// System.out.println(s.transformacja_op);
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 		}
 	}
@@ -125,18 +125,20 @@ public class Gra extends JPanel implements KeyListener
 		for (int i = 0; i < size; i++)
 		{
 			Pocisk pocisk = samolot.pociski.get(i);
-			x = (int)(pocisk.x - pocisk.width);
-			y = (int)(pocisk.y - pocisk.height);
-			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), pocisk.width, pocisk.height);
+			x = (int) (pocisk.x - pocisk.width);
+			y = (int) (pocisk.y - pocisk.height);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
+					pocisk.width, pocisk.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 		}
 	}
+
 	protected void aktualizujWspolrzedne()
 	{
 		this.klient.gracz = this.gracz;
 		samolot.aktualizujWspolrzedne();
-		
+
 	}
 
 	public void keyTyped(KeyEvent e)
@@ -191,7 +193,6 @@ public class Gra extends JPanel implements KeyListener
 
 	}
 
-
 	void startTimer()
 	{
 		java.util.Timer timer = new java.util.Timer();
@@ -212,20 +213,20 @@ public class Gra extends JPanel implements KeyListener
 		repaint();
 		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
 		{
-			if (key == 39 ) // zmieñ kierunek samolotu
+			if (key == 39) // zmieñ kierunek samolotu
 			{
-				samolot.kat+=4;
+				samolot.kat += 4;
 			}
-			else if(key == 37)
+			else if (key == 37)
 			{
-				samolot.kat-=4;
+				samolot.kat -= 4;
 			}
-			
-			if (key == 32)  //spacja
+
+			if (key == 32) // spacja
 			{
 				strzel();
 			}
-			if (key == 17)  //lewy CTRL
+			if (key == 17) // lewy CTRL
 			{
 				strzelBomba();
 			}
