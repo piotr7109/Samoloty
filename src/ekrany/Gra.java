@@ -1,4 +1,5 @@
 package ekrany;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -112,6 +113,7 @@ public class Gra extends JPanel implements KeyListener
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 		}
 	}
+
 	protected void rysujSamolotyGraczy(Graphics2D g2d)
 	{
 		gracze = klient.gracze;
@@ -122,19 +124,20 @@ public class Gra extends JPanel implements KeyListener
 		AffineTransformOp transformacja_op;
 		for (int i = 0; i < size; i++)
 		{
-			if(gracze.get(i).getId() == gracz.getId())
+			if (gracze.get(i).getId() == gracz.getId())
 				continue;
 			Samolot s = gracze.get(i).getSamolot();
 			x = (int) (s.x - s.width);
 			y = (int) (s.y - s.height);
-			rotacja = AffineTransform.getRotateInstance(Math.toRadians(s.kat + 90), s.width, s.height);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(s.kat + 90), s.width,
+					s.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 			// System.out.println(s.transformacja_op);
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
-			
+
 			int size_pociski = s.pociski.size();
-			//System.out.println(s.pociski);
-			
+			// System.out.println(s.pociski);
+
 			for (int j = 0; j < size_pociski; j++)
 			{
 				Pocisk pocisk = s.pociski.get(j);
@@ -145,8 +148,7 @@ public class Gra extends JPanel implements KeyListener
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 			}
-			
-			
+
 		}
 	}
 
