@@ -23,9 +23,11 @@ public class ClientTCP extends Thread
 
 			while (!koniec)
 			{
+				
 				out.writeObject(gracz);
 				out.reset();
 				sleep(50);
+				
 				try
 				{
 					Object o = in.readObject();

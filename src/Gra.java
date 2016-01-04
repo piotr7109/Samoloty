@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -33,7 +35,7 @@ public class Gra extends JPanel implements KeyListener
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
 	protected static int WIDTH, HEIGHT;
-	protected final int FPS = 15;
+	protected final int FPS = 40;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
 	
@@ -49,7 +51,7 @@ public class Gra extends JPanel implements KeyListener
 		gracz = new Gracz(100, 100, 0);
 		gracz.setId(id_gracza);
 		samolot = gracz.getSamolot();
-		startClientTcpThread();
+		//startClientTcpThread();
 		
 		startTimer();
 
@@ -66,7 +68,7 @@ public class Gra extends JPanel implements KeyListener
 
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
-		
+		//this.rysujSamolotyGraczy(g2d);
 		//this.rysujSamolotyGraczy(g2d);
 		
 
@@ -86,7 +88,10 @@ public class Gra extends JPanel implements KeyListener
 	{
 		int x =(int)(samolot.x - samolot.width);
 		int y =(int)(samolot.y - samolot.height);
-		g2d.drawImage(samolot.transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+		AffineTransform rotacja = AffineTransform.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
+		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
+		g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+		
 		
 	}
 	protected void rysujSamolotyGraczy(Graphics2D g2d)
@@ -100,7 +105,8 @@ public class Gra extends JPanel implements KeyListener
 			Samolot s = gracze.get(i).getSamolot();
 			x =(int)(s.x - s.width);
 			y =(int)(s.y - s.height);
-			g2d.drawImage(s.transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+			//System.out.println(s.transformacja_op);
+			//g2d.drawImage(s.transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 		}
 	}
 
@@ -109,17 +115,21 @@ public class Gra extends JPanel implements KeyListener
 		int size = samolot.pociski.size();
 		int x;
 		int y;
+		AffineTransform rotacja;
+		AffineTransformOp transformacja_op;
 		for (int i = 0; i < size; i++)
 		{
 			Pocisk pocisk = samolot.pociski.get(i);
 			x = (int)(pocisk.x - pocisk.width);
 			y = (int)(pocisk.y - pocisk.height);
-			g2d.drawImage(pocisk.transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), pocisk.width, pocisk.height);
+			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
+			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 		}
 	}
 	protected void aktualizujWspolrzedne()
 	{
-		this.klient.gracz = this.gracz;
+		//this.klient.gracz = this.gracz;
 		samolot.aktualizujWspolrzedne();
 		
 	}

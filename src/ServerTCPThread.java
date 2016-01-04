@@ -35,7 +35,7 @@ public class ServerTCPThread extends Thread implements Runnable
 				try
 				{
 					this.gracz = (Gracz) in.readObject();
-
+					
 					if (this.i == Bufor.gracze.size())
 					{
 						System.out.println("ADDS");

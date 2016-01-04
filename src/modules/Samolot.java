@@ -1,14 +1,8 @@
 package modules;
 
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 public class Samolot implements Serializable
 {
@@ -20,8 +14,7 @@ public class Samolot implements Serializable
 	private int punkty_zycia, ilosc_bomb;
 	public ArrayList<Pocisk> pociski;
 
-	private transient AffineTransform rotacja;
-	public transient AffineTransformOp transformacja_op;
+	
 
 	public Samolot(int x, int y, double kat)
 	{
@@ -61,8 +54,7 @@ public class Samolot implements Serializable
 		this.y += Math.sin(Math.toRadians(this.kat)) * 3;
 
 		// obrót obrazka o k¹t
-		rotacja = AffineTransform.getRotateInstance(Math.toRadians(this.kat + 90), width, height);
-		transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
+		
 
 		// aktualizacja wspó³rzêdnych pocisków
 		int size = pociski.size();
