@@ -1,13 +1,10 @@
 package ekrany;
 
 import java.awt.Dimension;
-import java.awt.Label;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -23,10 +20,10 @@ public class Ustawienia extends JPanel
 	
 	private static final long serialVersionUID = 1L;
 	public JButton zapisz;
-	private JSlider width, height;
-	private JLabel width_label, height_label;
-	private JTextField login;
+	public JSlider width, height;
+	public JTextField login;
 	
+	private JLabel width_label, height_label;
 	private JLabel max_width_label, min_width_label, max_height_label, min_height_label, login_label;
 	
 	public Ustawienia()
@@ -50,10 +47,10 @@ public class Ustawienia extends JPanel
 	
 	private void dodajEtykiety()
 	{
-		max_width_label = new JLabel("1920");
-		min_width_label = new JLabel("1024");
-		max_height_label = new JLabel("1080");
-		min_height_label = new JLabel("768");
+		max_width_label = new JLabel(width.getMaximum()+"");
+		min_width_label = new JLabel(width.getMinimum()+"");
+		max_height_label = new JLabel(height.getMaximum()+"");
+		min_height_label = new JLabel(height.getMinimum()+"");
 		login_label = new JLabel("Login");
 		Dimension d = new Dimension(50, 50);
 		
@@ -95,7 +92,7 @@ public class Ustawienia extends JPanel
 		width.setMinimum(1024);
 		width.setSize(new Dimension(WIDTH, HEIGHT));
 		width.setLocation(100, 100);
-		width_label.setText("1024");
+		width_label.setText(width.getMinimum()+"");
 		width_label.setSize(new Dimension(50, 50));
 		width_label.setLocation(WIDTH/2+100, 50);
 		
@@ -103,7 +100,7 @@ public class Ustawienia extends JPanel
 		height.setMinimum(768);
 		height.setSize(new Dimension(WIDTH, HEIGHT));
 		height.setLocation(100, 200);
-		height_label.setText("768");
+		height_label.setText(height.getMinimum()+"");
 		height_label.setSize(new Dimension(50, 50));
 		height_label.setLocation(WIDTH/2+100, 150);
 		
@@ -139,5 +136,7 @@ public class Ustawienia extends JPanel
 				
 			}
 		});
+		
+	
 	}
 }

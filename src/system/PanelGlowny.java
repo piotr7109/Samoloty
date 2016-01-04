@@ -1,6 +1,8 @@
 package system;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,6 +10,7 @@ import javax.swing.JTabbedPane;
 
 import ekrany.Gra;
 import ekrany.Ustawienia;
+import modules.SETTINGS;
 
 public class PanelGlowny extends JFrame
 {
@@ -16,11 +19,9 @@ public class PanelGlowny extends JFrame
 	private static PanelGlowny frame;
 	private int width, height;
 	private int id_gracza;
+	JTabbedPane tab_panel;
+	private Ustawienia ustawienia;
 	
-	public void setIdGracza(int id_gracza)
-	{
-		this.id_gracza = id_gracza;
-	}
 
 	public PanelGlowny()
 	{
@@ -29,47 +30,69 @@ public class PanelGlowny extends JFrame
 		this.setTitle("Samoloty");
 		this.setSize(new Dimension(width, height));
 		this.id_gracza = (int)(Math.random()*1000);
-		//this.add(EkranGry(id_gracza));
-		this.add(EkranUstawien());
+		//this.add(EkranGry());
+		this.add(inicjalizujKomponenty());
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 
 	}
-
-	private JPanel EkranUstawien()
-	{
-		Ustawienia ustawienia = new Ustawienia();
-		return ustawienia;
-	}
-	
-	private JPanel EkranGry(int id_gracza)
-	{
-		Gra gra = new Gra(width, height, id_gracza);
-		return gra;
-	}
-	/*private JPanel inicjalizujKomponenty(int id_gracza)
+	private JPanel inicjalizujKomponenty()
 	{
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
 
-		JTabbedPane tab_panel = new JTabbedPane();
-		Gra gra = new Gra(width, height, id_gracza);
+		tab_panel = new JTabbedPane();
+		
+		panel.add(tab_panel, BorderLayout.CENTER);
+		EkranUstawien();
+
+		return panel;
+	}
+
+	private void EkranUstawien()
+	{
+		ustawienia = new Ustawienia();
+		tab_panel.add(ustawienia, "Ustawienia");
+		EkranUstawienAction();
+	}
+	private void EkranUstawienAction()
+	{
+		ustawienia.zapisz.addActionListener(new ActionListener()
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				SETTINGS.width = ustawienia.width.getValue();
+				SETTINGS.height = ustawienia.height.getValue();
+				SETTINGS.login = ustawienia.login.getText();
+				setSize(new Dimension(SETTINGS.width, SETTINGS.height));
+				tab_panel.remove(ustawienia);
+				EkranGry();
+				repaint();
+				validate();
+				
+				
+			}
+		});
+	}
+	
+	private JPanel EkranGry()
+	{
+		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza);
 		tab_panel.addKeyListener(gra);
 		tab_panel.setFocusable(true);
 		tab_panel.add(gra, "Fajt");
-
-		panel.add(tab_panel, BorderLayout.CENTER);
-
-		return panel;
-	}*/
+		return gra;
+	}
+	
 	
 	
 
 	public static void createAndShowGui()
 	{
 		frame = new PanelGlowny();
-		frame.setIdGracza(1111);
 		frame.setVisible(true);
 	}
 }
