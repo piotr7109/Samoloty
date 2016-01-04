@@ -30,8 +30,7 @@ public class ClientTCP extends Thread
 				
 				try
 				{
-					Object o = in.readObject();
-					gracze = (ArrayList<Gracz>) o;
+					gracze = (ArrayList<Gracz>) in.readObject();
 
 				}
 				catch (Exception e)
