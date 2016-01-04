@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import ekrany.Gra;
+import ekrany.Ustawienia;
 
 public class PanelGlowny extends JFrame
 {
@@ -28,7 +29,8 @@ public class PanelGlowny extends JFrame
 		this.setTitle("Samoloty");
 		this.setSize(new Dimension(width, height));
 		this.id_gracza = (int)(Math.random()*1000);
-		this.add(inicjalizujKomponenty(id_gracza));
+		//this.add(EkranGry(id_gracza));
+		this.add(EkranUstawien());
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -36,7 +38,18 @@ public class PanelGlowny extends JFrame
 
 	}
 
-	private JPanel inicjalizujKomponenty(int id_gracza)
+	private JPanel EkranUstawien()
+	{
+		Ustawienia ustawienia = new Ustawienia();
+		return ustawienia;
+	}
+	
+	private JPanel EkranGry(int id_gracza)
+	{
+		Gra gra = new Gra(width, height, id_gracza);
+		return gra;
+	}
+	/*private JPanel inicjalizujKomponenty(int id_gracza)
 	{
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
 
@@ -49,7 +62,9 @@ public class PanelGlowny extends JFrame
 		panel.add(tab_panel, BorderLayout.CENTER);
 
 		return panel;
-	}
+	}*/
+	
+	
 
 	public static void createAndShowGui()
 	{
