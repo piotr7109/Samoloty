@@ -51,6 +51,13 @@ public class Serwer
 		this.ip_serwera = ip_serwera;
 	}
 	
+	
+	public ArrayList<Gracz_mod> getGracze()
+	{
+		setGracze();
+		return gracze;
+	}
+
 	public int insert()
 	{
 		
@@ -104,6 +111,37 @@ public class Serwer
 		baza.queryOpertaion(String.format("INSERT INTO t_gracze(id, id_serwera, login, druzyna) "
 										+ "VALUES('%d', '%d','%s','%c')", gracz.id, this.id, gracz.login, gracz.druzyna));
 		this.gracze.add(gracz);
+	}
+	private void setGracze()
+	{
+		SQLJDBC baza = new SQLJDBC();
+		Statement stmt;
+		Connection c = baza.getC(); 
+		try
+		{
+			stmt = c.createStatement();
+			String query = String.format("SELECT * FROM t_gracze WHERE id_serwera = %d",this.id);
+			
+			ResultSet rs = stmt.executeQuery( query );
+			while ( rs.next() ) 
+			{
+				Gracz_mod g = new Gracz_mod();
+				g.id = rs.getInt("id");
+				g.druzyna = rs.getString("druzyna").charAt(0);
+				g.id_serwera = rs.getInt("id_serwera");
+				g.login = rs.getString("login");
+				this.gracze.add(g);
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+
+		}
+		catch ( Exception e ) 
+		{
+			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+			System.exit(0);
+	    }
 	}
 
 }

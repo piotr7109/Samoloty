@@ -8,8 +8,9 @@ public class Gracz implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private int login;
+	public int id, id_serwera;
+	public String login;
+	public char druzyna;
 	private int ip;
 	private Samolot samolot;
 	private int punkty;
@@ -21,22 +22,7 @@ public class Gracz implements Serializable
 		this.samolot = samolot;
 	}
 	
-	public int getId()
-	{
-		return id;
-	}
-	public void setId(int id)
-	{
-		this.id = id;
-	}
-	public int getLogin()
-	{
-		return login;
-	}
-	public void setLogin(int login)
-	{
-		this.login = login;
-	}
+
 	public int getIp()
 	{
 		return ip;

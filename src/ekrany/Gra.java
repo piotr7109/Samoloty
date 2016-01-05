@@ -51,7 +51,7 @@ public class Gra extends JPanel implements KeyListener
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
 		gracz = new Gracz(100, 100, 0);
-		gracz.setId(id_gracza);
+		gracz.id = id_gracza;
 		samolot = gracz.getSamolot();
 		startClientTcpThread();
 
@@ -124,7 +124,7 @@ public class Gra extends JPanel implements KeyListener
 		AffineTransformOp transformacja_op;
 		for (int i = 0; i < size; i++)
 		{
-			if (gracze.get(i).getId() == gracz.getId())
+			if (gracze.get(i).id == gracz.id)
 				continue;
 			Samolot s = gracze.get(i).getSamolot();
 			x = (int) (s.x - s.width);
