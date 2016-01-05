@@ -10,7 +10,6 @@ import javax.swing.JTabbedPane;
 
 import ekrany.Gra;
 import ekrany.Ustawienia;
-import modules.SETTINGS;
 
 public class PanelGlowny extends JFrame
 {
