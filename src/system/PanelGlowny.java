@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import ekrany.Gra;
+import ekrany.Serwery;
 import ekrany.Ustawienia;
 
 public class PanelGlowny extends JFrame
@@ -19,7 +20,7 @@ public class PanelGlowny extends JFrame
 	private int id_gracza;
 	JTabbedPane tab_panel;
 	private Ustawienia ustawienia;
-	
+	private Serwery serwery;
 
 	public PanelGlowny()
 	{
@@ -45,7 +46,13 @@ public class PanelGlowny extends JFrame
 
 		return panel;
 	}
-
+	
+	private void EkranListySerwerow()
+	{
+		serwery = new Serwery();
+		tab_panel.add(serwery, "Lista serwerów");
+	}
+	
 	private void EkranUstawien()
 	{
 		ustawienia = new Ustawienia();
@@ -65,7 +72,7 @@ public class PanelGlowny extends JFrame
 				SETTINGS.login = ustawienia.login.getText();
 				setSize(new Dimension(SETTINGS.width, SETTINGS.height));
 				tab_panel.remove(ustawienia);
-				EkranGry();
+				EkranListySerwerow();
 				repaint();
 				validate();
 				
