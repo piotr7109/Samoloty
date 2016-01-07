@@ -1,4 +1,4 @@
-package system;
+package network;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,11 +7,17 @@ import java.net.*;
 import java.util.ArrayList;
 
 import modules.Gracz;
+import modules.Pocisk;
+import modules.Samolot;
 
 public class ClientTCP extends Thread
 {
+
+	
+	private GraczTcp gracz_tcp;
 	public Gracz gracz;
-	public ArrayList<Gracz> gracze = new ArrayList<Gracz>();
+	public ArrayList<GraczTcp> gracze_tcp = new ArrayList<GraczTcp>();
+	
 
 	public void run()
 	{
@@ -24,14 +30,14 @@ public class ClientTCP extends Thread
 
 			while (!koniec)
 			{
-				
-				out.writeObject(gracz);
+				gracz_tcp = getTcpGracz();
+				out.writeObject(gracz_tcp);
 				out.reset();
 				sleep(10);
 				
 				try
 				{
-					gracze = (ArrayList<Gracz>) in.readObject();
+					gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
 
 				}
 				catch (Exception e)
@@ -49,5 +55,29 @@ public class ClientTCP extends Thread
 		{
 			System.err.println(e);
 		}
+	}
+	protected GraczTcp getTcpGracz()
+	{
+		GraczTcp g = new GraczTcp();
+		Samolot s = gracz.getSamolot();
+		g.id = gracz.id;
+		g.x = s.x;
+		g.y = s.y;
+		g.kat = s.kat;
+		g.punkty_zycia = s.getPunktyZycia();
+		g.login = gracz.login;
+		ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
+		
+		for(Pocisk po: s.getPociski())
+		{
+			PociskTcp p = new PociskTcp();
+			p.x = po.x;
+			p.y = po.y;
+			p.kat = po.kat;
+			pociski_tcp.add(p);
+		}
+		g.pociski = pociski_tcp;
+		
+		return g;
 	}
 }

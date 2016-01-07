@@ -1,4 +1,4 @@
-package system;
+package network;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,7 +11,7 @@ public class ServerTCPThread extends Thread implements Runnable
 	private Socket mySocket;
 	private int i; // numer watku
 	private boolean czy_koniec;
-	private Gracz gracz;
+	private GraczTcp gracz;
 
 	public ServerTCPThread(Socket socket, int i)
 	{
@@ -34,7 +34,7 @@ public class ServerTCPThread extends Thread implements Runnable
 			{
 				try
 				{
-					this.gracz = (Gracz) in.readObject();
+					this.gracz = (GraczTcp) in.readObject();
 					
 					if (this.i == Bufor.gracze.size())
 					{
