@@ -1,4 +1,4 @@
-package network.modules;
+package network;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import modules.Gracz;
 import modules.Pocisk;
 import modules.Samolot;
-import network.PociskTcp;
+import network.modules.GraczTcp;
+import network.modules.PociskTcp;
 
 public class ClientTCP extends Thread
 {

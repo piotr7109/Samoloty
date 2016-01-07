@@ -1,4 +1,4 @@
-package network;
+package network.modules;
 
 import java.io.Serializable;
 
