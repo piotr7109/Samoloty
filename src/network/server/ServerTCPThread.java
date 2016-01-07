@@ -1,10 +1,10 @@
-package network;
+package network.server;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
-
-import modules.Gracz;
+import network.Bufor;
+import network.GraczTcp;
 
 public class ServerTCPThread extends Thread implements Runnable
 {
@@ -35,7 +35,7 @@ public class ServerTCPThread extends Thread implements Runnable
 				try
 				{
 					this.gracz = (GraczTcp) in.readObject();
-					
+
 					if (this.i == Bufor.gracze.size())
 					{
 						System.out.println("ADDS");
@@ -54,8 +54,7 @@ public class ServerTCPThread extends Thread implements Runnable
 				}
 				out.writeObject(Bufor.gracze);
 				out.reset();
-				
-				
+
 			}
 
 			mySocket.close();

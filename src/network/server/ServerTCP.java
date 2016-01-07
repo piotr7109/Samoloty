@@ -1,4 +1,4 @@
-package network;
+package network.server;
 
 import java.net.*;
 import java.util.concurrent.Executor;
