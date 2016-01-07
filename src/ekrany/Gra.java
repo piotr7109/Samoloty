@@ -21,9 +21,9 @@ import modules.Obrazki;
 import modules.Pocisk;
 import modules.Samolot;
 import modules.TypGry;
-import network.ClientTCP;
-import network.GraczTcp;
 import network.PociskTcp;
+import network.modules.ClientTCP;
+import network.modules.GraczTcp;
 import system.CONST;
 
 public class Gra extends JPanel implements KeyListener

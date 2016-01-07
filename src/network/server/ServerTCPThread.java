@@ -3,8 +3,9 @@ package network.server;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
-import network.Bufor;
-import network.GraczTcp;
+
+import network.modules.Bufor;
+import network.modules.GraczTcp;
 
 public class ServerTCPThread extends Thread implements Runnable
 {
