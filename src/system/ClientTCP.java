@@ -27,7 +27,7 @@ public class ClientTCP extends Thread
 				
 				out.writeObject(gracz);
 				out.reset();
-				sleep(50);
+				sleep(10);
 				
 				try
 				{

@@ -42,7 +42,8 @@ public class PanelGlowny extends JFrame
 		tab_panel = new JTabbedPane();
 		
 		panel.add(tab_panel, BorderLayout.CENTER);
-		EkranUstawien();
+		//EkranUstawien();
+		EkranGry();
 		return panel;
 	}
 	

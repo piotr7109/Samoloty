@@ -37,7 +37,7 @@ public class Gra extends JPanel implements KeyListener
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
 	protected static int WIDTH, HEIGHT;
-	protected final int FPS = 40;
+	protected final int FPS = 30;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
 
