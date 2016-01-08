@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class Serwer
 {
-	private int id;
+	private int id, start;
 	private String typ_gry, tryb_gry, ip_serwera;
 	private ArrayList<Gracz_mod> gracze = new ArrayList<Gracz_mod>();
+	
 
 	public int getId()
 	{
@@ -52,6 +53,11 @@ public class Serwer
 	}
 	
 	
+	public int getStart()
+	{
+		return start;
+	}
+
 	public ArrayList<Gracz_mod> getGracze()
 	{
 		setGracze();
@@ -131,6 +137,8 @@ public class Serwer
 				this.ip_serwera = rs.getString("ip_serwera");
 				this.tryb_gry = rs.getString("tryb_gry");
 				this.typ_gry = rs.getString("typ_gry");
+				this.start = rs.getInt("start");
+				
 			}
 			rs.close();
 			stmt.close();

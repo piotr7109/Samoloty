@@ -31,7 +31,7 @@ public class Gra extends JPanel implements KeyListener
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	protected static final long serialVersionUID = 1L;
 
 	protected ArrayList<GraczTcp> gracze;
 	protected Gracz gracz;
@@ -79,7 +79,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void startClientTcpThread()
 	{
-		Executor exe = Executors.newFixedThreadPool(10);
+		Executor exe = Executors.newFixedThreadPool(1);
 
 		klient = new ClientTCP();
 		klient.gracz = gracz;
@@ -184,9 +184,9 @@ public class Gra extends JPanel implements KeyListener
 
 	}
 
-	private int bullet_time_index = 0;
+	protected int bullet_time_index = 0;
 
-	private void strzel()
+	protected void strzel()
 	{
 		if (bullet_time_index < bullet_time)
 		{
@@ -200,9 +200,9 @@ public class Gra extends JPanel implements KeyListener
 
 	}
 
-	private int bullet_time_bomb_index = 0;
+	protected int bullet_time_bomb_index = 0;
 
-	private void strzelBomba()
+	protected void strzelBomba()
 	{
 		if (bullet_time_bomb_index < bullet_time_bomb)
 		{

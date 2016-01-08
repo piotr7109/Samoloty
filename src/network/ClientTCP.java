@@ -29,7 +29,7 @@ public class ClientTCP extends Thread
 			Socket socket = new Socket(InetAddress.getByName("localhost"), 4321);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-
+			System.out.println("AAAAAAAAAAAAAA");
 			while (!koniec)
 			{
 				gracz_tcp = getTcpGracz();

@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import database.Gracz_mod;
 import database.Serwer;
 import system.CONST;
+import system.PanelGlowny;
 import system.SETTINGS;
 
 public class Lobby extends JPanel
@@ -36,7 +37,7 @@ public class Lobby extends JPanel
 
 	JButton refresh = new JButton("Odœwierz");
 	JButton gotowy = new JButton("GOTOWY");
-	JButton start_button = new JButton("START!");
+	public JButton start_button = new JButton("START!");
 
 	public Lobby(int id_serwera, boolean czy_admin, int id_gracza)
 	{
@@ -155,33 +156,13 @@ public class Lobby extends JPanel
 
 	private void startButton()
 	{
-		start_button = new JButton("START!");
+		
 		start_button.setSize(new Dimension(100, 25));
 		start_button.setLocation(10, 250);
 
 		add(start_button);
 
-		start_button.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				boolean czy_gotowi = true;
-				for (Gracz_mod g : serwer.getGracze())
-				{
-					if (g.gotowy == 0)
-					{
-						czy_gotowi = false;
-						break;
-					}
-				}
-				if (czy_gotowi)
-				{
-					System.out.println("GO");
-				}
-			}
-		});
+		
 	}
 
 	private void gotowyButton()
@@ -221,7 +202,11 @@ public class Lobby extends JPanel
 			{
 				removeAll();
 				repaint();
-
+				if (serwer.getStart() == 1)
+				{
+					PanelGlowny.startGra();
+					
+				}
 			}
 		});
 	}

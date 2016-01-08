@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +21,7 @@ import ekrany.Lobby;
 import ekrany.Serwery;
 import ekrany.TworzenieGry;
 import ekrany.Ustawienia;
+import network.server.ServerTCP;
 
 public class PanelGlowny extends JFrame
 {
@@ -60,7 +64,49 @@ public class PanelGlowny extends JFrame
 	{
 		lobby = new Lobby(id_serwera, admin, id_gracza);
 		tab_panel.add(lobby, "Lobby");
+		EkranLobbyEvent(id_serwera);
 
+	}
+	public static ServerTCP serwer_tcp;
+	private static void EkranLobbyEvent(final int id_serwera)
+	{
+		lobby.start_button.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				Serwer serwer = new Serwer();
+				serwer.setId(id_serwera);
+				boolean czy_gotowi = true;
+				for (Gracz_mod g : serwer.getGracze())
+				{
+					if (g.gotowy == 0)
+					{
+						czy_gotowi = false;
+						break;
+					}
+				}
+				if (czy_gotowi)
+				{
+					serwer.startSerwer();
+					startTCPServer();
+					startGra();
+					
+				}
+			}
+		});
+	}
+	public static void startGra()
+	{
+		tab_panel.removeAll();
+		EkranGry();
+	}
+	private static void startTCPServer()
+	{
+		Executor exe = Executors.newFixedThreadPool(1);
+		serwer_tcp = new ServerTCP();
+		exe.execute(serwer_tcp);
 	}
 
 	private void EkranTworzeniaGry()
@@ -131,21 +177,25 @@ public class PanelGlowny extends JFrame
 	public static void EkranListySerwerowDolaczAction(JButton dolacz)
 	{
 		int id_serwera = Integer.parseInt(dolacz.getName());
-
+		Serwer serwer = new Serwer();
+		serwer.setId(id_serwera);
+		ArrayList<Gracz_mod> gracze = serwer.getGracze();
+		
 		Gracz_mod gracz = new Gracz_mod();
 		gracz.druzyna = 'A';
 		gracz.id = id_gracza;
 		gracz.id_serwera = id_serwera;
 		gracz.login = SETTINGS.login;
 		gracz.gotowy = 0;
-		gracz.pozycja = 0;
+		gracz.pozycja = gracze.size()+1;
 
-		Serwer serwer = new Serwer();
-		serwer.setId(id_serwera);
+		
+		
 		serwer.addGracz(gracz);
 		tab_panel.removeAll();
 
 		EkranLobby(id_serwera, false);
+		
 
 	}
 
@@ -177,13 +227,12 @@ public class PanelGlowny extends JFrame
 		});
 	}
 
-	private JPanel EkranGry()
+	private static void EkranGry()
 	{
 		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza);
 		tab_panel.addKeyListener(gra);
 		tab_panel.setFocusable(true);
 		tab_panel.add(gra, "Fajt");
-		return gra;
 	}
 
 	public static void createAndShowGui()

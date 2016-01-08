@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 
 public class ServerTCP extends Thread
 {
-	public static void main(String args[])
+	public void run()
 	{
 
 		try
