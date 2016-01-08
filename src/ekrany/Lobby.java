@@ -204,7 +204,7 @@ public class Lobby extends JPanel
 				repaint();
 				if (serwer.getStart() == 1)
 				{
-					PanelGlowny.startGra();
+					PanelGlowny.startGra(serwer);
 					
 				}
 			}

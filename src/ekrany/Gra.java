@@ -46,7 +46,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected ClientTCP klient;
 
-	public Gra(int width, int height, int id_gracza)
+	public Gra(int width, int height, int id_gracza, String ip_serwera)
 	{
 		HEIGHT = height;
 		WIDTH = width;
@@ -56,7 +56,7 @@ public class Gra extends JPanel implements KeyListener
 		gracz = new Gracz(100, 100, 0);
 		gracz.id = id_gracza;
 		samolot = gracz.getSamolot();
-		startClientTcpThread();
+		startClientTcpThread(ip_serwera);
 
 		startTimer();
 
@@ -77,11 +77,11 @@ public class Gra extends JPanel implements KeyListener
 
 	}
 
-	protected void startClientTcpThread()
+	protected void startClientTcpThread(String ip_serwera)
 	{
 		Executor exe = Executors.newFixedThreadPool(1);
 
-		klient = new ClientTCP();
+		klient = new ClientTCP(ip_serwera);
 		klient.gracz = gracz;
 		exe.execute(klient);
 	}

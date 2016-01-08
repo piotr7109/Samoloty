@@ -32,8 +32,9 @@ public class ServerTCPThread extends Thread implements Runnable
 		try
 		{
 			boolean start = false;
+			int kod_odpowiedzi = 100;
+			
 			System.out.println(InetAddress.getLocalHost() + "");
-
 			ObjectOutputStream out = new ObjectOutputStream(mySocket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(mySocket.getInputStream());
 			System.out.println("START");
@@ -56,12 +57,12 @@ public class ServerTCPThread extends Thread implements Runnable
 				}
 				catch (Exception e)
 				{
+					czy_koniec = true;
 					continue;
 
 				}
 				if(!start)
 				{
-					System.out.println(ile_graczy+" ile ma byæ:"+Bufor.gracze.size());
 					
 					if(ile_graczy!=Bufor.gracze.size())
 					{
@@ -72,14 +73,16 @@ public class ServerTCPThread extends Thread implements Runnable
 						start = true;
 						Serwer s = new Serwer();
 						s.setId(id_serwera);
+						s.setSerwerById(id_serwera);
 						s.delete();
+						
 						out.writeInt(100);
 					}
 					out.writeObject(Bufor.gracze);
 				}
 				else
 				{
-					out.writeInt(100);
+					out.writeInt(kod_odpowiedzi);
 					out.writeObject(Bufor.gracze);
 				}
 				
@@ -88,7 +91,7 @@ public class ServerTCPThread extends Thread implements Runnable
 			}
 
 			mySocket.close();
-			System.out.println("SERWER " + i + " zakonczyl prace\n");
+			System.out.println("Klient " + i + " roz³¹czony\n");
 
 		}
 		catch (Exception e)

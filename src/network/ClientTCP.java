@@ -15,13 +15,18 @@ import network.modules.PociskTcp;
 public class ClientTCP extends Thread
 {
 
-	
 	private GraczTcp gracz_tcp;
 	public Gracz gracz;
 	public ArrayList<GraczTcp> gracze_tcp = new ArrayList<GraczTcp>();
-	
+
 	public boolean start, koniec;
-	
+	public int kod_odpowiedzi = 0;
+	private String ip_serwera;
+
+	public ClientTCP(String ip)
+	{
+		this.ip_serwera = ip;
+	}
 
 	public void run()
 	{
@@ -29,39 +34,37 @@ public class ClientTCP extends Thread
 		{
 			koniec = false;
 			start = false;
-			Socket socket = new Socket(InetAddress.getByName("localhost"), 4321);
+			Socket socket = new Socket(InetAddress.getByName(ip_serwera), 4321);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 			System.out.println("AAAAAAAAAAAAAA");
-			int kod_odpowiedzi = 0;
+
 			while (!koniec)
 			{
 				gracz_tcp = getTcpGracz();
 				out.writeObject(gracz_tcp);
 				out.reset();
 				sleep(10);
-				
-				if(start)
+
+				if (start)
 				{
 					try
 					{
 						kod_odpowiedzi = in.readInt();
-						System.out.println("START");
 						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
-	
+
 					}
 					catch (Exception e)
 					{
-						//System.out.println("Exception ArrayList");
+						// System.out.println("Exception ArrayList");
 					}
 				}
 				else
 				{
-					System.out.println("pobierzInt");
 					try
 					{
 						kod_odpowiedzi = in.readInt();
-						if(kod_odpowiedzi == 100)
+						if (kod_odpowiedzi == 100)
 						{
 							start = true;
 						}
@@ -73,7 +76,6 @@ public class ClientTCP extends Thread
 						continue;
 					}
 				}
-				
 
 			}
 			socket.close();
@@ -84,6 +86,7 @@ public class ClientTCP extends Thread
 			System.err.println(e);
 		}
 	}
+
 	protected GraczTcp getTcpGracz()
 	{
 		GraczTcp g = new GraczTcp();
@@ -95,8 +98,8 @@ public class ClientTCP extends Thread
 		g.punkty_zycia = s.getPunktyZycia();
 		g.login = gracz.login;
 		ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
-		
-		for(Pocisk po: s.getPociski())
+
+		for (Pocisk po : s.getPociski())
 		{
 			PociskTcp p = new PociskTcp();
 			p.x = po.x;
@@ -105,7 +108,7 @@ public class ClientTCP extends Thread
 			pociski_tcp.add(p);
 		}
 		g.pociski = pociski_tcp;
-		
+
 		return g;
 	}
 }

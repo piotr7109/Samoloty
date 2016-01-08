@@ -92,16 +92,16 @@ public class PanelGlowny extends JFrame
 				{
 					serwer.startSerwer();
 					startTCPServer(ile_graczy, id_serwera);
-					startGra();
+					startGra(serwer);
 					
 				}
 			}
 		});
 	}
-	public static void startGra()
+	public static void startGra(Serwer serwer)
 	{
 		tab_panel.removeAll();
-		EkranGry();
+		EkranGry(serwer);
 	}
 	private static void startTCPServer(int ile_graczy, int id_serwera)
 	{
@@ -228,9 +228,9 @@ public class PanelGlowny extends JFrame
 		});
 	}
 
-	private static void EkranGry()
+	private static void EkranGry(final Serwer serwer)
 	{
-		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza);
+		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza, serwer.getIpSerwera());
 		tab_panel.addKeyListener(gra);
 		tab_panel.setFocusable(true);
 		tab_panel.add(gra, "Fajt");
