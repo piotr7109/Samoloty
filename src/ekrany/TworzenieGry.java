@@ -22,12 +22,12 @@ public class TworzenieGry extends JPanel
 	private final int HEIGHT = 25;
 	private final Point start = new Point(100,50);
 	
-	private String ip_servera;
+	public String ip_servera;
 	String[] typy_gry = {"TEAM","FFA"};
 	String[] tryby_gry = {"CTF", "DM_CLASSIC", "DM_TIME"};
 	
 	public JComboBox<String> typ_gry, tryb_gry;
-	public JLabel ip_label;
+	private JLabel ip_label;
 	public JButton stworz_gre;
 	
 	

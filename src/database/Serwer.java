@@ -105,11 +105,42 @@ public class Serwer
 	    }
 		return id_serwera;
 	}
+	public void setSerwerById(int id_serwera)
+	{
+		
+		SQLJDBC baza = new SQLJDBC();
+		Statement stmt;
+		Connection c = baza.getC(); 
+		try
+		{
+			stmt = c.createStatement();
+			String query = String.format("SELECT * FROM t_serwery WHERE id=%d", id_serwera);
+			
+			ResultSet rs = stmt.executeQuery( query );
+			while ( rs.next() ) 
+			{
+				this.id = id_serwera;
+				this.ip_serwera = rs.getString("ip_serwera");
+				this.tryb_gry = rs.getString("tryb_gry");
+				this.typ_gry = rs.getString("typ_gry");
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+
+		}
+		catch ( Exception e ) 
+		{
+			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+			System.exit(0);
+	    }
+		setGracze();
+	}
 	public void addGracz(Gracz_mod gracz)
 	{
 		SQLJDBC baza = new SQLJDBC();
-		baza.queryOpertaion(String.format("INSERT INTO t_gracze(id, id_serwera, login, druzyna) "
-										+ "VALUES('%d', '%d','%s','%c')", gracz.id, this.id, gracz.login, gracz.druzyna));
+		baza.queryOpertaion(String.format("INSERT INTO t_gracze(id, id_serwera, login, druzyna, pozycja, gotowy) "
+										+ "VALUES('%d', '%d','%s','%c', %d, %d)", gracz.id, this.id, gracz.login, gracz.druzyna, gracz.pozycja, gracz.gotowy));
 		this.gracze.add(gracz);
 	}
 	private void setGracze()

@@ -9,7 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import database.Gracz_mod;
+import database.Serwer;
 import ekrany.Gra;
+import ekrany.Lobby;
 import ekrany.Serwery;
 import ekrany.TworzenieGry;
 import ekrany.Ustawienia;
@@ -19,17 +22,18 @@ public class PanelGlowny extends JFrame
 
 	private static final long serialVersionUID = 1L;
 	private static PanelGlowny frame;
-	private int id_gracza;
+	private static int id_gracza;
 	JTabbedPane tab_panel;
 	private Ustawienia ustawienia;
 	private Serwery serwery;
 	private TworzenieGry tworzenie_gry;
+	private Lobby lobby;
 
 	public PanelGlowny()
 	{
 		this.setTitle("Samoloty");
 		this.setSize(new Dimension(SETTINGS.width, SETTINGS.height));
-		this.id_gracza = (int)(Math.random()*1000);
+		id_gracza = (int)(Math.random()*1000);
 		//this.add(EkranGry());
 		this.add(inicjalizujKomponenty());
 		setVisible(true);
@@ -48,9 +52,17 @@ public class PanelGlowny extends JFrame
 		//EkranUstawien();
 		//EkranGry();
 		//EkranTworzeniaGry();
-		EkranListySerwerow();
+		//EkranListySerwerow();
+		EkranLobby();
 		
 		return panel;
+	}
+	
+	private void EkranLobby()
+	{
+		lobby = new Lobby(17, true);
+		tab_panel.add(lobby, "Lobby");
+		
 	}
 	
 	private void EkranTworzeniaGry()
@@ -67,7 +79,14 @@ public class PanelGlowny extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				//zapisz do bazy + przekieruj do Lobby
+				//zapisz do bazy 
+				Serwer serwer = new Serwer();
+				serwer.setIpSerwera(tworzenie_gry.ip_servera);
+				serwer.setTypGry(tworzenie_gry.typ_gry.getSelectedItem().toString());
+				serwer.setTrybGry(tworzenie_gry.tryb_gry.getSelectedItem().toString());
+				int id_serwera = serwer.insert();
+				
+				//+ przekieruj do Lobby
 				
 			}
 		});
@@ -97,7 +116,21 @@ public class PanelGlowny extends JFrame
 	
 	public static void EkranListySerwerowDolaczAction(JButton dolacz)
 	{
-		System.out.println(dolacz.getName());
+		int id_serwera = Integer.parseInt(dolacz.getName());
+		
+		Gracz_mod gracz = new Gracz_mod();
+		gracz.druzyna = 'A';
+		gracz.id = id_gracza;
+		gracz.id_serwera = id_serwera;
+		gracz.login = SETTINGS.login;
+		gracz.gotowy = 0;
+		gracz.pozycja = 0;
+		
+		Serwer serwer = new Serwer();
+		serwer.setId(id_serwera);		
+		serwer.addGracz(gracz);
+		
+		//przekieruj do lobby
 	}
 	
 	
