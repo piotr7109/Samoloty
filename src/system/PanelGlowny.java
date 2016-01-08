@@ -4,12 +4,14 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import ekrany.Gra;
 import ekrany.Serwery;
+import ekrany.TworzenieGry;
 import ekrany.Ustawienia;
 
 public class PanelGlowny extends JFrame
@@ -21,6 +23,7 @@ public class PanelGlowny extends JFrame
 	JTabbedPane tab_panel;
 	private Ustawienia ustawienia;
 	private Serwery serwery;
+	private TworzenieGry tworzenie_gry;
 
 	public PanelGlowny()
 	{
@@ -43,15 +46,61 @@ public class PanelGlowny extends JFrame
 		
 		panel.add(tab_panel, BorderLayout.CENTER);
 		//EkranUstawien();
-		EkranGry();
+		//EkranGry();
+		//EkranTworzeniaGry();
+		EkranListySerwerow();
+		
 		return panel;
 	}
 	
+	private void EkranTworzeniaGry()
+	{
+		tworzenie_gry = new TworzenieGry();
+		tab_panel.add(tworzenie_gry, "Tworzenie gry");
+		EkranTworzeniaGryAction();
+	}
+	private void EkranTworzeniaGryAction()
+	{
+		tworzenie_gry.stworz_gre.addActionListener(new ActionListener()
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				//zapisz do bazy + przekieruj do Lobby
+				
+			}
+		});
+	}
 	private void EkranListySerwerow()
 	{
 		serwery = new Serwery();
 		tab_panel.add(serwery, "Lista serwerów");
+		EkranListySerwerowAction();
 	}
+	private void EkranListySerwerowAction()
+	{
+		serwery.stworz.addActionListener(new ActionListener()
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				tab_panel.remove(serwery);
+				EkranTworzeniaGry();
+				repaint();
+				validate();
+				
+			}
+		});
+	}
+	
+	public static void EkranListySerwerowDolaczAction(JButton dolacz)
+	{
+		System.out.println(dolacz.getName());
+	}
+	
+	
 	
 	private void EkranUstawien()
 	{
