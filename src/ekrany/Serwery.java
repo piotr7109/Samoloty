@@ -53,6 +53,7 @@ public class Serwery extends JPanel
 
 	private void refreshButton()
 	{
+		refresh = new JButton("Odœwierz");
 		refresh.setSize(new Dimension(100, 25));
 		refresh.setLocation(0, 0);
 		add(refresh);
@@ -100,19 +101,25 @@ public class Serwery extends JPanel
 			ip_serwera.setLocation(start.x * 4, start.y + i * y);
 			ilosc_graczy.setLocation(start.x * 5, start.y + i * y);
 			dolacz.setLocation(start.x * 6, start.y + i * y);
-
-			add(dolacz);
+			
+			
+			
 			add(id_serwera);
 			add(typ_gry);
 			add(tryb_gry);
 			add(ip_serwera);
 			add(ilosc_graczy);
 			i++;
-
-			dodajEvent(dolacz);
-			dolacz.setName(serwer.getId() + "");
-
-			this.dolacz.add(dolacz);
+			
+			if(serwer.getGracze().size()<4)
+			{
+				add(dolacz);
+				dodajEvent(dolacz);
+				dolacz.setName(serwer.getId() + "");
+				this.dolacz.add(dolacz);
+			}
+			
+			
 		}
 	}
 
@@ -125,6 +132,8 @@ public class Serwery extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				PanelGlowny.EkranListySerwerowDolaczAction(dolacz);
+				repaint();
+				validate();
 
 			}
 		});

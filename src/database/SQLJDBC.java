@@ -26,7 +26,7 @@ public class SQLJDBC
 			Class.forName("com.mysql.jdbc.Driver");
 			c = DriverManager.getConnection("jdbc:mysql://"+host+"/"+database, user, password);
 			c.createStatement().execute("SET NAMES utf8");
-			System.out.println("Opened database successfully");
+			//System.out.println("Opened database successfully");
 			
 			
 		} 
@@ -35,7 +35,7 @@ public class SQLJDBC
 			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 			System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
+	    //System.out.println("Operation done successfully");
 		
 		
 	}

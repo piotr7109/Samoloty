@@ -23,11 +23,11 @@ public class PanelGlowny extends JFrame
 	private static final long serialVersionUID = 1L;
 	private static PanelGlowny frame;
 	private static int id_gracza;
-	JTabbedPane tab_panel;
+	static JTabbedPane tab_panel;
 	private Ustawienia ustawienia;
 	private Serwery serwery;
 	private TworzenieGry tworzenie_gry;
-	private Lobby lobby;
+	private static Lobby lobby;
 
 	public PanelGlowny()
 	{
@@ -52,15 +52,15 @@ public class PanelGlowny extends JFrame
 		//EkranUstawien();
 		//EkranGry();
 		//EkranTworzeniaGry();
-		//EkranListySerwerow();
-		EkranLobby();
+		EkranListySerwerow();
+		
 		
 		return panel;
 	}
 	
-	private void EkranLobby()
+	private static void EkranLobby(int id_serwera, boolean admin)
 	{
-		lobby = new Lobby(17, true);
+		lobby = new Lobby(id_serwera, admin, id_gracza);
 		tab_panel.add(lobby, "Lobby");
 		
 	}
@@ -87,6 +87,19 @@ public class PanelGlowny extends JFrame
 				int id_serwera = serwer.insert();
 				
 				//+ przekieruj do Lobby
+				
+				Gracz_mod gracz = new Gracz_mod();
+				gracz.druzyna = 'A';
+				gracz.id = id_gracza;
+				gracz.id_serwera = id_serwera;
+				gracz.login = SETTINGS.login;
+				gracz.gotowy = 0;
+				gracz.pozycja = 0;
+					
+				serwer.addGracz(gracz);
+				tab_panel.removeAll();
+				
+				EkranLobby(id_serwera, true);
 				
 			}
 		});
@@ -129,8 +142,10 @@ public class PanelGlowny extends JFrame
 		Serwer serwer = new Serwer();
 		serwer.setId(id_serwera);		
 		serwer.addGracz(gracz);
+		tab_panel.removeAll();
 		
-		//przekieruj do lobby
+		EkranLobby(id_serwera, false);
+		
 	}
 	
 	

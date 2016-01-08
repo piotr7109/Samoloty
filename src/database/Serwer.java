@@ -68,6 +68,14 @@ public class Serwer
 		return id;
 		
 	}
+	public void startSerwer()
+	{
+		
+		SQLJDBC baza = new SQLJDBC();
+		baza.queryOpertaion(String.format("UPDATE t_serwery SET start=1 WHERE id=%d", this.id));
+		
+	}
+	
 	public void delete()
 	{
 		
@@ -134,7 +142,6 @@ public class Serwer
 			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 			System.exit(0);
 	    }
-		setGracze();
 	}
 	public void addGracz(Gracz_mod gracz)
 	{
@@ -143,6 +150,13 @@ public class Serwer
 										+ "VALUES('%d', '%d','%s','%c', %d, %d)", gracz.id, this.id, gracz.login, gracz.druzyna, gracz.pozycja, gracz.gotowy));
 		this.gracze.add(gracz);
 	}
+	public void gotowyGracz(int id_gracza)
+	{
+		SQLJDBC baza = new SQLJDBC();
+		baza.queryOpertaion(String.format("UPDATE t_gracze SET gotowy=1 WHERE id=%d", id_gracza));
+	}
+	
+	
 	private void setGracze()
 	{
 		SQLJDBC baza = new SQLJDBC();
@@ -161,6 +175,8 @@ public class Serwer
 				g.druzyna = rs.getString("druzyna").charAt(0);
 				g.id_serwera = rs.getInt("id_serwera");
 				g.login = rs.getString("login");
+				g.gotowy = rs.getInt("gotowy");
+				g.pozycja = rs.getInt("pozycja");
 				this.gracze.add(g);
 			}
 			rs.close();
