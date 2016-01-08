@@ -6,6 +6,14 @@ import java.util.concurrent.Executors;
 
 public class ServerTCP extends Thread
 {
+	int ile_graczy;
+	private int id_serwera;
+	
+	public ServerTCP(int ile_graczy, int id_serwera)
+	{
+		this.ile_graczy = ile_graczy;
+		this.id_serwera = id_serwera;
+	}
 	public void run()
 	{
 
@@ -21,7 +29,7 @@ public class ServerTCP extends Thread
 				if (clientSocket.isConnected() == true)
 				{
 					
-					ServerTCPThread gniazdo = new ServerTCPThread(clientSocket, i);
+					ServerTCPThread gniazdo = new ServerTCPThread(clientSocket, i, ile_graczy, id_serwera);
 					exe.execute(gniazdo);
 					i++;
 				}

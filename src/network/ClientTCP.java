@@ -20,16 +20,20 @@ public class ClientTCP extends Thread
 	public Gracz gracz;
 	public ArrayList<GraczTcp> gracze_tcp = new ArrayList<GraczTcp>();
 	
+	public boolean start, koniec;
+	
 
 	public void run()
 	{
 		try
 		{
-			boolean koniec = false;
+			koniec = false;
+			start = false;
 			Socket socket = new Socket(InetAddress.getByName("localhost"), 4321);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 			System.out.println("AAAAAAAAAAAAAA");
+			int kod_odpowiedzi = 0;
 			while (!koniec)
 			{
 				gracz_tcp = getTcpGracz();
@@ -37,15 +41,37 @@ public class ClientTCP extends Thread
 				out.reset();
 				sleep(10);
 				
-				try
+				if(start)
 				{
-					gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
-
+					try
+					{
+						kod_odpowiedzi = in.readInt();
+						System.out.println("START");
+						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
+	
+					}
+					catch (Exception e)
+					{
+						//System.out.println("Exception ArrayList");
+					}
 				}
-				catch (Exception e)
+				else
 				{
-					System.out.println("Exception");
-					continue;
+					System.out.println("pobierzInt");
+					try
+					{
+						kod_odpowiedzi = in.readInt();
+						if(kod_odpowiedzi == 100)
+						{
+							start = true;
+						}
+						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
+					}
+					catch (Exception e)
+					{
+						System.out.println("Exception");
+						continue;
+					}
 				}
 				
 

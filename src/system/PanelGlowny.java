@@ -79,18 +79,19 @@ public class PanelGlowny extends JFrame
 				Serwer serwer = new Serwer();
 				serwer.setId(id_serwera);
 				boolean czy_gotowi = true;
+				int ile_graczy=0;
 				for (Gracz_mod g : serwer.getGracze())
 				{
+					ile_graczy++;
 					if (g.gotowy == 0)
 					{
 						czy_gotowi = false;
-						break;
 					}
 				}
 				if (czy_gotowi)
 				{
 					serwer.startSerwer();
-					startTCPServer();
+					startTCPServer(ile_graczy, id_serwera);
 					startGra();
 					
 				}
@@ -102,10 +103,10 @@ public class PanelGlowny extends JFrame
 		tab_panel.removeAll();
 		EkranGry();
 	}
-	private static void startTCPServer()
+	private static void startTCPServer(int ile_graczy, int id_serwera)
 	{
 		Executor exe = Executors.newFixedThreadPool(1);
-		serwer_tcp = new ServerTCP();
+		serwer_tcp = new ServerTCP(ile_graczy, id_serwera);
 		exe.execute(serwer_tcp);
 	}
 

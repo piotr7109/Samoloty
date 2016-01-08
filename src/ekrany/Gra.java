@@ -232,7 +232,9 @@ public class Gra extends JPanel implements KeyListener
 
 	public void procesTimera()
 	{
-		this.aktualizujWspolrzedne();
+		if(klient.start)
+			this.aktualizujWspolrzedne();
+		
 		repaint();
 		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
 		{
