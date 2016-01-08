@@ -1,4 +1,5 @@
 package system;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -6,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -33,61 +35,58 @@ public class PanelGlowny extends JFrame
 	{
 		this.setTitle("Samoloty");
 		this.setSize(new Dimension(SETTINGS.width, SETTINGS.height));
-		id_gracza = (int)(Math.random()*1000);
-		//this.add(EkranGry());
+		id_gracza = (int) (Math.random() * 1000);
+		// this.add(EkranGry());
 		this.add(inicjalizujKomponenty());
-		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
 
 	}
+
 	private JPanel inicjalizujKomponenty()
 	{
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
 
 		tab_panel = new JTabbedPane();
-		
+
 		panel.add(tab_panel, BorderLayout.CENTER);
-		//EkranUstawien();
-		//EkranGry();
-		//EkranTworzeniaGry();
+		// EkranUstawien();
+		// EkranGry();
+		// EkranTworzeniaGry();
 		EkranListySerwerow();
-		
-		
+
 		return panel;
 	}
-	
+
 	private static void EkranLobby(int id_serwera, boolean admin)
 	{
 		lobby = new Lobby(id_serwera, admin, id_gracza);
 		tab_panel.add(lobby, "Lobby");
-		
+
 	}
-	
+
 	private void EkranTworzeniaGry()
 	{
 		tworzenie_gry = new TworzenieGry();
 		tab_panel.add(tworzenie_gry, "Tworzenie gry");
 		EkranTworzeniaGryAction();
 	}
+
 	private void EkranTworzeniaGryAction()
 	{
 		tworzenie_gry.stworz_gre.addActionListener(new ActionListener()
 		{
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				//zapisz do bazy 
+				// zapisz do bazy
 				Serwer serwer = new Serwer();
 				serwer.setIpSerwera(tworzenie_gry.ip_servera);
 				serwer.setTypGry(tworzenie_gry.typ_gry.getSelectedItem().toString());
 				serwer.setTrybGry(tworzenie_gry.tryb_gry.getSelectedItem().toString());
 				int id_serwera = serwer.insert();
-				
-				//+ przekieruj do Lobby
-				
+
+				// + przekieruj do Lobby
+
 				Gracz_mod gracz = new Gracz_mod();
 				gracz.druzyna = 'A';
 				gracz.id = id_gracza;
@@ -95,26 +94,28 @@ public class PanelGlowny extends JFrame
 				gracz.login = SETTINGS.login;
 				gracz.gotowy = 0;
 				gracz.pozycja = 0;
-					
+
 				serwer.addGracz(gracz);
 				tab_panel.removeAll();
-				
+
 				EkranLobby(id_serwera, true);
-				
+
 			}
 		});
 	}
+
 	private void EkranListySerwerow()
 	{
 		serwery = new Serwery();
 		tab_panel.add(serwery, "Lista serwerów");
 		EkranListySerwerowAction();
 	}
+
 	private void EkranListySerwerowAction()
 	{
 		serwery.stworz.addActionListener(new ActionListener()
 		{
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -122,15 +123,15 @@ public class PanelGlowny extends JFrame
 				EkranTworzeniaGry();
 				repaint();
 				validate();
-				
+
 			}
 		});
 	}
-	
+
 	public static void EkranListySerwerowDolaczAction(JButton dolacz)
 	{
 		int id_serwera = Integer.parseInt(dolacz.getName());
-		
+
 		Gracz_mod gracz = new Gracz_mod();
 		gracz.druzyna = 'A';
 		gracz.id = id_gracza;
@@ -138,29 +139,28 @@ public class PanelGlowny extends JFrame
 		gracz.login = SETTINGS.login;
 		gracz.gotowy = 0;
 		gracz.pozycja = 0;
-		
+
 		Serwer serwer = new Serwer();
-		serwer.setId(id_serwera);		
+		serwer.setId(id_serwera);
 		serwer.addGracz(gracz);
 		tab_panel.removeAll();
-		
+
 		EkranLobby(id_serwera, false);
-		
+
 	}
-	
-	
-	
+
 	private void EkranUstawien()
 	{
 		ustawienia = new Ustawienia();
 		tab_panel.add(ustawienia, "Ustawienia");
 		EkranUstawienAction();
 	}
+
 	private void EkranUstawienAction()
 	{
 		ustawienia.zapisz.addActionListener(new ActionListener()
 		{
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -172,12 +172,11 @@ public class PanelGlowny extends JFrame
 				EkranListySerwerow();
 				repaint();
 				validate();
-				
-				
+
 			}
 		});
 	}
-	
+
 	private JPanel EkranGry()
 	{
 		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza);
@@ -186,13 +185,25 @@ public class PanelGlowny extends JFrame
 		tab_panel.add(gra, "Fajt");
 		return gra;
 	}
-	
-	
-	
 
 	public static void createAndShowGui()
 	{
 		frame = new PanelGlowny();
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new java.awt.event.WindowAdapter()
+		{
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent)
+			{
+				if (JOptionPane.showConfirmDialog(frame, "Na pewno chcesz wyjœæ?",
+						"Na pewno?", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+				{
+					Gracz_mod.usunGracza(id_gracza);
+					System.exit(0);
+				}
+			}
+		});
 	}
 }

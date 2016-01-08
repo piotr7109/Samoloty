@@ -81,12 +81,13 @@ public class Serwery extends JPanel
 
 		for (Serwer serwer : lista_serwerow)
 		{
+			int ile_graczy = serwer.getGracze().size();
 			JButton dolacz = new JButton("Do³¹cz");
 			JLabel id_serwera = new JLabel(serwer.getId() + "");
 			JLabel typ_gry = new JLabel(serwer.getTypGry());
 			JLabel tryb_gry = new JLabel(serwer.getTrybGry());
 			JLabel ip_serwera = new JLabel(serwer.getIpSerwera());
-			JLabel ilosc_graczy = new JLabel(serwer.getGracze().size() + "");
+			JLabel ilosc_graczy = new JLabel(ile_graczy + "");
 
 			id_serwera.setSize(d);
 			typ_gry.setSize(d);
@@ -109,15 +110,15 @@ public class Serwery extends JPanel
 			add(tryb_gry);
 			add(ip_serwera);
 			add(ilosc_graczy);
-			i++;
 			
-			if(serwer.getGracze().size()<4)
+			if(ile_graczy < 4)
 			{
 				add(dolacz);
 				dodajEvent(dolacz);
 				dolacz.setName(serwer.getId() + "");
 				this.dolacz.add(dolacz);
 			}
+			i++;
 			
 			
 		}
