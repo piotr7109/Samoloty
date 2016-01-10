@@ -140,7 +140,7 @@ public class PanelGlowny extends JFrame
 				gracz.id_serwera = id_serwera;
 				gracz.login = SETTINGS.login;
 				gracz.gotowy = 0;
-				gracz.pozycja = 0;
+				gracz.pozycja = 1;
 
 				serwer.addGracz(gracz);
 				tab_panel.removeAll();
