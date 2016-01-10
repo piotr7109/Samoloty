@@ -40,7 +40,7 @@ public class Gra extends JPanel implements KeyListener
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
 	protected static int WIDTH, HEIGHT;
-	protected final int FPS = 40;
+	protected final int FPS = 20;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
 
@@ -136,15 +136,18 @@ public class Gra extends JPanel implements KeyListener
 			GraczTcp g = gracze.get(i);
 			if (g.id == gracz.id)
 			{
-				samolot.setPunktyZycia(g.punkty_zycia);
 				continue;
 			}
-			x = (int) (g.x - CONST.samolot_width);
-			y = (int) (g.y - CONST.samolot_height);
+			x = (int)g.x;//(int) (g.x - CONST.samolot_width);
+			y = (int)g.y;//(int) (g.y - CONST.samolot_height);
 			rotacja = AffineTransform.getRotateInstance(Math.toRadians(g.kat + 90),
 					CONST.samolot_width, CONST.samolot_height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
-
+			
+			g2d.setColor(Color.DARK_GRAY);
+			g2d.fillRect(x, y-5, (int)(g.punkty_zycia/5*3), 4); //pasek ¿ycia
+			g2d.setColor(Color.BLACK);
+			
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 
 			int size_pociski = g.pociski.size();
@@ -152,18 +155,85 @@ public class Gra extends JPanel implements KeyListener
 			for (int j = 0; j < size_pociski; j++)
 			{
 				PociskTcp pocisk = g.pociski.get(j);
-				x = (int) (pocisk.x - CONST.pocisk_width);
-				y = (int) (pocisk.y - CONST.pocisk_height);
+				x = (int) (pocisk.x );//- CONST.pocisk_width);
+				y = (int) (pocisk.y );//- CONST.pocisk_height);
 
-				
 				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
 						CONST.pocisk_width, CONST.pocisk_height);
 				transformacja_op = new AffineTransformOp(rotacja,
 						AffineTransformOp.TYPE_BILINEAR);
+				
+				
+				
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 			}
 
 		}
+	}
+
+	protected void sprawdzKolizjeAll()
+	{
+		int size = gracze.size();
+		for (int i = 0; i < size; i++)
+		{
+			GraczTcp g = gracze.get(i);
+			if (g.id == gracz.id)
+				continue;
+			int size_pociski = g.pociski.size();
+			for(int j =0; j < size_pociski; j++ )
+			{
+				PociskTcp p = g.pociski.get(j);
+				if(sprawdzKolizje(p.x, p.y, samolot.x, samolot.y))
+				{
+					samolot.setPunktyZycia(samolot.getPunktyZycia()-10);
+					gracze.get(i).pociski.remove(j);
+					size_pociski--;
+				}
+			}
+		}
+		size = samolot.pociski.size();
+		for(int i =0; i< size ;i++)
+		{
+			Pocisk p = samolot.pociski.get(i);
+			if(sprawdzKolizjeZGraczami(p.x, p.y))
+			{
+				samolot.pociski.remove(i);
+				size--;
+			}
+		}
+	}
+	
+	//pocisk
+	protected boolean sprawdzKolizjeZGraczami(double x, double y)
+	{
+		gracze = klient.gracze_tcp;
+		int size_gracze = gracze.size();
+		for (int i = 0; i < size_gracze; i++)
+		{
+			GraczTcp g = gracze.get(i);
+			if (g.id == gracz.id)
+				continue;
+			
+			if(sprawdzKolizje(x,y,  g.x, g.y))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//pocisk, samolot
+	protected boolean sprawdzKolizje(double x, double y, double x1, double y1)
+	{
+		double x_p = x + CONST.pocisk_width / 2;
+		double y_p = y + CONST.pocisk_width / 2;
+
+		if ((x_p > x1 && x_p < x1 + CONST.samolot_width*2)
+				&& (y_p > y1 && y_p < y1 + CONST.samolot_height*2))
+		{
+			return true;
+		}
+		return false;
 	}
 	
 
@@ -243,7 +313,10 @@ public class Gra extends JPanel implements KeyListener
 	public void procesTimera()
 	{
 		if (klient.start)
+		{
 			this.aktualizujWspolrzedne();
+			sprawdzKolizjeAll();
+		}
 
 		repaint();
 		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
