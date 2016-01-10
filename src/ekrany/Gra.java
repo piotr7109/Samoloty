@@ -40,7 +40,7 @@ public class Gra extends JPanel implements KeyListener
 	protected String mapa_src = "";
 	protected TypGry typ_gry;
 	protected static int WIDTH, HEIGHT;
-	protected final int FPS = 30;
+	protected final int FPS = 40;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
 
@@ -90,11 +90,15 @@ public class Gra extends JPanel implements KeyListener
 	{
 		int x = (int) (samolot.x - samolot.width);
 		int y = (int) (samolot.y - samolot.height);
-		
 		AffineTransform rotacja = AffineTransform
 				.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
 		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja,
 				AffineTransformOp.TYPE_BILINEAR);
+		
+		g2d.setColor(Color.GREEN);
+		g2d.fillRect(x, y-5, (int)(samolot.getPunktyZycia()/5*3), 4); //pasek ¿ycia
+		g2d.setColor(Color.BLACK);
+		
 		g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 
 	}
@@ -111,6 +115,7 @@ public class Gra extends JPanel implements KeyListener
 			Pocisk pocisk = samolot.pociski.get(i);
 			x = (int) (pocisk.x - pocisk.width);
 			y = (int) (pocisk.y - pocisk.height);
+			
 			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
 					pocisk.width, pocisk.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
@@ -130,14 +135,16 @@ public class Gra extends JPanel implements KeyListener
 		{
 			GraczTcp g = gracze.get(i);
 			if (g.id == gracz.id)
+			{
+				samolot.setPunktyZycia(g.punkty_zycia);
 				continue;
-			
+			}
 			x = (int) (g.x - CONST.samolot_width);
 			y = (int) (g.y - CONST.samolot_height);
-			rotacja = AffineTransform.getRotateInstance(Math.toRadians(g.kat + 90), CONST.samolot_width,
-					CONST.samolot_height);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(g.kat + 90),
+					CONST.samolot_width, CONST.samolot_height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
-			
+
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 
 			int size_pociski = g.pociski.size();
@@ -147,14 +154,18 @@ public class Gra extends JPanel implements KeyListener
 				PociskTcp pocisk = g.pociski.get(j);
 				x = (int) (pocisk.x - CONST.pocisk_width);
 				y = (int) (pocisk.y - CONST.pocisk_height);
+
+				
 				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
 						CONST.pocisk_width, CONST.pocisk_height);
-				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
+				transformacja_op = new AffineTransformOp(rotacja,
+						AffineTransformOp.TYPE_BILINEAR);
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 			}
 
 		}
 	}
+	
 
 	protected void aktualizujWspolrzedne()
 	{
@@ -162,7 +173,6 @@ public class Gra extends JPanel implements KeyListener
 		samolot.aktualizujWspolrzedne();
 
 	}
-	
 
 	public void keyTyped(KeyEvent e)
 	{}
@@ -232,9 +242,9 @@ public class Gra extends JPanel implements KeyListener
 
 	public void procesTimera()
 	{
-		if(klient.start)
+		if (klient.start)
 			this.aktualizujWspolrzedne();
-		
+
 		repaint();
 		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
 		{

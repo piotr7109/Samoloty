@@ -183,7 +183,7 @@ public class PanelGlowny extends JFrame
 		ArrayList<Gracz_mod> gracze = serwer.getGracze();
 		
 		Gracz_mod gracz = new Gracz_mod();
-		gracz.druzyna = 'A';
+		gracz.druzyna = getDruzyna(id_serwera);
 		gracz.id = id_gracza;
 		gracz.id_serwera = id_serwera;
 		gracz.login = SETTINGS.login;
@@ -197,7 +197,33 @@ public class PanelGlowny extends JFrame
 
 		EkranLobby(id_serwera, false);
 		
-
+		
+	}
+	private static char getDruzyna(int id_serwera)
+	{
+		char drz = 'X';
+		
+		Serwer serwer = new Serwer();
+		serwer.setId(id_serwera);
+		serwer.setSerwerById(id_serwera);
+		if(serwer.getTypGry().equals("TEAM"))
+		{
+			ArrayList<Gracz_mod> gracze = serwer.getGracze();
+			int a=0;
+			int b=0;
+			for(Gracz_mod g : gracze)
+			{
+				if(g.druzyna == 'A')
+					a++;
+				else
+					b++;
+			}
+			if(a > b)
+				drz = 'B';
+			else
+				drz = 'A';
+		}
+		return drz;
 	}
 
 	private void EkranUstawien()

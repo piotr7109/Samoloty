@@ -7,6 +7,7 @@ import java.net.*;
 import database.Serwer;
 import network.modules.Bufor;
 import network.modules.GraczTcp;
+import system.CONST;
 
 public class ServerTCPThread extends Thread implements Runnable
 {
@@ -99,5 +100,38 @@ public class ServerTCPThread extends Thread implements Runnable
 			System.err.println(e);
 		}
 	}
+	/*protected boolean sprawdzKolizjeZGraczami(int x, int y)
+	{
+		gracze = klient.gracze_tcp;
+		int size_gracze = gracze.size();
+		int x1;
+		int y1;
+		for (int i = 0; i < size_gracze; i++)
+		{
+			GraczTcp g = gracze.get(i);
+			if (g.id == gracz.id)
+				continue;
+			x1 = (int) (g.x - CONST.samolot_width);
+			y1 = (int) (g.y - CONST.samolot_height);
+			if(sprawdzKolizje(x1, y1, CONST.pocisk_width, CONST.pocisk_height , x, y, CONST.samolot_width, CONST.samolot_height))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	protected boolean sprawdzKolizje(double x, double y, int w, int h, double x1, double y1, int w1, int h1)
+	{
+		double x_p = x + w / 2;
+		double y_p = y + h / 2;
+
+		if ((x_p > x1 && x_p < x1 + w1)
+				&& (y_p > y1 && y_p < y1 + h1))
+		{
+			return true;
+		}
+		return false;
+	}*/
 
 }
