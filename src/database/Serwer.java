@@ -9,7 +9,7 @@ public class Serwer
 {
 	private int id, start;
 	private String typ_gry, tryb_gry, ip_serwera;
-	private ArrayList<Gracz_mod> gracze = new ArrayList<Gracz_mod>();
+	public ArrayList<Gracz_mod> gracze = new ArrayList<Gracz_mod>();
 	
 
 	public int getId()

@@ -59,6 +59,7 @@ public class ServerTCPThread extends Thread implements Runnable
 				catch (Exception e)
 				{
 					czy_koniec = true;
+					Bufor.gracze.remove(this.i);
 					continue;
 
 				}

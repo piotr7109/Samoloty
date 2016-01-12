@@ -97,6 +97,7 @@ public class ClientTCP extends Thread
 		g.kat = s.kat;
 		g.punkty_zycia = s.getPunktyZycia();
 		g.login = gracz.login;
+		g.druzyna = gracz.druzyna;
 		ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
 
 		for (Pocisk po : s.getPociski())

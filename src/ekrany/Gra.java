@@ -16,11 +16,12 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JPanel;
 
+import database.Gracz_mod;
+import database.Serwer;
 import modules.Gracz;
 import modules.Obrazki;
 import modules.Pocisk;
 import modules.Samolot;
-import modules.TypGry;
 import network.ClientTCP;
 import network.modules.GraczTcp;
 import network.modules.PociskTcp;
@@ -38,30 +39,52 @@ public class Gra extends JPanel implements KeyListener
 	protected Samolot samolot;
 	protected String mapa;
 	protected String mapa_src = "";
-	protected TypGry typ_gry;
 	protected static int WIDTH, HEIGHT;
 	protected final int FPS = 20;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
-	protected int start_x, start_y;
+	protected int start_x, start_y, start_kat;
+	protected Serwer serwer;
+	protected int pozycja;
+	protected char druzyna;
 
 	protected ClientTCP klient;
 
-	public Gra(int width, int height, int id_gracza, String ip_serwera)
+	public Gra(int width, int height, int id_gracza, Serwer serwer)
 	{
 		HEIGHT = height;
 		WIDTH = width;
+		this.serwer = serwer;
+		pozycja = getPozycja(id_gracza);
+
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
 		this.setPozycjaStartowa();
-		gracz = new Gracz(start_x, start_y, 0);
+
+		gracz = new Gracz(start_x, start_y, start_kat);
 		gracz.id = id_gracza;
+		gracz.druzyna = druzyna;
 		samolot = gracz.getSamolot();
-		startClientTcpThread(ip_serwera);
+
+		startClientTcpThread(serwer.getIpSerwera());
 
 		startTimer();
 
+	}
+
+	protected int getPozycja(int id_gracza)
+	{
+
+		for (Gracz_mod g : serwer.gracze)
+		{
+			if (g.id == id_gracza)
+			{
+				this.druzyna = g.druzyna;
+				return g.pozycja;
+			}
+		}
+		return 0;
 	}
 
 	@Override
@@ -178,15 +201,18 @@ public class Gra extends JPanel implements KeyListener
 		for (int i = 0; i < size; i++)
 		{
 			GraczTcp g = gracze.get(i);
-			if (g.id == gracz.id)
+			if (g.id == gracz.id )
 				continue;
+			if( serwer.getTypGry().equals("TEAM") && gracz.druzyna == g.druzyna)
+				continue;
+			
 			int size_pociski = g.pociski.size();
 			for (int j = 0; j < size_pociski; j++)
 			{
 				PociskTcp p = g.pociski.get(j);
 				if (sprawdzKolizje(p.x, p.y, samolot.x, samolot.y))
 				{
-					samolot.setPunktyZycia(samolot.getPunktyZycia() - 10);
+					samolot.setPunktyZycia(samolot.getPunktyZycia() - CONST.pocisk_dmg);
 					gracze.get(i).pociski.remove(j);
 					size_pociski--;
 				}
@@ -213,6 +239,8 @@ public class Gra extends JPanel implements KeyListener
 		{
 			GraczTcp g = gracze.get(i);
 			if (g.id == gracz.id)
+				continue;
+			if( serwer.getTypGry().equals("TEAM") && gracz.druzyna == g.druzyna)
 				continue;
 
 			if (sprawdzKolizje(x, y, g.x, g.y))
@@ -255,17 +283,24 @@ public class Gra extends JPanel implements KeyListener
 		if (smierc > 0)
 		{
 			smierc--;
-			samolot.setPunktyZycia(samolot.getPunktyZycia()+1);
+			samolot.setPunktyZycia(samolot.getPunktyZycia() + 1);
 		}
 	}
 
-	protected int smierc = 0;
+	public int smierc = 0;
 
 	protected void smierc()
 	{
-		smierc = 100;
-		samolot.x = start_x;
-		samolot.y = start_y;
+		if(serwer.getTrybGry() == "DM_TIME" || serwer.getTrybGry() == "CTF")
+		{
+			smierc = 100;
+			samolot.x = start_x;
+			samolot.y = start_y;
+		}
+		else
+		{
+			klient.koniec = true;
+		}
 	}
 
 	protected void aktualizujWspolrzedne()
@@ -280,8 +315,47 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void setPozycjaStartowa()
 	{
-		start_x = 100;
-		start_y = 100;
+		if (serwer.getTypGry().equals("TEAM"))
+		{
+			if (druzyna == 'A')
+			{
+				start_x = 50;
+				start_y = 50;
+				start_kat = 45;
+			}
+			else
+			{
+				start_x = 1200;
+				start_y = 960;
+				start_kat = 225;
+			}
+		}
+		else
+		{
+			switch (pozycja)
+			{
+			case 1:
+				start_x = 50;
+				start_y = 50;
+				start_kat = 45;
+				break;
+			case 2:
+				start_x = 1200;
+				start_y = 50;
+				start_kat = 135;
+				break;
+			case 3:
+				start_x = 50;
+				start_y = 960;
+				start_kat = 315;
+				break;
+			case 4:
+				start_x = 1200;
+				start_y = 960;
+				start_kat = 225;
+				break;
+			}
+		}
 	}
 
 	public void keyTyped(KeyEvent e)

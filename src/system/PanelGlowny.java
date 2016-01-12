@@ -78,6 +78,7 @@ public class PanelGlowny extends JFrame
 			{
 				Serwer serwer = new Serwer();
 				serwer.setId(id_serwera);
+				serwer.setSerwerById(id_serwera);
 				boolean czy_gotowi = true;
 				int ile_graczy=0;
 				for (Gracz_mod g : serwer.getGracze())
@@ -256,7 +257,7 @@ public class PanelGlowny extends JFrame
 
 	private static void EkranGry(final Serwer serwer)
 	{
-		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza, serwer.getIpSerwera());
+		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza, serwer);
 		tab_panel.addKeyListener(gra);
 		tab_panel.setFocusable(true);
 		tab_panel.add(gra, "Fajt");
