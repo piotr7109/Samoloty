@@ -88,8 +88,8 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void rysujSamolotGracza(Graphics2D g2d)
 	{
-		int x = (int) (samolot.x - samolot.width);
-		int y = (int) (samolot.y - samolot.height);
+		int x = (int) (samolot.x);
+		int y = (int) (samolot.y);
 		AffineTransform rotacja = AffineTransform
 				.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
 		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja,
@@ -113,8 +113,8 @@ public class Gra extends JPanel implements KeyListener
 		for (int i = 0; i < size; i++)
 		{
 			Pocisk pocisk = samolot.pociski.get(i);
-			x = (int) (pocisk.x - pocisk.width);
-			y = (int) (pocisk.y - pocisk.height);
+			x = (int) (pocisk.x);
+			y = (int) (pocisk.y);
 			
 			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
 					pocisk.width, pocisk.height);
