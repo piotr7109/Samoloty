@@ -291,7 +291,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void smierc()
 	{
-		if(serwer.getTrybGry() == "DM_TIME" || serwer.getTrybGry() == "CTF")
+		if(serwer.getTrybGry().equals("DM_TIME") || serwer.getTrybGry().equals("CTF"))
 		{
 			smierc = 100;
 			samolot.x = start_x;
