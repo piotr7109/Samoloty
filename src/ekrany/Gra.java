@@ -43,6 +43,7 @@ public class Gra extends JPanel implements KeyListener
 	protected final int FPS = 20;
 	protected int bullet_time = 15;
 	protected int bullet_time_bomb = 30;
+	protected int start_x, start_y;
 
 	protected ClientTCP klient;
 
@@ -53,7 +54,8 @@ public class Gra extends JPanel implements KeyListener
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
-		gracz = new Gracz(100, 100, 0);
+		this.setPozycjaStartowa();
+		gracz = new Gracz(start_x, start_y, 0);
 		gracz.id = id_gracza;
 		samolot = gracz.getSamolot();
 		startClientTcpThread(ip_serwera);
@@ -94,11 +96,12 @@ public class Gra extends JPanel implements KeyListener
 				.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
 		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja,
 				AffineTransformOp.TYPE_BILINEAR);
-		
+
 		g2d.setColor(Color.GREEN);
-		g2d.fillRect(x, y-5, (int)(samolot.getPunktyZycia()/5*3), 4); //pasek 퓓cia
+		g2d.fillRect(x, y - 5, (int) (samolot.getPunktyZycia() / 5 * 3), 4); // pasek
+																				// 퓓cia
 		g2d.setColor(Color.BLACK);
-		
+
 		g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 
 	}
@@ -115,7 +118,7 @@ public class Gra extends JPanel implements KeyListener
 			Pocisk pocisk = samolot.pociski.get(i);
 			x = (int) (pocisk.x);
 			y = (int) (pocisk.y);
-			
+
 			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
 					pocisk.width, pocisk.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
@@ -138,16 +141,17 @@ public class Gra extends JPanel implements KeyListener
 			{
 				continue;
 			}
-			x = (int)g.x;//(int) (g.x - CONST.samolot_width);
-			y = (int)g.y;//(int) (g.y - CONST.samolot_height);
+			x = (int) g.x;// (int) (g.x - CONST.samolot_width);
+			y = (int) g.y;// (int) (g.y - CONST.samolot_height);
 			rotacja = AffineTransform.getRotateInstance(Math.toRadians(g.kat + 90),
 					CONST.samolot_width, CONST.samolot_height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
-			
+
 			g2d.setColor(Color.DARK_GRAY);
-			g2d.fillRect(x, y-5, (int)(g.punkty_zycia/5*3), 4); //pasek 퓓cia
+			g2d.fillRect(x, y - 5, (int) (g.punkty_zycia / 5 * 3), 4); // pasek
+																		// 퓓cia
 			g2d.setColor(Color.BLACK);
-			
+
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 
 			int size_pociski = g.pociski.size();
@@ -155,16 +159,13 @@ public class Gra extends JPanel implements KeyListener
 			for (int j = 0; j < size_pociski; j++)
 			{
 				PociskTcp pocisk = g.pociski.get(j);
-				x = (int) (pocisk.x );//- CONST.pocisk_width);
-				y = (int) (pocisk.y );//- CONST.pocisk_height);
+				x = (int) (pocisk.x);// - CONST.pocisk_width);
+				y = (int) (pocisk.y);// - CONST.pocisk_height);
 
 				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
 						CONST.pocisk_width, CONST.pocisk_height);
-				transformacja_op = new AffineTransformOp(rotacja,
-						AffineTransformOp.TYPE_BILINEAR);
-				
-				
-				
+				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
+
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 			}
 
@@ -180,30 +181,30 @@ public class Gra extends JPanel implements KeyListener
 			if (g.id == gracz.id)
 				continue;
 			int size_pociski = g.pociski.size();
-			for(int j =0; j < size_pociski; j++ )
+			for (int j = 0; j < size_pociski; j++)
 			{
 				PociskTcp p = g.pociski.get(j);
-				if(sprawdzKolizje(p.x, p.y, samolot.x, samolot.y))
+				if (sprawdzKolizje(p.x, p.y, samolot.x, samolot.y))
 				{
-					samolot.setPunktyZycia(samolot.getPunktyZycia()-10);
+					samolot.setPunktyZycia(samolot.getPunktyZycia() - 10);
 					gracze.get(i).pociski.remove(j);
 					size_pociski--;
 				}
 			}
 		}
 		size = samolot.pociski.size();
-		for(int i =0; i< size ;i++)
+		for (int i = 0; i < size; i++)
 		{
 			Pocisk p = samolot.pociski.get(i);
-			if(sprawdzKolizjeZGraczami(p.x, p.y))
+			if (sprawdzKolizjeZGraczami(p.x, p.y))
 			{
 				samolot.pociski.remove(i);
 				size--;
 			}
 		}
 	}
-	
-	//pocisk
+
+	// pocisk
 	protected boolean sprawdzKolizjeZGraczami(double x, double y)
 	{
 		gracze = klient.gracze_tcp;
@@ -213,8 +214,8 @@ public class Gra extends JPanel implements KeyListener
 			GraczTcp g = gracze.get(i);
 			if (g.id == gracz.id)
 				continue;
-			
-			if(sprawdzKolizje(x,y,  g.x, g.y))
+
+			if (sprawdzKolizje(x, y, g.x, g.y))
 			{
 				return true;
 			}
@@ -222,26 +223,65 @@ public class Gra extends JPanel implements KeyListener
 		return false;
 	}
 
-	//pocisk, samolot
+	// pocisk, samolot
 	protected boolean sprawdzKolizje(double x, double y, double x1, double y1)
 	{
 		double x_p = x + CONST.pocisk_width / 2;
-		double y_p = y + CONST.pocisk_width / 2;
+		double y_p = y + CONST.pocisk_height / 2;
 
-		if ((x_p > x1 && x_p < x1 + CONST.samolot_width*2)
-				&& (y_p > y1 && y_p < y1 + CONST.samolot_height*2))
+		if ((x_p > x1 && x_p < x1 + CONST.samolot_width * 2)
+				&& (y_p > y1 && y_p < y1 + CONST.samolot_height * 2))
 		{
 			return true;
 		}
 		return false;
 	}
-	
+
+	protected void zasadyGry()
+	{
+		zasadySmierci();
+
+	}
+
+	protected void zasadySmierci()
+	{
+		if (smierc == 0)
+		{
+			if (samolot.getPunktyZycia() <= 0)
+			{
+				smierc();
+			}
+		}
+		if (smierc > 0)
+		{
+			smierc--;
+			samolot.setPunktyZycia(samolot.getPunktyZycia()+1);
+		}
+	}
+
+	protected int smierc = 0;
+
+	protected void smierc()
+	{
+		smierc = 100;
+		samolot.x = start_x;
+		samolot.y = start_y;
+	}
 
 	protected void aktualizujWspolrzedne()
 	{
 		this.klient.gracz = gracz;
-		samolot.aktualizujWspolrzedne();
+		if (smierc == 0)
+		{
+			samolot.aktualizujWspolrzedne();
+		}
 
+	}
+
+	protected void setPozycjaStartowa()
+	{
+		start_x = 100;
+		start_y = 100;
 	}
 
 	public void keyTyped(KeyEvent e)
@@ -314,8 +354,13 @@ public class Gra extends JPanel implements KeyListener
 	{
 		if (klient.start)
 		{
+
 			this.aktualizujWspolrzedne();
-			sprawdzKolizjeAll();
+			if (smierc == 0)
+			{
+				sprawdzKolizjeAll();
+			}
+			zasadyGry();
 		}
 
 		repaint();
@@ -329,14 +374,16 @@ public class Gra extends JPanel implements KeyListener
 			{
 				samolot.kat -= 4;
 			}
-
-			if (key == 32) // spacja
+			if (smierc == 0)
 			{
-				strzel();
-			}
-			if (key == 17) // lewy CTRL
-			{
-				strzelBomba();
+				if (key == 32) // spacja
+				{
+					strzel();
+				}
+				if (key == 17) // lewy CTRL
+				{
+					strzelBomba();
+				}
 			}
 
 		}
