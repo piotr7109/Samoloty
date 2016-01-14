@@ -37,7 +37,6 @@ public class ClientTCP extends Thread
 			Socket socket = new Socket(InetAddress.getByName(ip_serwera), 4321);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-			System.out.println("AAAAAAAAAAAAAA");
 
 			while (!koniec)
 			{
@@ -52,7 +51,6 @@ public class ClientTCP extends Thread
 					{
 						kod_odpowiedzi = in.readInt();
 						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
-
 					}
 					catch (Exception e)
 					{

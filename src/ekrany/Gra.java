@@ -14,6 +14,7 @@ import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import database.Gracz_mod;
@@ -26,6 +27,7 @@ import network.ClientTCP;
 import network.modules.GraczTcp;
 import network.modules.PociskTcp;
 import system.CONST;
+import system.PanelGlowny;
 
 public class Gra extends JPanel implements KeyListener
 {
@@ -47,6 +49,8 @@ public class Gra extends JPanel implements KeyListener
 	protected Serwer serwer;
 	protected int pozycja;
 	protected char druzyna;
+	protected int czas_do_konca = 600; // sekundy
+	protected JLabel czas_label;
 
 	protected ClientTCP klient;
 
@@ -70,7 +74,15 @@ public class Gra extends JPanel implements KeyListener
 		startClientTcpThread(serwer.getIpSerwera());
 
 		startTimer();
+		ustawLicznik();
 
+	}
+
+	protected void ustawLicznik()
+	{
+		czas_label = new JLabel(CONST.intToTime(czas_do_konca));
+		czas_label.setBounds(WIDTH - 80, 0, 50, 50);
+		add(czas_label);
 	}
 
 	protected int getPozycja(int id_gracza)
@@ -95,6 +107,7 @@ public class Gra extends JPanel implements KeyListener
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, WIDTH, HEIGHT);
 		g2d.setColor(Color.BLACK);
+		czas_label.setText(CONST.intToTime(czas_do_konca));
 
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
@@ -122,10 +135,25 @@ public class Gra extends JPanel implements KeyListener
 
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(x, y - 5, (int) (samolot.getPunktyZycia() / 5 * 3), 4); // pasek
-																				// ¿ycia
-		g2d.setColor(Color.BLACK);
-
-		g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+										
+		if(gracz.druzyna == 'B')
+		{
+			if(samolot.getPunktyZycia() >70)
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x, y, null);
+			else if(samolot.getPunktyZycia() >40)
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y, null);
+			else
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x, y, null);
+		}
+		else
+		{
+			if(samolot.getPunktyZycia() >70)
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+			else if(samolot.getPunktyZycia() >40)
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y, null);
+			else
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x, y, null);
+		}
 
 	}
 
@@ -151,7 +179,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void rysujSamolotyGraczy(Graphics2D g2d)
 	{
-		gracze = klient.gracze_tcp;
+
 		int size = gracze.size();
 		int x;
 		int y;
@@ -170,12 +198,35 @@ public class Gra extends JPanel implements KeyListener
 					CONST.samolot_width, CONST.samolot_height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
-			g2d.setColor(Color.DARK_GRAY);
+			if (g.druzyna == gracz.druzyna)
+			{
+				g2d.setColor(Color.BLUE);
+			}
+			else
+			{
+				g2d.setColor(Color.RED);
+
+			}
 			g2d.fillRect(x, y - 5, (int) (g.punkty_zycia / 5 * 3), 4); // pasek
 																		// ¿ycia
-			g2d.setColor(Color.BLACK);
-
-			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+			if (g.druzyna == 'B')
+			{
+				if(g.punkty_zycia >70)
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x, y, null);
+				else if(g.punkty_zycia >40)
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y, null);
+				else
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x, y, null);
+			}
+			else
+			{
+				if(g.punkty_zycia >70)
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+				else if(g.punkty_zycia >40)
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y, null);
+				else
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x, y, null);
+			}
 
 			int size_pociski = g.pociski.size();
 
@@ -197,15 +248,16 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void sprawdzKolizjeAll()
 	{
+
 		int size = gracze.size();
 		for (int i = 0; i < size; i++)
 		{
 			GraczTcp g = gracze.get(i);
-			if (g.id == gracz.id )
+			if (g.id == gracz.id)
 				continue;
-			if( serwer.getTypGry().equals("TEAM") && gracz.druzyna == g.druzyna)
+			if (serwer.getTypGry().equals("TEAM") && gracz.druzyna == g.druzyna)
 				continue;
-			
+
 			int size_pociski = g.pociski.size();
 			for (int j = 0; j < size_pociski; j++)
 			{
@@ -240,7 +292,7 @@ public class Gra extends JPanel implements KeyListener
 			GraczTcp g = gracze.get(i);
 			if (g.id == gracz.id)
 				continue;
-			if( serwer.getTypGry().equals("TEAM") && gracz.druzyna == g.druzyna)
+			if (serwer.getTypGry().equals("TEAM") && gracz.druzyna == g.druzyna)
 				continue;
 
 			if (sprawdzKolizje(x, y, g.x, g.y))
@@ -267,8 +319,21 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void zasadyGry()
 	{
+		zasadyTimera();
 		zasadySmierci();
 
+	}
+
+	protected boolean timer_enabled = true;
+
+	protected void zasadyTimera()
+	{
+		if (timer_enabled && serwer.getTrybGry().equals("DM_CLASSIC"))
+		{
+			remove(czas_label);
+			timer2.cancel();
+			timer2.purge();
+		}
 	}
 
 	protected void zasadySmierci()
@@ -291,7 +356,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void smierc()
 	{
-		if(serwer.getTrybGry().equals("DM_TIME") || serwer.getTrybGry().equals("CTF"))
+		if (serwer.getTrybGry().equals("DM_TIME") || serwer.getTrybGry().equals("CTF"))
 		{
 			smierc = 100;
 			samolot.x = start_x;
@@ -300,6 +365,7 @@ public class Gra extends JPanel implements KeyListener
 		else
 		{
 			klient.koniec = true;
+
 		}
 	}
 
@@ -422,22 +488,45 @@ public class Gra extends JPanel implements KeyListener
 			}
 		};
 		timer.scheduleAtFixedRate(timerTask, 0, FPS);
+
+	}
+
+	java.util.Timer timer2;
+
+	protected void startLicznik()
+	{
+		timer2 = new java.util.Timer();
+		TimerTask timerTask2 = new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				czas_do_konca--;
+			}
+		};
+		timer2.scheduleAtFixedRate(timerTask2, 0, 1000);
 	}
 
 	public void procesTimera()
 	{
+		gracze = klient.gracze_tcp;
 		if (klient.start)
 		{
+			if (czas_do_konca == 600)
+			{
+				startLicznik();
+				czas_do_konca--;
 
+			}
 			this.aktualizujWspolrzedne();
 			if (smierc == 0)
 			{
 				sprawdzKolizjeAll();
 			}
 			zasadyGry();
+
 		}
 
-		repaint();
 		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
 		{
 			if (key == 39) // zmieñ kierunek samolotu
@@ -461,6 +550,7 @@ public class Gra extends JPanel implements KeyListener
 			}
 
 		}
+		repaint();
 	}
 
 }

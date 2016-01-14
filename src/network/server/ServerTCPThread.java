@@ -38,7 +38,6 @@ public class ServerTCPThread extends Thread implements Runnable
 			System.out.println(InetAddress.getLocalHost() + "");
 			ObjectOutputStream out = new ObjectOutputStream(mySocket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(mySocket.getInputStream());
-			System.out.println("START");
 			while (!czy_koniec)
 			{
 				try
@@ -47,7 +46,6 @@ public class ServerTCPThread extends Thread implements Runnable
 
 					if (this.i == Bufor.gracze.size())
 					{
-						System.out.println("ADDS");
 						Bufor.gracze.add(this.gracz);
 					}
 					else
