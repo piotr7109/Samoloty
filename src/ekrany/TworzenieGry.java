@@ -25,8 +25,9 @@ public class TworzenieGry extends JPanel
 	public String ip_servera;
 	String[] typy_gry = {"TEAM","FFA"};
 	String[] tryby_gry = {"CTF", "DM_CLASSIC", "DM_TIME"};
+	String[] poziomy = {"SLOW","NORMAL", "FAST"};
 	
-	public JComboBox<String> typ_gry, tryb_gry;
+	public JComboBox<String> typ_gry, tryb_gry, poziom;
 	private JLabel ip_label;
 	public JButton stworz_gre;
 	
@@ -46,6 +47,8 @@ public class TworzenieGry extends JPanel
 	{
 		getNaglowek();
 		
+		
+		
 		typ_gry = new JComboBox<String>(typy_gry); 
 		typ_gry.setBounds(start.x, start.y, WIDTH, HEIGHT);
 		typGryEvent();
@@ -53,12 +56,17 @@ public class TworzenieGry extends JPanel
 		tryb_gry = new JComboBox<String>(tryby_gry); 
 		tryb_gry.setBounds(start.x+WIDTH*2, start.y, WIDTH, HEIGHT);
 		
+		poziom = new JComboBox<String>(poziomy);
+		poziom.setBounds(start.x+WIDTH*4, start.y, WIDTH, HEIGHT);
+		
 		ip_label = new JLabel("IP: "+ip_servera);
 		ip_label.setBounds(0, 0, WIDTH*2, HEIGHT);
 		
 		stworz_gre = new JButton("Stwórz grê");
-		stworz_gre.setBounds(start.x+WIDTH*4, start.y, WIDTH, HEIGHT);
+		stworz_gre.setBounds(start.x+WIDTH*6, start.y, WIDTH, HEIGHT);
 		
+		
+		add(poziom);
 		add(stworz_gre);
 		add(ip_label);
 		add(tryb_gry);
@@ -97,16 +105,21 @@ public class TworzenieGry extends JPanel
 	{
 		JLabel typ_gry = new JLabel("TYP");
 		JLabel tryb_gry = new JLabel("TRYB");
+		JLabel poziom = new JLabel("SZYBKOŒÆ");
 		
 		typ_gry.setFont(new Font(Font.SERIF, Font.BOLD, 16));
 		tryb_gry.setFont(new Font(Font.SERIF, Font.BOLD, 16));
+		poziom.setFont(new Font(Font.SERIF, Font.BOLD, 16));
 		
 		typ_gry.setSize(WIDTH, HEIGHT);
 		tryb_gry.setSize(WIDTH, HEIGHT);
+		poziom.setSize(WIDTH, HEIGHT);
 		
 		typ_gry.setLocation(start.x, start.y-30);
 		tryb_gry.setLocation(start.x+WIDTH*2, start.y-30);
+		poziom.setLocation(start.x+WIDTH*4, start.y-30);
 		
+		add(poziom);
 		add(typ_gry);
 		add(tryb_gry);
 	}

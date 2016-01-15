@@ -60,7 +60,7 @@ public class PanelGlowny extends JFrame
 		return panel;
 	}
 
-	private static void EkranLobby(int id_serwera, boolean admin)
+	private void EkranLobby(int id_serwera, boolean admin)
 	{
 		lobby = new Lobby(id_serwera, admin, id_gracza);
 		tab_panel.add(lobby, "Lobby");
@@ -68,8 +68,27 @@ public class PanelGlowny extends JFrame
 
 	}
 	public static ServerTCP serwer_tcp;
-	private static void EkranLobbyEvent(final int id_serwera)
+	private void EkranLobbyEvent(final int id_serwera)
 	{
+		lobby.cofnij_button.addActionListener(new ActionListener()
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				tab_panel.remove(lobby);
+				Serwer serwer = new Serwer();
+				serwer.setId(id_serwera);
+				serwer.deleteGracz(id_gracza);
+				EkranListySerwerow();
+				repaint();
+				validate();
+				
+				
+			}
+		});
+		
+		
 		lobby.start_button.addActionListener(new ActionListener()
 		{
 
@@ -131,6 +150,7 @@ public class PanelGlowny extends JFrame
 				serwer.setIpSerwera(tworzenie_gry.ip_servera);
 				serwer.setTypGry(tworzenie_gry.typ_gry.getSelectedItem().toString());
 				serwer.setTrybGry(tworzenie_gry.tryb_gry.getSelectedItem().toString());
+				serwer.setPoziom(tworzenie_gry.poziom.getSelectedItem().toString());
 				int id_serwera = serwer.insert();
 
 				// + przekieruj do Lobby
@@ -154,7 +174,7 @@ public class PanelGlowny extends JFrame
 
 	private void EkranListySerwerow()
 	{
-		serwery = new Serwery();
+		serwery = new Serwery(this);
 		tab_panel.add(serwery, "Lista serwerów");
 		EkranListySerwerowAction();
 	}
@@ -176,7 +196,7 @@ public class PanelGlowny extends JFrame
 		});
 	}
 
-	public static void EkranListySerwerowDolaczAction(JButton dolacz)
+	public void EkranListySerwerowDolaczAction(JButton dolacz)
 	{
 		int id_serwera = Integer.parseInt(dolacz.getName());
 		Serwer serwer = new Serwer();

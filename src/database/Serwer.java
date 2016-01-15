@@ -8,9 +8,8 @@ import java.util.ArrayList;
 public class Serwer
 {
 	private int id, start;
-	private String typ_gry, tryb_gry, ip_serwera;
+	private String typ_gry, tryb_gry, ip_serwera, poziom;
 	public ArrayList<Gracz_mod> gracze = new ArrayList<Gracz_mod>();
-	
 
 	public int getId()
 	{
@@ -51,8 +50,16 @@ public class Serwer
 	{
 		this.ip_serwera = ip_serwera;
 	}
-	
-	
+	public String getPoziom()
+	{
+		return poziom;
+	}
+
+	public void setPoziom(String poziom)
+	{
+		this.poziom = poziom;
+	}
+
 	public int getStart()
 	{
 		return start;
@@ -68,8 +75,8 @@ public class Serwer
 	{
 		
 		SQLJDBC baza = new SQLJDBC();
-		baza.queryOpertaion(String.format("INSERT INTO t_serwery(typ_gry, tryb_gry, ip_serwera) "
-										+ "VALUES('%s', '%s','%s')", typ_gry, tryb_gry, ip_serwera));
+		baza.queryOpertaion(String.format("INSERT INTO t_serwery(typ_gry, tryb_gry, ip_serwera, poziom) "
+										+ "VALUES('%s', '%s','%s','%s')", typ_gry, tryb_gry, ip_serwera, poziom));
 		this.id = getLastInserted();
 		return id;
 		
@@ -138,6 +145,7 @@ public class Serwer
 				this.tryb_gry = rs.getString("tryb_gry");
 				this.typ_gry = rs.getString("typ_gry");
 				this.start = rs.getInt("start");
+				this.poziom = rs.getString("poziom");
 				
 			}
 			rs.close();
@@ -157,6 +165,18 @@ public class Serwer
 		baza.queryOpertaion(String.format("INSERT INTO t_gracze(id, id_serwera, login, druzyna, pozycja, gotowy) "
 										+ "VALUES('%d', '%d','%s','%c', %d, %d)", gracz.id, this.id, gracz.login, gracz.druzyna, gracz.pozycja, gracz.gotowy));
 		this.gracze.add(gracz);
+	}
+	public void deleteGracz(int id)
+	{
+		SQLJDBC baza = new SQLJDBC();
+		baza.queryOpertaion(String.format("DELETE FROM t_gracze WHERE id=%d", id));
+		for(int i =0; i< this.gracze.size(); i++)
+		{
+			if(this.gracze.get(i).id == id)
+			{
+				this.gracze.remove(i);
+			}
+		}
 	}
 	public void gotowyGracz(int id_gracza)
 	{

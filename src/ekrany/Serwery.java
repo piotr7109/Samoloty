@@ -31,10 +31,12 @@ public class Serwery extends JPanel
 	public ArrayList<JButton> dolacz = new ArrayList<JButton>();
 
 	JButton refresh = new JButton("Odœwierz");
-
-	public Serwery()
+	PanelGlowny panel_glowny;
+	
+	
+	public Serwery(PanelGlowny p)
 	{
-
+		panel_glowny = p;
 	}
 
 	protected void paintComponent(Graphics g)
@@ -132,7 +134,7 @@ public class Serwery extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				PanelGlowny.EkranListySerwerowDolaczAction(dolacz);
+				panel_glowny.EkranListySerwerowDolaczAction(dolacz);
 				repaint();
 				validate();
 

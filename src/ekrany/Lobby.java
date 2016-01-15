@@ -33,11 +33,12 @@ public class Lobby extends JPanel
 	public ArrayList<Gracz_mod> gracze;
 	private int id_gracza;
 
-	private JLabel ip_serwera_label, typ_gry_label, tryb_gry_label, czas_label;
+	private JLabel ip_serwera_label, typ_gry_label, tryb_gry_label, poziom;
 
 	JButton refresh = new JButton("Odúwierz");
 	JButton gotowy = new JButton("GOTOWY");
 	public JButton start_button = new JButton("START!");
+	public JButton cofnij_button = new JButton("Wyjdü");
 
 	public Lobby(int id_serwera, boolean czy_admin, int id_gracza)
 	{
@@ -67,6 +68,10 @@ public class Lobby extends JPanel
 		if (czy_admin)
 		{
 			startButton();
+		}
+		if(!czy_admin)
+		{
+			cofnijButton();
 		}
 	}
 
@@ -161,8 +166,13 @@ public class Lobby extends JPanel
 		start_button.setLocation(10, 250);
 
 		add(start_button);
-
+	}
+	private void cofnijButton()
+	{
+		cofnij_button.setSize(new Dimension(100,25));
+		cofnij_button.setLocation(10, 300);
 		
+		add(cofnij_button);
 	}
 
 	private void gotowyButton()

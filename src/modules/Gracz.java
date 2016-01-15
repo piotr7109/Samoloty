@@ -15,11 +15,13 @@ public class Gracz implements Serializable
 	private Samolot samolot;
 	private int punkty;
 	private int fragi;
+	public boolean flaga;
 	
 	public Gracz(int x, int y, double kat)
 	{
 		Samolot samolot = new Samolot(x, y, kat);
 		this.samolot = samolot;
+		flaga = false;
 	}
 	
 
