@@ -28,6 +28,7 @@ import network.modules.GraczTcp;
 import network.modules.PociskTcp;
 import system.CONST;
 import system.PanelGlowny;
+import system.SETTINGS;
 
 public class Gra extends JPanel implements KeyListener
 {
@@ -36,7 +37,7 @@ public class Gra extends JPanel implements KeyListener
 	 */
 	protected static final long serialVersionUID = 1L;
 
-	protected ArrayList<GraczTcp> gracze;
+	public ArrayList<GraczTcp> gracze;
 	protected Gracz gracz;
 	protected Samolot samolot;
 	protected String mapa;
@@ -55,11 +56,13 @@ public class Gra extends JPanel implements KeyListener
 	protected JLabel punkty, fragi;
 
 	protected ClientTCP klient;
+	protected PanelGlowny panel;
 
-	public Gra(int width, int height, int id_gracza, Serwer serwer)
+	public Gra(int width, int height, int id_gracza, Serwer serwer, PanelGlowny panel_glowny)
 	{
 		HEIGHT = height;
 		WIDTH = width;
+		panel = panel_glowny;
 		this.serwer = serwer;
 		pozycja = getPozycja(id_gracza);
 
@@ -72,6 +75,7 @@ public class Gra extends JPanel implements KeyListener
 		gracz = new Gracz(start_x, start_y, start_kat);
 		gracz.id = id_gracza;
 		gracz.druzyna = druzyna;
+		gracz.login = SETTINGS.login;
 		samolot = gracz.getSamolot();
 
 		startClientTcpThread(serwer.getIpSerwera());
@@ -84,7 +88,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void setPredkoscGry()
 	{
-		switch(serwer.getPoziom())
+		switch (serwer.getPoziom())
 		{
 			case "SLOW":
 				multiplier = 0.7;
@@ -95,9 +99,10 @@ public class Gra extends JPanel implements KeyListener
 			case "FAST":
 				multiplier = 1.6;
 				break;
-				
+
 		}
 	}
+
 	protected void ustawPunkty()
 	{
 		fragi = new JLabel("Liczba zabiæ:" + gracz.getFragi());
@@ -371,6 +376,7 @@ public class Gra extends JPanel implements KeyListener
 		zasadyTimera();
 		zasadySmierci();
 		graniceEkranu();
+		zasadyKoniec();
 
 	}
 
@@ -383,7 +389,7 @@ public class Gra extends JPanel implements KeyListener
 		}
 		if (samolot.x + 60 > WIDTH)
 		{
-			samolot.x = WIDTH - 100 - CONST.samolot_width*2;
+			samolot.x = WIDTH - 100 - CONST.samolot_width * 2;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
 		if (samolot.y < 0)
@@ -393,7 +399,7 @@ public class Gra extends JPanel implements KeyListener
 		}
 		if (samolot.y + 60 > HEIGHT)
 		{
-			samolot.y = HEIGHT - 200 - samolot.height*2;
+			samolot.y = HEIGHT - 200 - samolot.height * 2;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
 	}
@@ -412,7 +418,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void zasadySmierci()
 	{
-		if (smierc == 0)
+		if (smierc <= 0)
 		{
 			if (samolot.getPunktyZycia() <= 0)
 			{
@@ -422,11 +428,13 @@ public class Gra extends JPanel implements KeyListener
 		if (smierc > 0)
 		{
 			smierc--;
+
 			samolot.setPunktyZycia(samolot.getPunktyZycia() + 1);
 		}
 	}
 
 	public int smierc = 0;
+	protected boolean smierc_koniec = false;
 
 	protected void smierc()
 	{
@@ -438,9 +446,44 @@ public class Gra extends JPanel implements KeyListener
 		}
 		else
 		{
-			klient.koniec = true;
-
+			smierc_koniec = true;
 		}
+	}
+
+	protected void zasadyKoniec()
+	{
+		if (serwer.getTrybGry().equals("DM_TIME") || serwer.getTrybGry().equals("CTF"))
+		{
+			if(czas_do_konca <= 0)
+			{
+				koniec();
+			}
+		}
+		else
+		{
+			int martwi = 0;
+
+			for (GraczTcp g : gracze)
+			{
+				if (g.punkty_zycia > 0)
+					martwi++;
+			}
+			if (martwi == gracze.size() - 1)
+			{ 
+				koniec();
+
+			}
+		}
+	}
+	protected void koniec()
+	{
+		smierc_koniec = true;
+		timer.cancel();
+		timer.purge();
+		timer2.cancel();
+		timer2.purge();
+		panel.EkranKoniec(gracze);
+		klient.koniec = true;
 	}
 
 	protected void aktualizujWspolrzedne()
@@ -468,7 +511,7 @@ public class Gra extends JPanel implements KeyListener
 			else
 			{
 				start_x = 1200;
-				start_y = 960;
+				start_y = 850;
 				start_kat = 225;
 			}
 		}
@@ -476,26 +519,26 @@ public class Gra extends JPanel implements KeyListener
 		{
 			switch (pozycja)
 			{
-			case 1:
-				start_x = 50;
-				start_y = 50;
-				start_kat = 45;
-				break;
-			case 2:
-				start_x = 1200;
-				start_y = 50;
-				start_kat = 135;
-				break;
-			case 3:
-				start_x = 50;
-				start_y = 960;
-				start_kat = 315;
-				break;
-			case 4:
-				start_x = 1200;
-				start_y = 960;
-				start_kat = 225;
-				break;
+				case 1:
+					start_x = 50;
+					start_y = 50;
+					start_kat = 45;
+					break;
+				case 2:
+					start_x = 1200;
+					start_y = 50;
+					start_kat = 135;
+					break;
+				case 3:
+					start_x = 50;
+					start_y = 850;
+					start_kat = 315;
+					break;
+				case 4:
+					start_x = 1200;
+					start_y = 850;
+					start_kat = 225;
+					break;
 			}
 		}
 	}
@@ -552,9 +595,11 @@ public class Gra extends JPanel implements KeyListener
 
 	}
 
+	java.util.Timer timer;
+
 	void startTimer()
 	{
-		java.util.Timer timer = new java.util.Timer();
+		timer = new java.util.Timer();
 		TimerTask timerTask = new TimerTask()
 		{
 			@Override
@@ -563,7 +608,7 @@ public class Gra extends JPanel implements KeyListener
 				procesTimera();
 			}
 		};
-		timer.scheduleAtFixedRate(timerTask, 0, (int)(FPS/multiplier));
+		timer.scheduleAtFixedRate(timerTask, 0, (int) (FPS / multiplier));
 
 	}
 
@@ -586,45 +631,56 @@ public class Gra extends JPanel implements KeyListener
 	public void procesTimera()
 	{
 		gracze = klient.gracze_tcp;
-		if (klient.start)
+		if (!smierc_koniec)
 		{
-			if (czas_do_konca == 600)
+			if (klient.start)
 			{
-				startLicznik();
-				czas_do_konca--;
+				if (czas_do_konca == 600)
+				{
+					startLicznik();
+					czas_do_konca--;
+
+				}
+
+				this.aktualizujWspolrzedne();
+				if (smierc == 0)
+				{
+					sprawdzKolizjeAll();
+				}
+				zasadyGry();
 
 			}
-			this.aktualizujWspolrzedne();
-			if (smierc == 0)
-			{
-				sprawdzKolizjeAll();
-			}
-			zasadyGry();
 
+			if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
+			{
+				if (key == 39) // zmieñ kierunek samolotu
+				{
+					samolot.kat += 4;
+				}
+				else if (key == 37)
+				{
+					samolot.kat -= 4;
+				}
+				if (smierc == 0)
+				{
+					if (key == 32) // spacja
+					{
+						strzel();
+					}
+					if (key == 17) // lewy CTRL
+					{
+						strzelBomba();
+					}
+				}
+
+			}
 		}
-
-		if (key_pressed) // sprawdz, czy klawisz klawiatury jest wciœniêty
+		else
 		{
-			if (key == 39) // zmieñ kierunek samolotu
-			{
-				samolot.kat += 4;
-			}
-			else if (key == 37)
-			{
-				samolot.kat -= 4;
-			}
-			if (smierc == 0)
-			{
-				if (key == 32) // spacja
-				{
-					strzel();
-				}
-				if (key == 17) // lewy CTRL
-				{
-					strzelBomba();
-				}
-			}
-
+			this.aktualizujWspolrzedne();
+			zasadyGry();
+			samolot.x = -100;
+			samolot.y = -100;
 		}
 		repaint();
 	}

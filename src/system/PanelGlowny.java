@@ -16,11 +16,13 @@ import javax.swing.JTabbedPane;
 
 import database.Gracz_mod;
 import database.Serwer;
+import ekrany.EkranKoniec;
 import ekrany.Gra;
 import ekrany.Lobby;
 import ekrany.Serwery;
 import ekrany.TworzenieGry;
 import ekrany.Ustawienia;
+import network.modules.GraczTcp;
 import network.server.ServerTCP;
 
 public class PanelGlowny extends JFrame
@@ -34,6 +36,8 @@ public class PanelGlowny extends JFrame
 	private Serwery serwery;
 	private TworzenieGry tworzenie_gry;
 	private static Lobby lobby;
+	private Gra gra;
+	private EkranKoniec koniec;
 
 	public PanelGlowny()
 	{
@@ -55,14 +59,28 @@ public class PanelGlowny extends JFrame
 		// EkranUstawien();
 		// EkranGry();
 		// EkranTworzeniaGry();
+		
+		//EkranKoniec(null);
 		EkranListySerwerow();
 
 		return panel;
 	}
 
+	public void EkranKoniec(ArrayList<GraczTcp> gracze)
+	{
+		tab_panel.remove(gra);
+		koniec = new EkranKoniec(gracze);
+		tab_panel.add("Podsumowanie meczu", koniec);
+		EkranKoniecEvent();
+	}
+	private void EkranKoniecEvent()
+	{
+		
+	}
+	
 	private void EkranLobby(int id_serwera, boolean admin)
 	{
-		lobby = new Lobby(id_serwera, admin, id_gracza);
+		lobby = new Lobby(id_serwera, admin, id_gracza, this);
 		tab_panel.add(lobby, "Lobby");
 		EkranLobbyEvent(id_serwera);
 
@@ -118,7 +136,7 @@ public class PanelGlowny extends JFrame
 			}
 		});
 	}
-	public static void startGra(Serwer serwer)
+	public void startGra(Serwer serwer)
 	{
 		tab_panel.removeAll();
 		EkranGry(serwer);
@@ -275,9 +293,9 @@ public class PanelGlowny extends JFrame
 		});
 	}
 
-	private static void EkranGry(final Serwer serwer)
+	private void EkranGry(final Serwer serwer)
 	{
-		Gra gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza, serwer);
+		gra = new Gra(SETTINGS.width, SETTINGS.height, id_gracza, serwer, this);
 		tab_panel.addKeyListener(gra);
 		tab_panel.setFocusable(true);
 		tab_panel.add(gra, "Fajt");

@@ -76,6 +76,10 @@ public class ClientTCP extends Thread
 				}
 
 			}
+			sleep(100);
+			gracz_tcp = getTcpGracz();
+			out.writeObject(gracz_tcp);
+			out.reset();
 			socket.close();
 			System.out.println("KONIEC KLIENT");
 		}
@@ -97,6 +101,8 @@ public class ClientTCP extends Thread
 		g.login = gracz.login;
 		g.druzyna = gracz.druzyna;
 		g.flaga = gracz.flaga;
+		g.fragi = gracz.getFragi();
+		g.punkty = gracz.getPunkty();
 		ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
 
 		for (Pocisk po : s.getPociski())

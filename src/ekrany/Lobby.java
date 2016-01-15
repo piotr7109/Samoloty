@@ -40,11 +40,14 @@ public class Lobby extends JPanel
 	public JButton start_button = new JButton("START!");
 	public JButton cofnij_button = new JButton("Wyjdü");
 
-	public Lobby(int id_serwera, boolean czy_admin, int id_gracza)
+	protected PanelGlowny panel_glowny;
+	
+	public Lobby(int id_serwera, boolean czy_admin, int id_gracza, PanelGlowny panel_glowny)
 	{
 		this.id_serwera = id_serwera;
 		this.czy_admin = czy_admin;
 		this.id_gracza = id_gracza;
+		this.panel_glowny = panel_glowny;
 
 	}
 
@@ -214,7 +217,7 @@ public class Lobby extends JPanel
 				repaint();
 				if (serwer.getStart() == 1)
 				{
-					PanelGlowny.startGra(serwer);
+					panel_glowny.startGra(serwer);
 					
 				}
 			}

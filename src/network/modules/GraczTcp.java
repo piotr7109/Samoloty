@@ -11,7 +11,7 @@ public class GraczTcp implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	public double x, y, kat;
-	public int  punkty_zycia, id;
+	public int  punkty_zycia, id, punkty, fragi;
 	public char druzyna;
 	public boolean flaga;
 	public String login;
