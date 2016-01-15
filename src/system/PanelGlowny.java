@@ -75,7 +75,18 @@ public class PanelGlowny extends JFrame
 	}
 	private void EkranKoniecEvent()
 	{
-		
+		koniec.powrot.addActionListener(new ActionListener()
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				tab_panel.remove(koniec);
+				EkranListySerwerow();
+				repaint();
+				validate();
+			}
+		});
 	}
 	
 	private void EkranLobby(int id_serwera, boolean admin)

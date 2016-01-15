@@ -454,7 +454,7 @@ public class Gra extends JPanel implements KeyListener
 	{
 		if (serwer.getTrybGry().equals("DM_TIME") || serwer.getTrybGry().equals("CTF"))
 		{
-			if(czas_do_konca <= 0)
+			if (czas_do_konca <= 0)
 			{
 				koniec();
 			}
@@ -462,19 +462,38 @@ public class Gra extends JPanel implements KeyListener
 		else
 		{
 			int martwi = 0;
-
+			int a = 0;
+			int b = 0;
+			int a_ilosc = 0;
+			int b_ilosc = 0;
 			for (GraczTcp g : gracze)
 			{
-				if (g.punkty_zycia > 0)
+				if (g.druzyna == 'B')
+					b_ilosc++;
+				else
+					a_ilosc++;
+				if (g.punkty_zycia <= 0)
+				{
 					martwi++;
+					if (g.druzyna == 'B')
+						b++;
+					else
+						a++;
+				}
+
+			}
+			if (serwer.getTypGry().equals("TEAM"))
+			{
+				if (b == b_ilosc || a == a_ilosc)
+					koniec();
 			}
 			if (martwi == gracze.size() - 1)
-			{ 
+			{
 				koniec();
-
 			}
 		}
 	}
+
 	protected void koniec()
 	{
 		smierc_koniec = true;
