@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.concurrent.Executor;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 
 import database.Gracz_mod;
 import database.Serwer;
+import modules.Flaga;
 import modules.Gracz;
 import modules.Obrazki;
 import modules.Pocisk;
@@ -55,6 +57,8 @@ public class Gra extends JPanel implements KeyListener
 	protected JLabel czas_label;
 	protected JLabel punkty, fragi;
 
+	public Flaga flaga_a, flaga_b;
+
 	protected ClientTCP klient;
 	protected PanelGlowny panel;
 
@@ -77,7 +81,8 @@ public class Gra extends JPanel implements KeyListener
 		gracz.druzyna = druzyna;
 		gracz.login = SETTINGS.login;
 		samolot = gracz.getSamolot();
-
+		
+		setFlaga();
 		startClientTcpThread(serwer.getIpSerwera());
 
 		startTimer();
@@ -100,6 +105,15 @@ public class Gra extends JPanel implements KeyListener
 				multiplier = 1.6;
 				break;
 
+		}
+	}
+
+	protected void setFlaga()
+	{
+		if(serwer.getTrybGry().equals("CTF"))
+		{
+			flaga_a = new Flaga(50, 50);
+			flaga_b = new Flaga(WIDTH - 50, HEIGHT - 50);
 		}
 	}
 
@@ -136,6 +150,15 @@ public class Gra extends JPanel implements KeyListener
 		return 0;
 	}
 
+	protected void startClientTcpThread(String ip_serwera)
+	{
+		Executor exe = Executors.newFixedThreadPool(1);
+
+		klient = new ClientTCP(ip_serwera);
+		klient.gracz = gracz;
+		exe.execute(klient);
+	}
+
 	@Override
 	protected void paintComponent(Graphics g)
 	{
@@ -149,16 +172,20 @@ public class Gra extends JPanel implements KeyListener
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
 		this.rysujSamolotyGraczy(g2d);
+		
+		if(serwer.getTrybGry().equals("CTF"))
+		{
+			this.rysujFlage(g2d);
+		}
 
 	}
 
-	protected void startClientTcpThread(String ip_serwera)
+	protected void rysujFlage(Graphics2D g2d)
 	{
-		Executor exe = Executors.newFixedThreadPool(1);
+		g2d.drawImage(Obrazki.flaga_a, null, flaga_a.x, flaga_a.y);
 
-		klient = new ClientTCP(ip_serwera);
-		klient.gracz = gracz;
-		exe.execute(klient);
+		g2d.drawImage(Obrazki.flaga_a, null, flaga_b.x, flaga_b.y);
+
 	}
 
 	protected void rysujSamolotGracza(Graphics2D g2d)
@@ -311,7 +338,10 @@ public class Gra extends JPanel implements KeyListener
 				PociskTcp p = g.pociski.get(j);
 				if (sprawdzKolizje(p.x, p.y, samolot.x, samolot.y))
 				{
-					samolot.setPunktyZycia(samolot.getPunktyZycia() - CONST.pocisk_dmg);
+					if(gracz.flaga)
+						samolot.setPunktyZycia(samolot.getPunktyZycia() - (int)(CONST.pocisk_dmg*1.5));
+					else
+						samolot.setPunktyZycia(samolot.getPunktyZycia() - CONST.pocisk_dmg);
 					gracze.get(i).pociski.remove(j);
 					size_pociski--;
 				}
@@ -370,6 +400,18 @@ public class Gra extends JPanel implements KeyListener
 		}
 		return false;
 	}
+	
+	//obiekt, pole
+	protected boolean sprawdzFlage(int x, int y, int x1, int y1)
+	{
+
+		if ((x > x1-100 && x < x1)
+				&& (y > y1-100 && y < y1))
+		{
+			return true;
+		}
+		return false;
+	}
 
 	protected void zasadyGry()
 	{
@@ -377,9 +419,36 @@ public class Gra extends JPanel implements KeyListener
 		zasadySmierci();
 		graniceEkranu();
 		zasadyKoniec();
+		zasadyFlaga();
 
 	}
 
+	protected void zasadyFlaga()
+	{
+		if(gracz.druzyna =='A')
+		{
+			if(!flaga_b.zajeta)
+			{
+				if(sprawdzKolizje(flaga_b.x, flaga_b.y, samolot.x, samolot.y))
+				{
+					flaga_b.zajeta = true;
+					gracz.flaga = true;
+				}
+			}
+		}
+		else
+		{
+			if(!flaga_a.zajeta)
+			{
+				if(sprawdzKolizje(flaga_a.x, flaga_a.y, samolot.x, samolot.y))
+				{
+					flaga_a.zajeta = true;
+					gracz.flaga = true;
+				}
+			}
+		}
+	}
+	
 	protected void graniceEkranu()
 	{
 		if (samolot.x < 0)
@@ -443,6 +512,26 @@ public class Gra extends JPanel implements KeyListener
 			smierc = 100;
 			samolot.x = start_x;
 			samolot.y = start_y;
+			
+			if(serwer.getTrybGry().equals("CTF"))
+			{
+				if(gracz.flaga)
+				{
+					if(gracz.druzyna == 'A')
+					{
+						flaga_b.x = WIDTH-50;
+						flaga_b.y = HEIGHT-50;
+						flaga_b.zajeta = false;
+					}
+					else if(gracz.druzyna == 'B')
+					{
+						flaga_a.x = 50;
+						flaga_a.y = 50;
+						flaga_a.zajeta = false;
+					}
+					gracz.flaga = false;
+				}
+			}
 		}
 		else
 		{
@@ -505,10 +594,40 @@ public class Gra extends JPanel implements KeyListener
 		klient.koniec = true;
 	}
 
+	protected void flagaWspolrzedne()
+	{
+		boolean a, b;
+		a = true;
+		b = true;
+		for (GraczTcp g : gracze)
+		{
+			if (g.flaga)
+			{
+				if (a && g.druzyna == 'B')
+				{
+					flaga_a.x = (int) g.x;
+					flaga_a.y = (int) g.y;
+					a = false;
+				}
+				if (b && g.druzyna == 'A')
+				{
+					flaga_b.x = (int) g.x;
+					flaga_b.y = (int) g.y;
+					b = false;
+				}
+			}
+		}
+	}
+
 	protected void aktualizujWspolrzedne()
 	{
 		fragi.setText("Liczba zabiæ:" + gracz.getFragi());
 		punkty.setText("Punkty:" + gracz.getPunkty());
+		
+		if(serwer.getTrybGry().equals("CTF"))
+		{
+			flagaWspolrzedne();
+		}
 		if (smierc == 0)
 		{
 			samolot.aktualizujWspolrzedne();
