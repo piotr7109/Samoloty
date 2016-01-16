@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.concurrent.Executor;
@@ -81,7 +80,7 @@ public class Gra extends JPanel implements KeyListener
 		gracz.druzyna = druzyna;
 		gracz.login = SETTINGS.login;
 		samolot = gracz.getSamolot();
-		
+
 		setFlaga();
 		startClientTcpThread(serwer.getIpSerwera());
 
@@ -110,7 +109,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void setFlaga()
 	{
-		if(serwer.getTrybGry().equals("CTF"))
+		if (serwer.getTrybGry().equals("CTF"))
 		{
 			flaga_a = new Flaga(50, 50);
 			flaga_b = new Flaga(WIDTH - 50, HEIGHT - 50);
@@ -172,8 +171,8 @@ public class Gra extends JPanel implements KeyListener
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
 		this.rysujSamolotyGraczy(g2d);
-		
-		if(serwer.getTrybGry().equals("CTF"))
+
+		if (serwer.getTrybGry().equals("CTF"))
 		{
 			this.rysujFlage(g2d);
 		}
@@ -338,8 +337,9 @@ public class Gra extends JPanel implements KeyListener
 				PociskTcp p = g.pociski.get(j);
 				if (sprawdzKolizje(p.x, p.y, samolot.x, samolot.y))
 				{
-					if(gracz.flaga)
-						samolot.setPunktyZycia(samolot.getPunktyZycia() - (int)(CONST.pocisk_dmg*1.5));
+					if (gracz.flaga)
+						samolot.setPunktyZycia(
+								samolot.getPunktyZycia() - (int) (CONST.pocisk_dmg * 1.5));
 					else
 						samolot.setPunktyZycia(samolot.getPunktyZycia() - CONST.pocisk_dmg);
 					gracze.get(i).pociski.remove(j);
@@ -400,13 +400,12 @@ public class Gra extends JPanel implements KeyListener
 		}
 		return false;
 	}
-	
-	//obiekt, pole
+
+	// obiekt, pole
 	protected boolean sprawdzFlage(int x, int y, int x1, int y1)
 	{
 
-		if ((x > x1-100 && x < x1)
-				&& (y > y1-100 && y < y1))
+		if ((x > x1 - 100 && x < x1) && (y > y1 - 100 && y < y1))
 		{
 			return true;
 		}
@@ -416,39 +415,43 @@ public class Gra extends JPanel implements KeyListener
 	protected void zasadyGry()
 	{
 		zasadyTimera();
+		zasadyFlaga();
 		zasadySmierci();
 		graniceEkranu();
 		zasadyKoniec();
-		zasadyFlaga();
+		
 
 	}
 
 	protected void zasadyFlaga()
 	{
-		if(gracz.druzyna =='A')
+		if (!gracz.flaga)
 		{
-			if(!flaga_b.zajeta)
+			if (gracz.druzyna == 'A')
 			{
-				if(sprawdzKolizje(flaga_b.x, flaga_b.y, samolot.x, samolot.y))
+				if (!flaga_b.zajeta)
 				{
-					flaga_b.zajeta = true;
-					gracz.flaga = true;
+					if (sprawdzKolizje(flaga_b.x, flaga_b.y, samolot.x, samolot.y))
+					{
+						flaga_b.zajeta = true;
+						gracz.flaga = true;
+					}
 				}
 			}
-		}
-		else
-		{
-			if(!flaga_a.zajeta)
+			else
 			{
-				if(sprawdzKolizje(flaga_a.x, flaga_a.y, samolot.x, samolot.y))
+				if (!flaga_a.zajeta)
 				{
-					flaga_a.zajeta = true;
-					gracz.flaga = true;
+					if (sprawdzKolizje(flaga_a.x, flaga_a.y, samolot.x, samolot.y))
+					{
+						flaga_a.zajeta = true;
+						gracz.flaga = true;
+					}
 				}
 			}
 		}
 	}
-	
+
 	protected void graniceEkranu()
 	{
 		if (samolot.x < 0)
@@ -512,25 +515,26 @@ public class Gra extends JPanel implements KeyListener
 			smierc = 100;
 			samolot.x = start_x;
 			samolot.y = start_y;
-			
-			if(serwer.getTrybGry().equals("CTF"))
+
+			if (serwer.getTrybGry().equals("CTF"))
 			{
-				if(gracz.flaga)
+				if (gracz.flaga)
 				{
-					if(gracz.druzyna == 'A')
+					if (gracz.druzyna == 'A')
 					{
-						flaga_b.x = WIDTH-50;
-						flaga_b.y = HEIGHT-50;
+						flaga_b.x = WIDTH - 50;
+						flaga_b.y = HEIGHT - 50;
 						flaga_b.zajeta = false;
 					}
-					else if(gracz.druzyna == 'B')
+					else if (gracz.druzyna == 'B')
 					{
 						flaga_a.x = 50;
 						flaga_a.y = 50;
 						flaga_a.zajeta = false;
 					}
-					gracz.flaga = false;
+
 				}
+				gracz.flaga = false;
 			}
 		}
 		else
@@ -599,6 +603,7 @@ public class Gra extends JPanel implements KeyListener
 		boolean a, b;
 		a = true;
 		b = true;
+		setFlaga();
 		for (GraczTcp g : gracze)
 		{
 			if (g.flaga)
@@ -607,12 +612,14 @@ public class Gra extends JPanel implements KeyListener
 				{
 					flaga_a.x = (int) g.x;
 					flaga_a.y = (int) g.y;
+					flaga_a.zajeta = true;
 					a = false;
 				}
 				if (b && g.druzyna == 'A')
 				{
 					flaga_b.x = (int) g.x;
 					flaga_b.y = (int) g.y;
+					flaga_b.zajeta = true;
 					b = false;
 				}
 			}
@@ -623,8 +630,8 @@ public class Gra extends JPanel implements KeyListener
 	{
 		fragi.setText("Liczba zabiæ:" + gracz.getFragi());
 		punkty.setText("Punkty:" + gracz.getPunkty());
-		
-		if(serwer.getTrybGry().equals("CTF"))
+
+		if (serwer.getTrybGry().equals("CTF"))
 		{
 			flagaWspolrzedne();
 		}
