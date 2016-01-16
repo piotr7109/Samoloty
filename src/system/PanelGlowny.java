@@ -59,8 +59,8 @@ public class PanelGlowny extends JFrame
 		// EkranUstawien();
 		// EkranGry();
 		// EkranTworzeniaGry();
-		
-		//EkranKoniec(null);
+
+		// EkranKoniec(null);
 		EkranListySerwerow();
 
 		return panel;
@@ -68,27 +68,28 @@ public class PanelGlowny extends JFrame
 
 	public void EkranKoniec(ArrayList<GraczTcp> gracze)
 	{
-		tab_panel.remove(gra);
+		tab_panel.removeAll();
 		koniec = new EkranKoniec(gracze);
 		tab_panel.add("Podsumowanie meczu", koniec);
 		EkranKoniecEvent();
 	}
+
 	private void EkranKoniecEvent()
 	{
 		koniec.powrot.addActionListener(new ActionListener()
 		{
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				tab_panel.remove(koniec);
+				tab_panel.removeAll();
 				EkranListySerwerow();
 				repaint();
 				validate();
 			}
 		});
 	}
-	
+
 	private void EkranLobby(int id_serwera, boolean admin)
 	{
 		lobby = new Lobby(id_serwera, admin, id_gracza, this);
@@ -96,28 +97,28 @@ public class PanelGlowny extends JFrame
 		EkranLobbyEvent(id_serwera);
 
 	}
+
 	public static ServerTCP serwer_tcp;
+
 	private void EkranLobbyEvent(final int id_serwera)
 	{
 		lobby.cofnij_button.addActionListener(new ActionListener()
 		{
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				tab_panel.remove(lobby);
+				tab_panel.removeAll();
 				Serwer serwer = new Serwer();
 				serwer.setId(id_serwera);
 				serwer.deleteGracz(id_gracza);
 				EkranListySerwerow();
 				repaint();
 				validate();
-				
-				
+
 			}
 		});
-		
-		
+
 		lobby.start_button.addActionListener(new ActionListener()
 		{
 
@@ -128,7 +129,7 @@ public class PanelGlowny extends JFrame
 				serwer.setId(id_serwera);
 				serwer.setSerwerById(id_serwera);
 				boolean czy_gotowi = true;
-				int ile_graczy=0;
+				int ile_graczy = 0;
 				for (Gracz_mod g : serwer.getGracze())
 				{
 					ile_graczy++;
@@ -142,16 +143,18 @@ public class PanelGlowny extends JFrame
 					serwer.startSerwer();
 					startTCPServer(ile_graczy, id_serwera);
 					startGra(serwer);
-					
+
 				}
 			}
 		});
 	}
+
 	public void startGra(Serwer serwer)
 	{
 		tab_panel.removeAll();
 		EkranGry(serwer);
 	}
+
 	private static void startTCPServer(int ile_graczy, int id_serwera)
 	{
 		Executor exe = Executors.newFixedThreadPool(1);
@@ -216,7 +219,7 @@ public class PanelGlowny extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				tab_panel.remove(serwery);
+				tab_panel.removeAll();
 				EkranTworzeniaGry();
 				repaint();
 				validate();
@@ -231,44 +234,42 @@ public class PanelGlowny extends JFrame
 		Serwer serwer = new Serwer();
 		serwer.setId(id_serwera);
 		ArrayList<Gracz_mod> gracze = serwer.getGracze();
-		
+
 		Gracz_mod gracz = new Gracz_mod();
 		gracz.druzyna = getDruzyna(id_serwera);
 		gracz.id = id_gracza;
 		gracz.id_serwera = id_serwera;
 		gracz.login = SETTINGS.login;
 		gracz.gotowy = 0;
-		gracz.pozycja = gracze.size()+1;
+		gracz.pozycja = gracze.size() + 1;
 
-		
-		
 		serwer.addGracz(gracz);
 		tab_panel.removeAll();
 
 		EkranLobby(id_serwera, false);
-		
-		
+
 	}
+
 	private static char getDruzyna(int id_serwera)
 	{
 		char drz = 'X';
-		
+
 		Serwer serwer = new Serwer();
 		serwer.setId(id_serwera);
 		serwer.setSerwerById(id_serwera);
-		if(serwer.getTypGry().equals("TEAM"))
+		if (serwer.getTypGry().equals("TEAM"))
 		{
 			ArrayList<Gracz_mod> gracze = serwer.getGracze();
-			int a=0;
-			int b=0;
-			for(Gracz_mod g : gracze)
+			int a = 0;
+			int b = 0;
+			for (Gracz_mod g : gracze)
 			{
-				if(g.druzyna == 'A')
+				if (g.druzyna == 'A')
 					a++;
 				else
 					b++;
 			}
-			if(a > b)
+			if (a > b)
 				drz = 'B';
 			else
 				drz = 'A';
@@ -295,7 +296,7 @@ public class PanelGlowny extends JFrame
 				SETTINGS.height = ustawienia.height.getValue();
 				SETTINGS.login = ustawienia.login.getText();
 				setSize(new Dimension(SETTINGS.width, SETTINGS.height));
-				tab_panel.remove(ustawienia);
+				tab_panel.removeAll();
 				EkranListySerwerow();
 				repaint();
 				validate();
@@ -322,8 +323,8 @@ public class PanelGlowny extends JFrame
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent)
 			{
-				if (JOptionPane.showConfirmDialog(frame, "Na pewno chcesz wyjœæ?",
-						"Na pewno?", JOptionPane.YES_NO_OPTION,
+				if (JOptionPane.showConfirmDialog(frame, "Na pewno chcesz wyjœæ?", "Na pewno?",
+						JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
 				{
 					Gracz_mod.usunGracza(id_gracza);

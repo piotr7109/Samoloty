@@ -112,7 +112,7 @@ public class Gra extends JPanel implements KeyListener
 		if (serwer.getTrybGry().equals("CTF"))
 		{
 			flaga_a = new Flaga(50, 50);
-			flaga_b = new Flaga(WIDTH - 50, HEIGHT - 50);
+			flaga_b = new Flaga(WIDTH - 150, HEIGHT - 150);
 		}
 	}
 
@@ -405,7 +405,7 @@ public class Gra extends JPanel implements KeyListener
 	protected boolean sprawdzFlage(int x, int y, int x1, int y1)
 	{
 
-		if ((x > x1 - 100 && x < x1) && (y > y1 - 100 && y < y1))
+		if ((x > x1 && x < x1 + 50) && (y > y1 && y < y1 + 150))
 		{
 			return true;
 		}
@@ -415,11 +415,13 @@ public class Gra extends JPanel implements KeyListener
 	protected void zasadyGry()
 	{
 		zasadyTimera();
-		zasadyFlaga();
+		if (serwer.getTrybGry().equals("CTF"))
+		{
+			zasadyFlaga();
+		}
 		zasadySmierci();
 		graniceEkranu();
 		zasadyKoniec();
-		
 
 	}
 
@@ -448,6 +450,21 @@ public class Gra extends JPanel implements KeyListener
 						gracz.flaga = true;
 					}
 				}
+			}
+		}
+		else
+		{
+			if(sprawdzFlage(flaga_b.x, flaga_b.y, 0, 0))
+			{
+				flaga_b.zajeta = false;
+				gracz.flaga = false;
+				gracz.setPunkty(gracz.getPunkty()+100);
+			}
+			if(sprawdzFlage(flaga_a.x, flaga_a.y, WIDTH-200, HEIGHT-200))
+			{
+				flaga_a.zajeta = false;
+				gracz.flaga = false;
+				gracz.setPunkty(gracz.getPunkty()+100);
 			}
 		}
 	}
