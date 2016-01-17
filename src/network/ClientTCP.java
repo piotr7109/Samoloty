@@ -98,9 +98,9 @@ public class ClientTCP extends Thread
 		GraczTcp g = new GraczTcp();
 		Samolot s = gracz.getSamolot();
 		g.id = gracz.id;
-		g.x = s.x;
-		g.y = s.y;
-		g.kat = s.kat;
+		g.x = (int)s.x;
+		g.y = (int)s.y;
+		g.kat = (int)s.kat;
 		g.punkty_zycia = s.getPunktyZycia();
 		g.login = gracz.login;
 		g.druzyna = gracz.druzyna;
@@ -112,9 +112,9 @@ public class ClientTCP extends Thread
 		for (Pocisk po : s.getPociski())
 		{
 			PociskTcp p = new PociskTcp();
-			p.x = po.x;
-			p.y = po.y;
-			p.kat = po.kat;
+			p.x = (int)po.x;
+			p.y = (int)po.y;
+			p.kat = (int)po.kat;
 			pociski_tcp.add(p);
 		}
 		g.pociski = pociski_tcp;

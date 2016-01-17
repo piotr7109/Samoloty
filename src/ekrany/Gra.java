@@ -433,7 +433,7 @@ public class Gra extends JPanel implements KeyListener
 			{
 				if (!flaga_b.zajeta)
 				{
-					if (sprawdzKolizje(flaga_b.x, flaga_b.y, samolot.x, samolot.y))  //czy flaga zosta³a zabrana
+					if (sprawdzKolizje(flaga_b.x, flaga_b.y, samolot.x, samolot.y))
 					{
 						flaga_b.zajeta = true;
 						gracz.flaga = true;
@@ -444,7 +444,7 @@ public class Gra extends JPanel implements KeyListener
 			{
 				if (!flaga_a.zajeta)
 				{
-					if (sprawdzKolizje(flaga_a.x, flaga_a.y, samolot.x, samolot.y))  //czy flaga zosta³a zabrana
+					if (sprawdzKolizje(flaga_a.x, flaga_a.y, samolot.x, samolot.y))
 					{
 						flaga_a.zajeta = true;
 						gracz.flaga = true;
@@ -454,17 +454,17 @@ public class Gra extends JPanel implements KeyListener
 		}
 		else
 		{
-			if(sprawdzFlage(flaga_b.x, flaga_b.y, 0, 0))  //czy flaga zosta³a dostraczona do bazy
+			if (sprawdzFlage(flaga_b.x, flaga_b.y, 0, 0))
 			{
 				flaga_b.zajeta = false;
 				gracz.flaga = false;
-				gracz.setPunkty(gracz.getPunkty()+100);
+				gracz.setPunkty(gracz.getPunkty() + 100);
 			}
-			if(sprawdzFlage(flaga_a.x, flaga_a.y, WIDTH-200, HEIGHT-200))  //czy flaga zosta³a dostraczona do bazy
+			if (sprawdzFlage(flaga_a.x, flaga_a.y, WIDTH - 200, HEIGHT - 200))
 			{
 				flaga_a.zajeta = false;
 				gracz.flaga = false;
-				gracz.setPunkty(gracz.getPunkty()+100);
+				gracz.setPunkty(gracz.getPunkty() + 100);
 			}
 		}
 	}
