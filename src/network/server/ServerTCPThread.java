@@ -84,10 +84,7 @@ public class ServerTCPThread extends Thread implements Runnable
 				}
 				else
 				{
-					out.writeObject(Bufor.gracze.get(0));
-					out.writeObject(Bufor.gracze.get(1));
-					/*out.writeObject(Bufor.gracze.get(2));
-					out.writeObject(Bufor.gracze.get(3));*/
+					out.writeObject(this.toArray());
 				}
 				
 				out.reset();

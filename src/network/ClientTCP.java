@@ -51,10 +51,7 @@ public class ClientTCP extends Thread
 				{
 					try
 					{
-						gracze_tcp.set(0,  (GraczTcp)in.readObject());
-						gracze_tcp.set(1,  (GraczTcp)in.readObject());
-						//gracze_tcp.set(2,  (GraczTcp)in.readObject());
-						//gracze_tcp.set(3,  (GraczTcp)in.readObject());
+						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
 						Gra.gracze = gracze_tcp;
 					}
 					catch (Exception e)
