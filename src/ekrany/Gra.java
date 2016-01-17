@@ -305,7 +305,7 @@ public class Gra extends JPanel implements KeyListener
 							y, null);
 			}
 
-			/*int size_pociski = g.pociski.size();
+			int size_pociski = g.pociski.size();
 
 			for (int j = 0; j < size_pociski; j++)
 			{
@@ -318,7 +318,7 @@ public class Gra extends JPanel implements KeyListener
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
-			}*/
+			}
 
 		}
 	}
@@ -335,7 +335,7 @@ public class Gra extends JPanel implements KeyListener
 			if (serwer.getTypGry().equals("TEAM") && gracz.druzyna == g.druzyna)
 				continue;
 
-			/*int size_pociski = g.pociski.size();
+			int size_pociski = g.pociski.size();
 			for (int j = 0; j < size_pociski; j++)
 			{
 				PociskTcp p = g.pociski.get(j);
@@ -349,7 +349,7 @@ public class Gra extends JPanel implements KeyListener
 					gracze.get(i).pociski.remove(j);
 					size_pociski--;
 				}
-			}*/
+			}
 		}
 		size = samolot.pociski.size();
 		for (int i = 0; i < size; i++)

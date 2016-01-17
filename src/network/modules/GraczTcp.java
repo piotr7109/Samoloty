@@ -15,6 +15,6 @@ public class GraczTcp implements Serializable
 	public char druzyna;
 	public boolean flaga;
 	public String login;
-	//public ArrayList<PociskTcp> pociski;
+	public ArrayList<PociskTcp> pociski;
 	
 }
