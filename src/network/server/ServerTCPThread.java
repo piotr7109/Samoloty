@@ -88,7 +88,6 @@ public class ServerTCPThread extends Thread implements Runnable
 				}
 				out.flush();
 				
-				out.reset();
 
 			}
 
