@@ -10,6 +10,7 @@ import modules.Gracz;
 import modules.Pocisk;
 import modules.Samolot;
 import network.modules.GraczTcp;
+import network.modules.ObjectSizeFetcher;
 import network.modules.PociskTcp;
 
 public class ClientTCP extends Thread
@@ -18,7 +19,6 @@ public class ClientTCP extends Thread
 	private GraczTcp gracz_tcp;
 	public Gracz gracz;
 	public ArrayList<GraczTcp> gracze_tcp = new ArrayList<GraczTcp>();
-	private GraczTcp[] gracze_pre = new GraczTcp[4];
 
 	public boolean start, koniec;
 	public int kod_odpowiedzi = 0;
@@ -36,6 +36,7 @@ public class ClientTCP extends Thread
 			koniec = false;
 			start = false;
 			Socket socket = new Socket(InetAddress.getByName(ip_serwera), 4321);
+			socket.setTcpNoDelay(true);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
@@ -44,7 +45,7 @@ public class ClientTCP extends Thread
 				gracz_tcp = getTcpGracz();
 				out.writeObject(gracz_tcp);
 				out.reset();
-				sleep(10);
+				sleep(5);
 
 				if (start)
 				{
@@ -98,10 +99,8 @@ public class ClientTCP extends Thread
 		int size = gracz.length;
 		for(int i =0; i< size; i++)
 		{
-			
 			if(gracz[i]!= null)
 			{
-				System.out.println(gracz[i].x+" "+gracz[i].y);
 				gg.add(gracz[i]);
 			}
 		}		
@@ -112,28 +111,28 @@ public class ClientTCP extends Thread
 	{
 		GraczTcp g = new GraczTcp();
 		Samolot s = gracz.getSamolot();
-		g.id = gracz.id;
-		g.x = (int)s.x;
-		g.y = (int)s.y;
-		g.kat = (int)s.kat;
-		g.punkty_zycia = s.getPunktyZycia();
+		g.id = (short)gracz.id;
+		g.x = (short)s.x;
+		g.y = (short)s.y;
+		g.kat = (short)s.kat;
+		g.punkty_zycia = (short)s.getPunktyZycia();
 		g.login = gracz.login;
 		g.druzyna = gracz.druzyna;
 		g.flaga = gracz.flaga;
-		g.fragi = gracz.getFragi();
-		g.punkty = gracz.getPunkty();
-		/*ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
+		g.fragi = (short)gracz.getFragi();
+		g.punkty = (short)gracz.getPunkty();
+		ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
 
 		for (Pocisk po : s.getPociski())
 		{
 			PociskTcp p = new PociskTcp();
-			p.x = (int)po.x;
-			p.y = (int)po.y;
-			p.kat = (int)po.kat;
+			p.x = (short)po.x;
+			p.y = (short)po.y;
+			p.kat = (short)po.kat;
 			pociski_tcp.add(p);
 		}
 		g.pociski = pociski_tcp;
-*/
+
 		return g;
 	}
 }

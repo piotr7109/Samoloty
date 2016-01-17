@@ -26,6 +26,7 @@ import modules.Pocisk;
 import modules.Samolot;
 import network.ClientTCP;
 import network.modules.GraczTcp;
+import network.modules.ObjectSizeFetcher;
 import network.modules.PociskTcp;
 import system.CONST;
 import system.PanelGlowny;
@@ -301,7 +302,7 @@ public class Gra extends JPanel implements KeyListener
 							y, null);
 			}
 
-			/*int size_pociski = g.pociski.size();
+			int size_pociski = g.pociski.size();
 
 			for (int j = 0; j < size_pociski; j++)
 			{
@@ -314,7 +315,7 @@ public class Gra extends JPanel implements KeyListener
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
-			}*/
+			}
 
 		}
 	}
@@ -793,6 +794,7 @@ public class Gra extends JPanel implements KeyListener
 	public void procesTimera()
 	{
 		gracze = klient.gracze_tcp;
+		
 		if (!smierc_koniec)
 		{
 			if (klient.start)
@@ -807,7 +809,7 @@ public class Gra extends JPanel implements KeyListener
 				this.aktualizujWspolrzedne();
 				if (smierc == 0)
 				{
-					//sprawdzKolizjeAll();
+					sprawdzKolizjeAll();
 				}
 				zasadyGry();
 

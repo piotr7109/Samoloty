@@ -8,5 +8,5 @@ public class PociskTcp implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public int x, y, kat;
+	public short x, y, kat;
 }
