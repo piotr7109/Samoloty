@@ -202,7 +202,7 @@ public class Lobby extends JPanel
 
 	private void refreshButton()
 	{
-		refresh = new JButton("Odœwierz");
+		refresh = new JButton("Odœwie¿");
 		refresh.setSize(new Dimension(100, 25));
 		refresh.setLocation(10, 200);
 		add(refresh);
