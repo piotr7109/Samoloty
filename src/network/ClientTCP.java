@@ -123,7 +123,7 @@ public class ClientTCP extends Thread
 		g.flaga = gracz.flaga;
 		g.fragi = (short)gracz.getFragi();
 		g.punkty = (short)gracz.getPunkty();
-		ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
+		/*ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
 
 		for (Pocisk po : s.getPociski())
 		{
@@ -133,7 +133,7 @@ public class ClientTCP extends Thread
 			p.kat = (short)po.kat;
 			pociski_tcp.add(p);
 		}
-		g.pociski = pociski_tcp;
+		g.pociski = pociski_tcp;*/
 
 		return g;
 	}
