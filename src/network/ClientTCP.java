@@ -54,7 +54,7 @@ public class ClientTCP extends Thread
 					}
 					catch (Exception e)
 					{
-						// System.out.println("Exception ArrayList");
+						System.err.println(e);
 					}
 				}
 				else

@@ -7,7 +7,6 @@ import java.net.*;
 import database.Serwer;
 import network.modules.Bufor;
 import network.modules.GraczTcp;
-import system.CONST;
 
 public class ServerTCPThread extends Thread implements Runnable
 {
