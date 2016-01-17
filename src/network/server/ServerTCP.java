@@ -23,11 +23,13 @@ public class ServerTCP extends Thread
 		{
 			int i = 0;// numer serwera
 			ServerSocket serverSocket = new ServerSocket(4321);
+			serverSocket.setPerformancePreferences(1,0,0);
 			System.out.println(InetAddress.getLocalHost() + "");
 			Executor exe = Executors.newFixedThreadPool(10);
 			while (true)
 			{
 				Socket clientSocket = serverSocket.accept();
+				clientSocket.setPerformancePreferences(1,0,0);
 				if (clientSocket.isConnected() == true)
 				{
 					
