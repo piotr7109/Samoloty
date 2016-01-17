@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
 
+import ekrany.Gra;
 import modules.Gracz;
 import modules.Pocisk;
 import modules.Samolot;
@@ -52,6 +53,7 @@ public class ClientTCP extends Thread
 					try
 					{
 						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
+						Gra.gracze = gracze_tcp;
 					}
 					catch (Exception e)
 					{

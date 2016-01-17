@@ -41,7 +41,7 @@ public class Gra extends JPanel implements KeyListener
 	 */
 	protected static final long serialVersionUID = 1L;
 
-	public ArrayList<GraczTcp> gracze;
+	public static ArrayList<GraczTcp> gracze;
 	protected Gracz gracz;
 	protected Samolot samolot;
 	protected String mapa;
