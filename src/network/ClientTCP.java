@@ -39,7 +39,7 @@ public class ClientTCP extends Thread
 			socket.setTcpNoDelay(true);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-
+			int ile = 0;
 			while (!koniec)
 			{
 				gracz_tcp = getTcpGracz();
