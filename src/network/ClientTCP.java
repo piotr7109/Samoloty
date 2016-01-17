@@ -69,6 +69,7 @@ public class ClientTCP extends Thread
 							start = true;
 						}
 						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
+						Gra.gracze = gracze_tcp;
 					}
 					catch (Exception e)
 					{

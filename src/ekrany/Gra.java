@@ -83,9 +83,10 @@ public class Gra extends JPanel implements KeyListener
 		gracz.druzyna = druzyna;
 		gracz.login = SETTINGS.login;
 		samolot = gracz.getSamolot();
-
-		setFlaga();
+		
 		startClientTcpThread(serwer.getIpSerwera());
+		setFlaga();
+		
 
 		startTimer();
 		ustawLicznik();
