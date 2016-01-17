@@ -38,6 +38,7 @@ public class ClientTCP extends Thread
 			start = false;
 			Socket socket = new Socket(InetAddress.getByName(ip_serwera), 4321);
 			socket.setTcpNoDelay(true);
+			socket.setSoTimeout(0);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 			while (!koniec)
