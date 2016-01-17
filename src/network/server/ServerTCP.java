@@ -29,7 +29,6 @@ public class ServerTCP extends Thread
 			while (true)
 			{
 				Socket clientSocket = serverSocket.accept();
-				clientSocket.setPerformancePreferences(1,0,0);
 				if (clientSocket.isConnected() == true)
 				{
 					
