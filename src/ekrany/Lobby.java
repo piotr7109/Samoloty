@@ -35,7 +35,7 @@ public class Lobby extends JPanel
 
 	private JLabel ip_serwera_label, typ_gry_label, tryb_gry_label, poziom;
 
-	JButton refresh = new JButton("Odúwierz");
+	JButton refresh = new JButton("Odúwieø");
 	JButton gotowy = new JButton("GOTOWY");
 	public JButton start_button = new JButton("START!");
 	public JButton cofnij_button = new JButton("Wyjdü");
