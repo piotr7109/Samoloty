@@ -38,7 +38,6 @@ public class ClientTCP extends Thread
 			start = false;
 			Socket socket = new Socket(InetAddress.getByName(ip_serwera), 4321);
 			socket.setTcpNoDelay(true);
-			socket.setPerformancePreferences(1,0,0);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 			while (!koniec)
@@ -52,7 +51,10 @@ public class ClientTCP extends Thread
 				{
 					try
 					{
-						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
+						gracze_tcp.set(0,  (GraczTcp)in.readObject());
+						gracze_tcp.set(1,  (GraczTcp)in.readObject());
+						//gracze_tcp.set(2,  (GraczTcp)in.readObject());
+						//gracze_tcp.set(3,  (GraczTcp)in.readObject());
 						Gra.gracze = gracze_tcp;
 					}
 					catch (Exception e)
