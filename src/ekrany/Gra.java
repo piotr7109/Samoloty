@@ -301,7 +301,7 @@ public class Gra extends JPanel implements KeyListener
 							y, null);
 			}
 
-			int size_pociski = g.pociski.size();
+			/*int size_pociski = g.pociski.size();
 
 			for (int j = 0; j < size_pociski; j++)
 			{
@@ -314,7 +314,7 @@ public class Gra extends JPanel implements KeyListener
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
-			}
+			}*/
 
 		}
 	}
@@ -807,7 +807,7 @@ public class Gra extends JPanel implements KeyListener
 				this.aktualizujWspolrzedne();
 				if (smierc == 0)
 				{
-					sprawdzKolizjeAll();
+					//sprawdzKolizjeAll();
 				}
 				zasadyGry();
 

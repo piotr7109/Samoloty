@@ -18,6 +18,7 @@ public class ClientTCP extends Thread
 	private GraczTcp gracz_tcp;
 	public Gracz gracz;
 	public ArrayList<GraczTcp> gracze_tcp = new ArrayList<GraczTcp>();
+	private GraczTcp[] gracze_pre = new GraczTcp[4];
 
 	public boolean start, koniec;
 	public int kod_odpowiedzi = 0;
@@ -49,12 +50,11 @@ public class ClientTCP extends Thread
 				{
 					try
 					{
-						kod_odpowiedzi = in.readInt();
-						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
+						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
 					}
 					catch (Exception e)
 					{
-						// System.out.println("Exception ArrayList");
+						 System.out.println("Exception Array");
 					}
 				}
 				else
@@ -66,11 +66,11 @@ public class ClientTCP extends Thread
 						{
 							start = true;
 						}
-						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
+						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
 					}
 					catch (Exception e)
 					{
-						System.out.println("Exception");
+						System.out.println("Exception Client");
 						continue;
 					}
 				}
@@ -92,6 +92,21 @@ public class ClientTCP extends Thread
 			System.err.println(e);
 		}
 	}
+	private ArrayList<GraczTcp> convertGracz(GraczTcp[] gracz)
+	{
+		ArrayList<GraczTcp> gg = new ArrayList<GraczTcp>();
+		int size = gracz.length;
+		for(int i =0; i< size; i++)
+		{
+			
+			if(gracz[i]!= null)
+			{
+				System.out.println(gracz[i].x+" "+gracz[i].y);
+				gg.add(gracz[i]);
+			}
+		}		
+		return gg;
+	}
 
 	protected GraczTcp getTcpGracz()
 	{
@@ -107,7 +122,7 @@ public class ClientTCP extends Thread
 		g.flaga = gracz.flaga;
 		g.fragi = gracz.getFragi();
 		g.punkty = gracz.getPunkty();
-		ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
+		/*ArrayList<PociskTcp> pociski_tcp = new ArrayList<PociskTcp>();
 
 		for (Pocisk po : s.getPociski())
 		{
@@ -118,7 +133,7 @@ public class ClientTCP extends Thread
 			pociski_tcp.add(p);
 		}
 		g.pociski = pociski_tcp;
-
+*/
 		return g;
 	}
 }

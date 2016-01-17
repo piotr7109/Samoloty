@@ -4,6 +4,8 @@ import java.net.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import network.modules.Bufor;
+
 public class ServerTCP extends Thread
 {
 	int ile_graczy;
