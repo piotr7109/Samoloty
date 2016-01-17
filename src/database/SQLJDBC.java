@@ -9,7 +9,7 @@ public class SQLJDBC
 	private String host = "localhost";
 	private String database = "samoloty";
 	private String user = "root";
-	private String password = "";
+	private String password = ""; 
 	
 	private Connection c = null;
 	
