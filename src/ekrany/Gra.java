@@ -65,6 +65,8 @@ public class Gra extends JPanel implements KeyListener
 
 	public Gra(int width, int height, int id_gracza, Serwer serwer, PanelGlowny panel_glowny)
 	{
+		ExecutorService sound = Executors.newCachedThreadPool();
+		sound.execute(new Audio("theme"));
 		HEIGHT = height;
 		WIDTH = width;
 		panel = panel_glowny;
@@ -398,6 +400,8 @@ public class Gra extends JPanel implements KeyListener
 		if ((x_p > x1 && x_p < x1 + CONST.samolot_width * 2)
 				&& (y_p > y1 && y_p < y1 + CONST.samolot_height * 2))
 		{
+			ExecutorService sound = Executors.newCachedThreadPool();
+			sound.execute(new Audio("trafienie"));
 			return true;
 		}
 		return false;

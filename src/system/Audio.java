@@ -17,18 +17,9 @@ public class Audio implements Runnable
 	 public void run() {
 	    try {
 	    	AudioInputStream audioInputStream = null;
-	    	if(type.equals("strzal"))
-	    	{
-	    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio/strzal.wav").getAbsoluteFile());
-	    	}
-	    	else if(type.equals("smierc"))
-	    	{
-	    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio/smierc.wav").getAbsoluteFile());
-	    	}  
-	    	else if(type.equals("bomba"))
-	    	{
-	    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio/bomba.wav").getAbsoluteFile());
-	    	}
+	
+	    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio/"+type+".wav").getAbsoluteFile());
+	    	
 	    	
 	    	
 	    
