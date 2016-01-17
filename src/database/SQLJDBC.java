@@ -6,10 +6,10 @@ import java.sql.Statement;
 
 public class SQLJDBC 
 {
-	private String host = "localhost";
+	private String host = "192.168.1.1";
 	private String database = "samoloty";
-	private String user = "root";
-	private String password = ""; 
+	private String user = "bardzki";
+	private String password = "123"; 
 	
 	private Connection c = null;
 	

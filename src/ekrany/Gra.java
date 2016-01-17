@@ -12,6 +12,7 @@ import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.swing.JLabel;
@@ -28,6 +29,7 @@ import network.ClientTCP;
 import network.modules.GraczTcp;
 import network.modules.ObjectSizeFetcher;
 import network.modules.PociskTcp;
+import system.Audio;
 import system.CONST;
 import system.PanelGlowny;
 import system.SETTINGS;
@@ -528,6 +530,8 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void smierc()
 	{
+        ExecutorService sound = Executors.newCachedThreadPool();
+		sound.execute(new Audio("smierc"));
 		if (serwer.getTrybGry().equals("DM_TIME") || serwer.getTrybGry().equals("CTF"))
 		{
 			smierc = 100;
@@ -730,6 +734,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void strzel()
 	{
+        
 		if (bullet_time_index < bullet_time)
 		{
 			bullet_time_index++;
@@ -738,6 +743,8 @@ public class Gra extends JPanel implements KeyListener
 		{
 			bullet_time_index = 0;
 			samolot.dodajPocisk("normalny");
+			ExecutorService sound = Executors.newCachedThreadPool();
+			sound.execute(new Audio("strzal"));
 		}
 
 	}
@@ -746,6 +753,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void strzelBomba()
 	{
+        
 		if (bullet_time_bomb_index < bullet_time_bomb)
 		{
 			bullet_time_bomb_index++;
@@ -754,6 +762,8 @@ public class Gra extends JPanel implements KeyListener
 		{
 			bullet_time_bomb_index = 0;
 			samolot.dodajPocisk("bomba");
+			ExecutorService sound = Executors.newCachedThreadPool();
+			sound.execute(new Audio("bomba"));
 		}
 
 	}
