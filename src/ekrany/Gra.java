@@ -366,7 +366,6 @@ public class Gra extends JPanel implements KeyListener
 	// pocisk
 	protected boolean sprawdzKolizjeZGraczami(double x, double y)
 	{
-		gracze = klient.gracze_tcp;
 		int size_gracze = gracze.size();
 		for (int i = 0; i < size_gracze; i++)
 		{
@@ -803,7 +802,6 @@ public class Gra extends JPanel implements KeyListener
 
 	public void procesTimera()
 	{
-		gracze = klient.gracze_tcp;
 		
 		if (!smierc_koniec)
 		{
