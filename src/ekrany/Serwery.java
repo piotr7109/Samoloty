@@ -30,7 +30,7 @@ public class Serwery extends JPanel
 	public JButton stworz = new JButton("Stwórz grê");
 	public ArrayList<JButton> dolacz = new ArrayList<JButton>();
 
-	JButton refresh = new JButton("Odœwierz");
+	JButton refresh = new JButton("Odœwie¿");
 	PanelGlowny panel_glowny;
 	
 	
@@ -55,7 +55,7 @@ public class Serwery extends JPanel
 
 	private void refreshButton()
 	{
-		refresh = new JButton("Odœwierz");
+		refresh = new JButton("Odœwie¿");
 		refresh.setSize(new Dimension(100, 25));
 		refresh.setLocation(0, 0);
 		add(refresh);
