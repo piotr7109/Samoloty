@@ -27,12 +27,11 @@ public class Audio implements Runnable
 	    	}  
 	    	else if(type.equals("bomba"))
 	    	{
-	    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio/smierc.wav").getAbsoluteFile());
+	    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio/bomba.wav").getAbsoluteFile());
 	    	}
 	    	
 	    	
-	    	System.out.println("asdasdasdasdasd");
-	        
+	    
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.start();
