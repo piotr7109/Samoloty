@@ -87,7 +87,6 @@ public class ServerTCPThread extends Thread implements Runnable
 					out.writeObject(this.toArray());
 				}
 				out.flush();
-				sleep(50);
 
 			}
 
