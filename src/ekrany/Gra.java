@@ -40,7 +40,7 @@ public class Gra extends JPanel implements KeyListener
 	 */
 	protected static final long serialVersionUID = 1L;
 
-	public static ArrayList<GraczTcp> gracze;
+	public ArrayList<GraczTcp> gracze;
 	protected Gracz gracz;
 	protected Samolot samolot;
 	protected String mapa;
@@ -251,7 +251,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void rysujSamolotyGraczy(Graphics2D g2d)
 	{
-
+		gracze = klient.gracze_tcp;
 		int size = gracze.size();
 		int x;
 		int y;
@@ -806,7 +806,7 @@ public class Gra extends JPanel implements KeyListener
 
 	public void procesTimera()
 	{
-		
+		gracze = klient.gracze_tcp;
 		if (!smierc_koniec)
 		{
 			if (klient.start)

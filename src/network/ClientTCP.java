@@ -6,12 +6,10 @@ import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
 
-import ekrany.Gra;
 import modules.Gracz;
 import modules.Pocisk;
 import modules.Samolot;
 import network.modules.GraczTcp;
-import network.modules.ObjectSizeFetcher;
 import network.modules.PociskTcp;
 
 public class ClientTCP extends Thread
@@ -37,25 +35,26 @@ public class ClientTCP extends Thread
 			koniec = false;
 			start = false;
 			Socket socket = new Socket(InetAddress.getByName(ip_serwera), 4321);
-			socket.setTcpNoDelay(true);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
 			while (!koniec)
 			{
 				gracz_tcp = getTcpGracz();
 				out.writeObject(gracz_tcp);
+				out.reset();
+				sleep(10);
 
-				out.flush();
 				if (start)
 				{
 					try
 					{
-						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
-						Gra.gracze = gracze_tcp;
+						kod_odpowiedzi = in.readInt();
+						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
 					}
 					catch (Exception e)
 					{
-						 System.out.println("Exception Array");
+						// System.out.println("Exception ArrayList");
 					}
 				}
 				else
@@ -67,12 +66,11 @@ public class ClientTCP extends Thread
 						{
 							start = true;
 						}
-						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
-						Gra.gracze = gracze_tcp;
+						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
 					}
 					catch (Exception e)
 					{
-						System.out.println("Exception Client");
+						System.out.println("Exception");
 						continue;
 					}
 				}
@@ -93,19 +91,6 @@ public class ClientTCP extends Thread
 		{
 			System.err.println(e);
 		}
-	}
-	private ArrayList<GraczTcp> convertGracz(GraczTcp[] gracz)
-	{
-		ArrayList<GraczTcp> gg = new ArrayList<GraczTcp>();
-		int size = gracz.length;
-		for(int i =0; i< size; i++)
-		{
-			if(gracz[i]!= null)
-			{
-				gg.add(gracz[i]);
-			}
-		}		
-		return gg;
 	}
 
 	protected GraczTcp getTcpGracz()

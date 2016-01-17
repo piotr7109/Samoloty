@@ -4,8 +4,6 @@ import java.net.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import network.modules.Bufor;
-
 public class ServerTCP extends Thread
 {
 	int ile_graczy;
@@ -23,7 +21,6 @@ public class ServerTCP extends Thread
 		{
 			int i = 0;// numer serwera
 			ServerSocket serverSocket = new ServerSocket(4321);
-			serverSocket.setPerformancePreferences(1,0,0);
 			System.out.println(InetAddress.getLocalHost() + "");
 			Executor exe = Executors.newFixedThreadPool(10);
 			while (true)
