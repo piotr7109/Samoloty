@@ -63,7 +63,6 @@ public class Ustawienia extends JPanel
 		
 		min_width_label.setLocation(width.getX()-50, width.getY() - width.getHeight()/2);
 		max_width_label.setLocation(width.getX()+width.getWidth(), width.getY()- width.getHeight()/2);
-		
 		min_height_label.setLocation(height.getX()-50, height.getY()- height.getHeight()/2);
 		max_height_label.setLocation(height.getX()+height.getWidth(), height.getY()- height.getHeight()/2);
 		

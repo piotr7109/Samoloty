@@ -75,12 +75,12 @@ public class Serwery extends JPanel
 
 	private void dodajListeSerwerow()
 	{
-		int i = 0;
+		
 		final int x = 150;
 		final int y = 20;
 		Dimension d = new Dimension(x, y);
 		getNaglowek(x, y, d);
-
+		int i = 0;
 		for (Serwer serwer : lista_serwerow)
 		{
 			int ile_graczy = serwer.getGracze().size();

@@ -20,14 +20,14 @@ public class Obrazki
 	{
 		try
 		{
-			obrazekSamolot = ImageIO.read(new File("gfx/samolot.png"));
-			obrazekSamolot2 = ImageIO.read(new File("gfx/samolot.png"));
+			obrazekSamolot = ImageIO.read(new File("gfx/wing.png"));
+			obrazekSamolot2 = ImageIO.read(new File("gfx/tie.png"));
 			
-			obrazekSamolot_dmg = ImageIO.read(new File("gfx/samolot.png"));
-			obrazekSamolot2_dmg = ImageIO.read(new File("gfx/samolot.png"));
+			obrazekSamolot_dmg = ImageIO.read(new File("gfx/wing.png"));
+			obrazekSamolot2_dmg = ImageIO.read(new File("gfx/tie.png"));
 			
-			obrazekSamolot_hard_dmg = ImageIO.read(new File("gfx/samolot.png"));
-			obrazekSamolot2_hard_dmg = ImageIO.read(new File("gfx/samolot.png"));
+			obrazekSamolot_hard_dmg = ImageIO.read(new File("gfx/wing.png"));
+			obrazekSamolot2_hard_dmg = ImageIO.read(new File("gfx/tie.png"));
 			
 			flaga_a = ImageIO.read(new File("gfx/pocisk.png"));
 			flaga_b = ImageIO.read(new File("gfx/pocisk.png"));
