@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
 
-import ekrany.Gra;
 import modules.Gracz;
 import modules.Pocisk;
 import modules.Samolot;
@@ -39,21 +38,24 @@ public class ClientTCP extends Thread
 			socket.setTcpNoDelay(true);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
 			while (!koniec)
 			{
 				gracz_tcp = getTcpGracz();
 				out.writeObject(gracz_tcp);
+				out.reset();
+				sleep(10);
 
-				out.flush();
 				if (start)
 				{
 					try
 					{
-						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
+						kod_odpowiedzi = in.readInt();
+						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
 					}
 					catch (Exception e)
 					{
-						 System.out.println("Exception Array");
+						System.err.println(e);
 					}
 				}
 				else
@@ -65,11 +67,11 @@ public class ClientTCP extends Thread
 						{
 							start = true;
 						}
-						gracze_tcp = this.convertGracz((GraczTcp[]) in.readObject());
+						gracze_tcp = (ArrayList<GraczTcp>) in.readObject();
 					}
 					catch (Exception e)
 					{
-						System.out.println("Exception Client");
+						System.out.println("Exception");
 						continue;
 					}
 				}
@@ -90,19 +92,6 @@ public class ClientTCP extends Thread
 		{
 			System.err.println(e);
 		}
-	}
-	private ArrayList<GraczTcp> convertGracz(GraczTcp[] gracz)
-	{
-		ArrayList<GraczTcp> gg = new ArrayList<GraczTcp>();
-		int size = gracz.length;
-		for(int i =0; i< size; i++)
-		{
-			if(gracz[i]!= null)
-			{
-				gg.add(gracz[i]);
-			}
-		}		
-		return gg;
 	}
 
 	protected GraczTcp getTcpGracz()

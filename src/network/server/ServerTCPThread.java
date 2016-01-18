@@ -3,12 +3,10 @@ package network.server;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
-import java.util.ArrayList;
 
 import database.Serwer;
 import network.modules.Bufor;
 import network.modules.GraczTcp;
-import system.CONST;
 
 public class ServerTCPThread extends Thread implements Runnable
 {
@@ -59,7 +57,6 @@ public class ServerTCPThread extends Thread implements Runnable
 				{
 					czy_koniec = true;
 					Bufor.gracze.remove(this.i);
-					System.out.println("EXCEPTION SERWER");
 					continue;
 
 				}
@@ -80,14 +77,15 @@ public class ServerTCPThread extends Thread implements Runnable
 						
 						out.writeInt(100);
 					}
-					out.writeObject(this.toArray());
+					out.writeObject(Bufor.gracze);
 				}
 				else
 				{
-					out.writeObject(this.toArray());
+					out.writeInt(kod_odpowiedzi);
+					out.writeObject(Bufor.gracze);
 				}
-				out.flush();
-				sleep(50);
+				
+				out.reset();
 
 			}
 
@@ -99,25 +97,6 @@ public class ServerTCPThread extends Thread implements Runnable
 		{
 			System.err.println(e);
 		}
-	}
-	private GraczTcp[] toArray()
-	{
-		GraczTcp[] g = new GraczTcp[4];
-		
-		int size = Bufor.gracze.size();
-		for(int j =0; j< 4 ;j++)
-		{
-			g[j] = null;
-		}
-		
-		for(int i=0; i<size; i++)
-		{
-
-			g[i] = Bufor.gracze.get(i);
-		}
-		
-		
-		return g;
 	}
 	
 
