@@ -84,10 +84,9 @@ public class Gra extends JPanel implements KeyListener
 		gracz.druzyna = druzyna;
 		gracz.login = SETTINGS.login;
 		samolot = gracz.getSamolot();
-		
+
 		startClientTcpThread(serwer.getIpSerwera());
 		setFlaga();
-		
 
 		startTimer();
 		ustawLicznik();
@@ -196,10 +195,8 @@ public class Gra extends JPanel implements KeyListener
 	{
 		int x = (int) (samolot.x);
 		int y = (int) (samolot.y);
-		AffineTransform rotacja = AffineTransform
-				.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
-		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja,
-				AffineTransformOp.TYPE_BILINEAR);
+		AffineTransform rotacja = AffineTransform.getRotateInstance(Math.toRadians(samolot.kat + 90), samolot.width, samolot.height);
+		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(x, y - 5, (int) (samolot.getPunktyZycia() / 5 * 3), 4); // pasek
@@ -209,22 +206,18 @@ public class Gra extends JPanel implements KeyListener
 			if (samolot.getPunktyZycia() > 70)
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x, y, null);
 			else if (samolot.getPunktyZycia() > 40)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y,
-						null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y, null);
 			else
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x, y,
-						null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x, y, null);
 		}
 		else
 		{
 			if (samolot.getPunktyZycia() > 70)
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 			else if (samolot.getPunktyZycia() > 40)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y,
-						null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y, null);
 			else
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x, y,
-						null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x, y, null);
 		}
 
 	}
@@ -242,8 +235,7 @@ public class Gra extends JPanel implements KeyListener
 			x = (int) (pocisk.x);
 			y = (int) (pocisk.y);
 
-			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
-					pocisk.width, pocisk.height);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), pocisk.width, pocisk.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
 		}
@@ -266,8 +258,7 @@ public class Gra extends JPanel implements KeyListener
 			}
 			x = (int) g.x;// (int) (g.x - CONST.samolot_width);
 			y = (int) g.y;// (int) (g.y - CONST.samolot_height);
-			rotacja = AffineTransform.getRotateInstance(Math.toRadians(g.kat + 90),
-					CONST.samolot_width, CONST.samolot_height);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(g.kat + 90), CONST.samolot_width, CONST.samolot_height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 			if (g.druzyna == gracz.druzyna)
@@ -284,26 +275,20 @@ public class Gra extends JPanel implements KeyListener
 			if (g.druzyna == 'B')
 			{
 				if (g.punkty_zycia > 70)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x, y,
-							null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x, y, null);
 				else if (g.punkty_zycia > 40)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y,
-							null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y, null);
 				else
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null),
-							x, y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x, y, null);
 			}
 			else
 			{
 				if (g.punkty_zycia > 70)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y,
-							null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
 				else if (g.punkty_zycia > 40)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y,
-							null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y, null);
 				else
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x,
-							y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x, y, null);
 			}
 
 			int size_pociski = g.pociski.size();
@@ -314,8 +299,7 @@ public class Gra extends JPanel implements KeyListener
 				x = (int) (pocisk.x);// - CONST.pocisk_width);
 				y = (int) (pocisk.y);// - CONST.pocisk_height);
 
-				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90),
-						CONST.pocisk_width, CONST.pocisk_height);
+				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), CONST.pocisk_width, CONST.pocisk_height);
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
@@ -340,11 +324,10 @@ public class Gra extends JPanel implements KeyListener
 			for (int j = 0; j < size_pociski; j++)
 			{
 				PociskTcp p = g.pociski.get(j);
-				if (sprawdzKolizje(p.x, p.y, samolot.x, samolot.y))
+				if (sprawdzKolizje(p.x+Math.cos(p.kat)*10, p.y+Math.sin(p.kat)*10, samolot.x, samolot.y))
 				{
 					if (gracz.flaga)
-						samolot.setPunktyZycia(
-								samolot.getPunktyZycia() - (int) (CONST.pocisk_dmg * 1.5));
+						samolot.setPunktyZycia(samolot.getPunktyZycia() - (int) (CONST.pocisk_dmg * 2));
 					else
 						samolot.setPunktyZycia(samolot.getPunktyZycia() - CONST.pocisk_dmg);
 					gracze.get(i).pociski.remove(j);
@@ -397,8 +380,7 @@ public class Gra extends JPanel implements KeyListener
 		double x_p = x + CONST.pocisk_width / 2;
 		double y_p = y + CONST.pocisk_height / 2;
 
-		if ((x_p > x1 && x_p < x1 + CONST.samolot_width * 2)
-				&& (y_p > y1 && y_p < y1 + CONST.samolot_height * 2))
+		if ((x_p > x1 && x_p < x1 + CONST.samolot_width * 2) && (y_p > y1 && y_p < y1 + CONST.samolot_height * 2))
 		{
 			ExecutorService sound = Executors.newCachedThreadPool();
 			sound.execute(new Audio("trafienie"));
@@ -533,7 +515,8 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void smierc()
 	{
-        ExecutorService sound = Executors.newCachedThreadPool();
+		samolot.setPunktyZycia(0);
+		ExecutorService sound = Executors.newCachedThreadPool();
 		sound.execute(new Audio("smierc"));
 		if (serwer.getTrybGry().equals("DM_TIME") || serwer.getTrybGry().equals("CTF"))
 		{
@@ -737,7 +720,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void strzel()
 	{
-        
+
 		if (bullet_time_index < bullet_time)
 		{
 			bullet_time_index++;
@@ -756,7 +739,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void strzelBomba()
 	{
-        
+
 		if (bullet_time_bomb_index < bullet_time_bomb)
 		{
 			bullet_time_bomb_index++;
