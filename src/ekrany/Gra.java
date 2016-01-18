@@ -303,6 +303,7 @@ public class Gra extends JPanel implements KeyListener
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
+				
 			}
 
 		}
@@ -324,7 +325,7 @@ public class Gra extends JPanel implements KeyListener
 			for (int j = 0; j < size_pociski; j++)
 			{
 				PociskTcp p = g.pociski.get(j);
-				if (sprawdzKolizje(p.x+Math.cos(p.kat)*10, p.y+Math.sin(p.kat)*10, samolot.x, samolot.y))
+				if (sprawdzKolizje2(p.x, p.y, samolot.x, samolot.y))
 				{
 					if (gracz.flaga)
 						samolot.setPunktyZycia(samolot.getPunktyZycia() - (int) (CONST.pocisk_dmg * 2));
@@ -365,6 +366,8 @@ public class Gra extends JPanel implements KeyListener
 				gracz.setPunkty(gracz.getPunkty() + 1);
 				if (g.punkty_zycia < 6)
 				{
+					ExecutorService sound = Executors.newCachedThreadPool();
+					sound.execute(new Audio("smierc"));
 					gracz.setFragi(gracz.getFragi() + 1);
 					gracz.setPunkty(gracz.getPunkty() + 20);
 				}
@@ -374,6 +377,20 @@ public class Gra extends JPanel implements KeyListener
 		return false;
 	}
 
+	protected boolean sprawdzKolizje2(double x, double y, double x1, double y1)
+	{
+		double x_p = x + CONST.pocisk_width / 2;
+		double y_p = y + CONST.pocisk_height / 2;
+
+		if ((x_p > x1-7 && x_p < x1 + CONST.samolot_width * 2 +7) && (y_p > y1-7 && y_p < y1 + CONST.samolot_height * 2 +7))
+		{
+			ExecutorService sound = Executors.newCachedThreadPool();
+			sound.execute(new Audio("trafienie"));
+			return true;
+		}
+		return false;
+	}
+	
 	// pocisk, samolot
 	protected boolean sprawdzKolizje(double x, double y, double x1, double y1)
 	{

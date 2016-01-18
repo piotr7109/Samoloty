@@ -44,7 +44,7 @@ public class ClientTCP extends Thread
 				gracz_tcp = getTcpGracz();
 				out.writeObject(gracz_tcp);
 				out.reset();
-				sleep(10);
+				sleep(20);
 
 				if (start)
 				{
