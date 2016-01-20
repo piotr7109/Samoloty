@@ -467,7 +467,7 @@ public class Gra extends JPanel implements KeyListener
 		}
 		else
 		{
-			if (sprawdzFlage(flaga_b.x, flaga_b.y, 0, 0))
+			if (sprawdzFlage(flaga_b.x, flaga_b.y, 0, 0)) 
 			{
 				flaga_b.zajeta = false;
 				gracz.flaga = false;
