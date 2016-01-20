@@ -57,6 +57,8 @@ public class Gra extends JPanel implements KeyListener
 	protected double multiplier;
 	protected JLabel czas_label;
 	protected JLabel punkty, fragi;
+	protected int rel_x, rel_y;
+	protected int map_width, map_height;
 
 	public Flaga flaga_a, flaga_b;
 
@@ -69,6 +71,9 @@ public class Gra extends JPanel implements KeyListener
 		sound.execute(new Audio("theme"));
 		HEIGHT = height;
 		WIDTH = width;
+		map_width = 1500;
+		map_height = 1500;
+		rel_x = rel_y = 0;
 		panel = panel_glowny;
 		this.serwer = serwer;
 		pozycja = getPozycja(id_gracza);
@@ -116,7 +121,7 @@ public class Gra extends JPanel implements KeyListener
 		if (serwer.getTrybGry().equals("CTF"))
 		{
 			flaga_a = new Flaga(50, 50);
-			flaga_b = new Flaga(WIDTH - 150, HEIGHT - 150);
+			flaga_b = new Flaga(map_width - 150, map_height - 150);
 		}
 	}
 
@@ -167,8 +172,11 @@ public class Gra extends JPanel implements KeyListener
 	{
 		// super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.setColor(Color.GREEN);
+		g2d.fillRect(0, 0, 2000, 2000);
 		g2d.setColor(Color.WHITE);
-		g2d.fillRect(0, 0, WIDTH, HEIGHT);
+		g2d.fillRect(0+rel_x, 0+rel_y, 1500, 1500);
 		g2d.setColor(Color.BLACK);
 		czas_label.setText(CONST.intToTime(czas_do_konca));
 
@@ -185,9 +193,9 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void rysujFlage(Graphics2D g2d)
 	{
-		g2d.drawImage(Obrazki.flaga_a, null, flaga_a.x, flaga_a.y);
+		g2d.drawImage(Obrazki.flaga_a, null, flaga_a.x+rel_x, flaga_a.y+rel_y);
 
-		g2d.drawImage(Obrazki.flaga_a, null, flaga_b.x, flaga_b.y);
+		g2d.drawImage(Obrazki.flaga_a, null, flaga_b.x+rel_x, flaga_b.y+rel_y);
 
 	}
 
@@ -199,25 +207,25 @@ public class Gra extends JPanel implements KeyListener
 		AffineTransformOp transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
 		g2d.setColor(Color.GREEN);
-		g2d.fillRect(x, y - 5, (int) (samolot.getPunktyZycia() / 5 * 3), 4); // pasek
+		g2d.fillRect(x+rel_x, y - 5+rel_y , (int) (samolot.getPunktyZycia() / 5 * 3), 4); // pasek
 
 		if (gracz.druzyna == 'B')
 		{
 			if (samolot.getPunktyZycia() > 70)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x, y, null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x+rel_x, y+rel_y, null);
 			else if (samolot.getPunktyZycia() > 40)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y, null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x+rel_x, y+rel_y, null);
 			else
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x, y, null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x+rel_x, y+rel_y, null);
 		}
 		else
 		{
 			if (samolot.getPunktyZycia() > 70)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x+rel_x, y+rel_y, null);
 			else if (samolot.getPunktyZycia() > 40)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y, null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x+rel_x, y+rel_y, null);
 			else
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x, y, null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x+rel_x, y+rel_y, null);
 		}
 
 	}
@@ -237,7 +245,7 @@ public class Gra extends JPanel implements KeyListener
 
 			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), pocisk.width, pocisk.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
-			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
+			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x+rel_x, y+rel_y, null);
 		}
 	}
 
@@ -270,25 +278,25 @@ public class Gra extends JPanel implements KeyListener
 				g2d.setColor(Color.RED);
 
 			}
-			g2d.fillRect(x, y - 5, (int) (g.punkty_zycia / 5 * 3), 4); // pasek
+			g2d.fillRect(x+rel_x, y - 5+rel_y, (int) (g.punkty_zycia / 5 * 3), 4); // pasek
 																		// ¿ycia
 			if (g.druzyna == 'B')
 			{
 				if (g.punkty_zycia > 70)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x, y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x+rel_x, y+rel_y, null);
 				else if (g.punkty_zycia > 40)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x, y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x+rel_x, y+rel_y, null);
 				else
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x, y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x+rel_x, y+rel_y, null);
 			}
 			else
 			{
 				if (g.punkty_zycia > 70)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x, y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x+rel_x, y+rel_y, null);
 				else if (g.punkty_zycia > 40)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x, y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x+rel_x, y+rel_y, null);
 				else
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x, y, null);
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x+rel_x, y+rel_y, null);
 			}
 
 			int size_pociski = g.pociski.size();
@@ -302,7 +310,7 @@ public class Gra extends JPanel implements KeyListener
 				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), CONST.pocisk_width, CONST.pocisk_height);
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
 
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x, y, null);
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x+rel_x, y+rel_y, null);
 				
 			}
 
@@ -481,9 +489,9 @@ public class Gra extends JPanel implements KeyListener
 			samolot.x = 100;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
-		if (samolot.x + 60 > WIDTH)
+		if (samolot.x + 60 > map_width)
 		{
-			samolot.x = WIDTH - 100 - CONST.samolot_width * 2;
+			samolot.x = map_width - 100 - CONST.samolot_width * 2;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
 		if (samolot.y < 0)
@@ -491,9 +499,9 @@ public class Gra extends JPanel implements KeyListener
 			samolot.y = 100;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
-		if (samolot.y + 60 > HEIGHT)
+		if (samolot.y + 60 > map_height)
 		{
-			samolot.y = HEIGHT - 200 - samolot.height * 2;
+			samolot.y = map_height - 100 - CONST.samolot_height * 2;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
 	}
@@ -653,6 +661,17 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void aktualizujWspolrzedne()
 	{
+		rel_x = (int)(WIDTH/2 - samolot.x);
+		rel_y =(int)(HEIGHT/2 - samolot.y);
+		if(rel_x>0)
+		{
+			rel_x = 0;
+		}
+		if(rel_y>0)
+		{
+			rel_y= 0;
+		}
+		System.out.println(rel_x+" "+rel_y);
 		fragi.setText("Liczba zabiæ:" + gracz.getFragi());
 		punkty.setText("Punkty:" + gracz.getPunkty());
 
@@ -680,8 +699,8 @@ public class Gra extends JPanel implements KeyListener
 			}
 			else
 			{
-				start_x = 1200;
-				start_y = 850;
+				start_x = map_width-100;
+				start_y = map_height-100;
 				start_kat = 225;
 			}
 		}
@@ -695,18 +714,18 @@ public class Gra extends JPanel implements KeyListener
 					start_kat = 45;
 					break;
 				case 2:
-					start_x = 1200;
+					start_x = map_width-100;
 					start_y = 50;
 					start_kat = 135;
 					break;
 				case 3:
 					start_x = 50;
-					start_y = 850;
+					start_y = map_height-100;
 					start_kat = 315;
 					break;
 				case 4:
-					start_x = 1200;
-					start_y = 850;
+					start_x = map_width-100;
+					start_y = map_height-100;
 					start_kat = 225;
 					break;
 			}
