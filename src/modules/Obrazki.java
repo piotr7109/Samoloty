@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 public class Obrazki
 {
 	public static BufferedImage obrazekPocisk;
+	public static BufferedImage obrazekPocisk2;
 	public static BufferedImage obrazekSamolot, obrazekSamolot2;
 	public static BufferedImage obrazekSamolot_dmg, obrazekSamolot2_dmg;
 	public static BufferedImage obrazekSamolot_hard_dmg, obrazekSamolot2_hard_dmg;
@@ -32,7 +33,8 @@ public class Obrazki
 			flaga_a = ImageIO.read(new File("gfx/rebel.png"));
 			flaga_b = ImageIO.read(new File("gfx/empire.png"));
 			
-			obrazekPocisk = ImageIO.read(new File("gfx/pocisk.png"));
+			obrazekPocisk = ImageIO.read(new File("gfx/red_bullet.png"));
+			obrazekPocisk2 = ImageIO.read(new File("gfx/green_bullet.png"));
 		}
 		catch (IOException e)
 		{

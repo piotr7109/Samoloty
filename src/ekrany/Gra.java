@@ -243,9 +243,17 @@ public class Gra extends JPanel implements KeyListener
 			x = (int) (pocisk.x);
 			y = (int) (pocisk.y);
 
-			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), pocisk.width, pocisk.height);
+			rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat), pocisk.width, pocisk.height);
 			transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
-			g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x+rel_x, y+rel_y, null);
+			
+			if(gracz.druzyna =='B')
+			{
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk2, null), x+rel_x, y+rel_y, null);
+			}
+			else
+			{
+				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x+rel_x, y+rel_y, null);
+			}
 		}
 	}
 
@@ -307,11 +315,17 @@ public class Gra extends JPanel implements KeyListener
 				x = (int) (pocisk.x);// - CONST.pocisk_width);
 				y = (int) (pocisk.y);// - CONST.pocisk_height);
 
-				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat + 90), CONST.pocisk_width, CONST.pocisk_height);
+				rotacja = AffineTransform.getRotateInstance(Math.toRadians(pocisk.kat), CONST.pocisk_width, CONST.pocisk_height);
 				transformacja_op = new AffineTransformOp(rotacja, AffineTransformOp.TYPE_BILINEAR);
-
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x+rel_x, y+rel_y, null);
 				
+				if(g.druzyna =='B')
+				{
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk2, null), x+rel_x, y+rel_y, null);
+				}
+				else
+				{
+					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x+rel_x, y+rel_y, null);
+				}
 			}
 
 		}
