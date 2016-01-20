@@ -1,6 +1,7 @@
 package system;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -17,15 +18,22 @@ public class Audio implements Runnable
 	 public void run() {
 	    try {
 	    	AudioInputStream audioInputStream = null;
-	
-	    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio/"+type+".wav").getAbsoluteFile());
+	    		
 	    	
+	    	audioInputStream = AudioSystem.getAudioInputStream(new File("audio/"+type+".wav").getAbsoluteFile());
 	    	
-	    	
-	    
+
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.start();
+	        
+	    	if(type.equals("theme"))
+    		{
+	    		clip.loop(6);
+    		}
+	    	
+	    
+	        
 	    } catch(Exception ex) {
 	        System.out.println("Error with playing sound.");
 	        ex.printStackTrace();
