@@ -176,7 +176,7 @@ public class Gra extends JPanel implements KeyListener
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(0, 0, 2000, 2000);
 		g2d.setColor(Color.WHITE);
-		g2d.fillRect(0+rel_x, 0+rel_y, 1500, 1500);
+		g2d.fillRect(0+rel_x, 0+rel_y, map_width, map_height);
 		g2d.setColor(Color.BLACK);
 		czas_label.setText(CONST.intToTime(czas_do_konca));
 
