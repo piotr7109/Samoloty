@@ -195,7 +195,7 @@ public class Gra extends JPanel implements KeyListener
 	{
 		g2d.drawImage(Obrazki.flaga_a, null, flaga_a.x+rel_x, flaga_a.y+rel_y);
 
-		g2d.drawImage(Obrazki.flaga_a, null, flaga_b.x+rel_x, flaga_b.y+rel_y);
+		g2d.drawImage(Obrazki.flaga_b, null, flaga_b.x+rel_x, flaga_b.y+rel_y);
 
 	}
 

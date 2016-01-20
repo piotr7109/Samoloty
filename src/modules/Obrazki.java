@@ -29,8 +29,8 @@ public class Obrazki
 			obrazekSamolot_hard_dmg = ImageIO.read(new File("gfx/wing.png"));
 			obrazekSamolot2_hard_dmg = ImageIO.read(new File("gfx/tie.png"));
 			
-			flaga_a = ImageIO.read(new File("gfx/pocisk.png"));
-			flaga_b = ImageIO.read(new File("gfx/pocisk.png"));
+			flaga_a = ImageIO.read(new File("gfx/rebel.png"));
+			flaga_b = ImageIO.read(new File("gfx/empire.png"));
 			
 			obrazekPocisk = ImageIO.read(new File("gfx/pocisk.png"));
 		}
