@@ -667,11 +667,19 @@ public class Gra extends JPanel implements KeyListener
 		{
 			rel_x = 0;
 		}
+		else if( samolot.x + WIDTH/2 >= map_width )
+		{
+			rel_x = (int)( WIDTH - map_width);
+		}
 		if(rel_y>0)
 		{
 			rel_y= 0;
 		}
-		System.out.println(rel_x+" "+rel_y);
+		else if( samolot.y + HEIGHT/2 >= map_height )
+		{
+			rel_y = (int)( HEIGHT - map_height);
+		}
+
 		fragi.setText("Liczba zabiæ:" + gracz.getFragi());
 		punkty.setText("Punkty:" + gracz.getPunkty());
 
