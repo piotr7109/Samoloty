@@ -180,12 +180,10 @@ public class Gra extends JPanel implements KeyListener
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setColor(Color.GREEN);
-		g2d.fillRect(0, 0, 2000, 2000);
-		g2d.setColor(Color.BLACK);
-
+		this.rysujTlo(g2d);
 		czas_label.setText(CONST.intToTime(czas_do_konca));
 
-		this.rysujTlo(g2d);
+		
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
 		this.rysujSamolotyGraczy(g2d);
