@@ -13,7 +13,7 @@ public class Pocisk implements Serializable
 	public double x,y, speed, width, height, kat;
 	private String typ;
 	private double start_x, start_y;
-	private int max_czas_zycia = 900;
+	private int max_czas_zycia = 600;
 	
 	
 	public Pocisk(double x, double y, double kat, String typ)
