@@ -161,7 +161,6 @@ public class Ustawienia extends JPanel
 		catch (IOException e)
 		{
 			// TODO Auto-generated catch block
-			System.err.println("!!!!!!!!!!!!!!!!!!!!!!");
 			e.printStackTrace();
 		}
 	

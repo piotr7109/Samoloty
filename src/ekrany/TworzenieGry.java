@@ -1,12 +1,18 @@
 package ekrany;
 
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -134,6 +140,27 @@ public class TworzenieGry extends JPanel
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	protected void paintComponent(Graphics g)
+	{
+
+		//super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+
+		Image img = null;
+		try
+		{
+			img = ImageIO.read(new File("gfx/background.png"));
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		g2d.drawImage(img, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
+		
+	
 	}
 
 }
