@@ -20,6 +20,9 @@ public class Obrazki
 
 	public static BufferedImage tlo;
 	public static Image tlo2;
+	
+	public static BufferedImage background;
+	public static Image background2;
 
 	public static void ladujObrazki()
 	{
@@ -42,6 +45,9 @@ public class Obrazki
 
 			tlo = ImageIO.read(new File("gfx/tlo.png"));
 			tlo2 = (Image) tlo;
+			
+			background = ImageIO.read(new File("gfx/background.png"));
+			background2 = (Image) background ;
 		}
 		catch (IOException e)
 		{

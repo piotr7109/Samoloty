@@ -1,7 +1,14 @@
 package ekrany;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,6 +16,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import modules.Obrazki;
 
 public class Ustawienia extends JPanel
 {
@@ -135,6 +144,28 @@ public class Ustawienia extends JPanel
 				
 			}
 		});
+		
+	
+	}
+	protected void paintComponent(Graphics g)
+	{
+
+		//super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+
+		Image img = null;
+		try
+		{
+			img = ImageIO.read(new File("gfx/background.png"));
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			System.err.println("!!!!!!!!!!!!!!!!!!!!!!");
+			e.printStackTrace();
+		}
+	
+		g2d.drawImage(img, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
 		
 	
 	}
