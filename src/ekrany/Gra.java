@@ -71,8 +71,8 @@ public class Gra extends JPanel implements KeyListener
 		sound.execute(new Audio("theme"));
 		HEIGHT = height;
 		WIDTH = width;
-		map_width = 1500;
-		map_height = 1500;
+		map_width = 2000;
+		map_height = 2000;
 		rel_x = rel_y = 0;
 		panel = panel_glowny;
 		this.serwer = serwer;
