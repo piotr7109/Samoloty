@@ -40,8 +40,8 @@ public class Obrazki
 			flaga_a = ImageIO.read(new File("gfx/rebel.png"));
 			flaga_b = ImageIO.read(new File("gfx/empire.png"));
 
-			obrazekPocisk = ImageIO.read(new File("gfx/red_bullet.png"));
-			obrazekPocisk2 = ImageIO.read(new File("gfx/green_bullet.png"));
+			obrazekPocisk = ImageIO.read(new File("gfx/green_bullet.png"));
+			obrazekPocisk2 = ImageIO.read(new File("gfx/red_bullet.png"));
 
 			tlo = ImageIO.read(new File("gfx/tlo.png"));
 			tlo2 = (Image) tlo;
