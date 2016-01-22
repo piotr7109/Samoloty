@@ -109,7 +109,14 @@ public class Serwery extends JPanel
 			JLabel tryb_gry = new JLabel(serwer.getTrybGry());
 			JLabel ip_serwera = new JLabel(serwer.getIpSerwera());
 			JLabel ilosc_graczy = new JLabel(ile_graczy + "");
-
+			
+			
+			id_serwera.setForeground(SETTINGS.kolorCzcionki);
+			typ_gry.setForeground(SETTINGS.kolorCzcionki);
+			tryb_gry.setForeground(SETTINGS.kolorCzcionki);
+			ip_serwera.setForeground(SETTINGS.kolorCzcionki);
+			ilosc_graczy.setForeground(SETTINGS.kolorCzcionki);
+			
 			id_serwera.setSize(d);
 			typ_gry.setSize(d);
 			tryb_gry.setSize(d);
@@ -168,7 +175,14 @@ public class Serwery extends JPanel
 		JLabel tryb_gry = new JLabel("TRYB");
 		JLabel ip_serwera = new JLabel("IP");
 		JLabel ilosc_graczy = new JLabel("ILOŒÆ GRACZY");
-
+		
+		id_serwera.setForeground(SETTINGS.kolorCzcionki);
+		typ_gry.setForeground(SETTINGS.kolorCzcionki);
+		tryb_gry.setForeground(SETTINGS.kolorCzcionki);
+		ip_serwera.setForeground(SETTINGS.kolorCzcionki);
+		ilosc_graczy.setForeground(SETTINGS.kolorCzcionki);
+		
+		
 		id_serwera.setFont(new Font(Font.SERIF, Font.BOLD, 16));
 		typ_gry.setFont(new Font(Font.SERIF, Font.BOLD, 16));
 		tryb_gry.setFont(new Font(Font.SERIF, Font.BOLD, 16));

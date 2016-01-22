@@ -138,7 +138,9 @@ public class Gra extends JPanel implements KeyListener
 
 		fragi.setBounds(0, 0, 100, 25);
 		punkty.setBounds(0, 25, 100, 25);
-
+		
+		fragi.setForeground(SETTINGS.kolorCzcionki);
+		punkty.setForeground(SETTINGS.kolorCzcionki);
 		add(fragi);
 		add(punkty);
 	}
@@ -180,10 +182,12 @@ public class Gra extends JPanel implements KeyListener
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setColor(Color.GREEN);
-		this.rysujTlo(g2d);
+		g2d.fillRect(0, 0, 2000, 2000);
+		g2d.setColor(Color.BLACK);
+
 		czas_label.setText(CONST.intToTime(czas_do_konca));
 
-		
+		this.rysujTlo(g2d);
 		this.rysujSamolotGracza(g2d);
 		this.rysujPociskiGracza(g2d);
 		this.rysujSamolotyGraczy(g2d);

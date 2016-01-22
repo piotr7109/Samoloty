@@ -1,5 +1,6 @@
 package ekrany;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -18,6 +19,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import modules.Obrazki;
+import system.SETTINGS;
 
 public class Ustawienia extends JPanel
 {
@@ -57,10 +59,19 @@ public class Ustawienia extends JPanel
 	private void dodajEtykiety()
 	{
 		max_width_label = new JLabel(width.getMaximum()+"");
+		max_width_label.setForeground(SETTINGS.kolorCzcionki);
+		
 		min_width_label = new JLabel(width.getMinimum()+"");
+		min_width_label.setForeground(SETTINGS.kolorCzcionki);
+		
 		max_height_label = new JLabel(height.getMaximum()+"");
+		max_height_label.setForeground(SETTINGS.kolorCzcionki);
+		
 		min_height_label = new JLabel(height.getMinimum()+"");
+		min_height_label.setForeground(SETTINGS.kolorCzcionki);
+		
 		login_label = new JLabel("Login");
+		login_label.setForeground(SETTINGS.kolorCzcionki);
 		Dimension d = new Dimension(50, 50);
 		
 		max_width_label.setSize(d);
@@ -101,6 +112,7 @@ public class Ustawienia extends JPanel
 		width.setSize(new Dimension(WIDTH, HEIGHT));
 		width.setLocation(100, 100);
 		width_label.setText(width.getMinimum()+"");
+		width_label.setForeground(SETTINGS.kolorCzcionki);
 		width_label.setSize(new Dimension(50, 50));
 		width_label.setLocation(WIDTH/2+100, 50);
 		
@@ -109,6 +121,7 @@ public class Ustawienia extends JPanel
 		height.setSize(new Dimension(WIDTH, HEIGHT));
 		height.setLocation(100, 200);
 		height_label.setText(height.getMinimum()+"");
+		height_label.setForeground(SETTINGS.kolorCzcionki);
 		height_label.setSize(new Dimension(50, 50));
 		height_label.setLocation(WIDTH/2+100, 150);
 		

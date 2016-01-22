@@ -19,6 +19,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import system.SETTINGS;
+
 public class TworzenieGry extends JPanel
 {
 	/**
@@ -116,6 +118,10 @@ public class TworzenieGry extends JPanel
 		typ_gry.setFont(new Font(Font.SERIF, Font.BOLD, 16));
 		tryb_gry.setFont(new Font(Font.SERIF, Font.BOLD, 16));
 		poziom.setFont(new Font(Font.SERIF, Font.BOLD, 16));
+		
+		typ_gry.setForeground(SETTINGS.kolorCzcionki);
+		tryb_gry.setForeground(SETTINGS.kolorCzcionki);
+		poziom.setForeground(SETTINGS.kolorCzcionki);
 		
 		typ_gry.setSize(WIDTH, HEIGHT);
 		tryb_gry.setSize(WIDTH, HEIGHT);
