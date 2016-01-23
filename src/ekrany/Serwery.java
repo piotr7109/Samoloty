@@ -36,11 +36,21 @@ public class Serwery extends JPanel
 
 	JButton refresh = new JButton("Odœwie¿");
 	PanelGlowny panel_glowny;
+	private Image tlo;
 	
 	
 	public Serwery(PanelGlowny p)
 	{
 		panel_glowny = p;
+		try
+		{
+			tlo = ImageIO.read(new File("gfx/background.png"));
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void paintComponent(Graphics g)
@@ -52,18 +62,9 @@ public class Serwery extends JPanel
 		g2d.fillRect(0, 0, SETTINGS.width, SETTINGS.height);
 		g2d.setColor(Color.BLACK);
 		
-		Image img = null;
-		try
-		{
-			img = ImageIO.read(new File("gfx/background.png"));
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	
-		g2d.drawImage(img, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
+		g2d.drawImage(tlo, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
 		
 		
 		refreshButton();

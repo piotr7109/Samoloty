@@ -38,7 +38,7 @@ public class TworzenieGry extends JPanel
 	public JComboBox<String> typ_gry, tryb_gry, poziom;
 	private JLabel ip_label;
 	public JButton stworz_gre;
-	
+	private Image tlo;
 	
 
 	private static final long serialVersionUID = 1L;
@@ -46,6 +46,18 @@ public class TworzenieGry extends JPanel
 	public TworzenieGry()
 	{
 		this.setLayout(null);
+		
+		
+		try
+		{
+			tlo = ImageIO.read(new File("gfx/background.png"));
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		pobierzIp();
 		ustawParametry();
 
@@ -153,18 +165,9 @@ public class TworzenieGry extends JPanel
 		//super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 
-		Image img = null;
-		try
-		{
-			img = ImageIO.read(new File("gfx/background.png"));
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	
-		g2d.drawImage(img, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
+		g2d.drawImage(tlo, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
 		
 	
 	}

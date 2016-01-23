@@ -47,7 +47,6 @@ public class Obrazki
 			tlo2 = (Image) tlo;
 			
 			background = ImageIO.read(new File("gfx/background.png"));
-			background2 = (Image) background ;
 		}
 		catch (IOException e)
 		{
