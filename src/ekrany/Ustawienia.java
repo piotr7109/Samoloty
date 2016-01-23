@@ -36,6 +36,7 @@ public class Ustawienia extends JPanel
 	
 	private JLabel width_label, height_label;
 	private JLabel max_width_label, min_width_label, max_height_label, min_height_label, login_label;
+	private Image tlo;
 	
 	public Ustawienia()
 	{
@@ -47,6 +48,16 @@ public class Ustawienia extends JPanel
 		height_label = new JLabel();
 		login = new JTextField();
 		zapisz = new JButton("Zapisz");
+		
+		try
+		{
+			tlo = ImageIO.read(new File("gfx/background.png"));
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		
@@ -166,18 +177,9 @@ public class Ustawienia extends JPanel
 		//super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 
-		Image img = null;
-		try
-		{
-			img = ImageIO.read(new File("gfx/background.png"));
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	
-		g2d.drawImage(img, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
+		g2d.drawImage(tlo, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
 		
 	
 	}

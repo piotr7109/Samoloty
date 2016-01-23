@@ -43,6 +43,7 @@ public class Lobby extends JPanel
 	JButton gotowy = new JButton("GOTOWY");
 	public JButton start_button = new JButton("START!");
 	public JButton cofnij_button = new JButton("Wyjdü");
+	private Image tlo;
 
 	protected PanelGlowny panel_glowny;
 	
@@ -52,6 +53,16 @@ public class Lobby extends JPanel
 		this.czy_admin = czy_admin;
 		this.id_gracza = id_gracza;
 		this.panel_glowny = panel_glowny;
+		
+		try
+		{
+			tlo = ImageIO.read(new File("gfx/background.png"));
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -66,18 +77,9 @@ public class Lobby extends JPanel
 		getSerwer();
 		this.setLayout(null);
 		
-		Image img = null;
-		try
-		{
-			img = ImageIO.read(new File("gfx/background.png"));
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	
-		g2d.drawImage(img, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
+		g2d.drawImage(tlo, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
 
 		getDaneSerwera();
 		getDaneGraczy();
