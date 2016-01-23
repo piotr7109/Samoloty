@@ -179,7 +179,7 @@ public class Ustawienia extends JPanel
 
 		
 	
-		g2d.drawImage(tlo, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
+		g2d.drawImage(Obrazki.background2, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
 		
 	
 	}
