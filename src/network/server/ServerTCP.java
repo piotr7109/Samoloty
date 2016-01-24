@@ -8,7 +8,7 @@ public class ServerTCP extends Thread
 {
 	int ile_graczy;
 	private int id_serwera;
-	
+	public static boolean gotowi;
 	public ServerTCP(int ile_graczy, int id_serwera)
 	{
 		this.ile_graczy = ile_graczy;
@@ -23,8 +23,14 @@ public class ServerTCP extends Thread
 			ServerSocket serverSocket = new ServerSocket(4321);
 			System.out.println(InetAddress.getLocalHost() + "");
 			Executor exe = Executors.newFixedThreadPool(4);
-			while (true)
+			gotowi = false;
+			boolean czy_trwa = true;
+			while (czy_trwa)
 			{
+				if(gotowi)
+				{
+					czy_trwa = false;
+				}
 				Socket clientSocket = serverSocket.accept();
 				if (clientSocket.isConnected() == true)
 				{
@@ -34,7 +40,7 @@ public class ServerTCP extends Thread
 					i++;
 				}
 			}
-			//serverSocket.close();
+			serverSocket.close();
 
 		}
 		catch (Exception e)

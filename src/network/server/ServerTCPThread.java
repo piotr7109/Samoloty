@@ -74,7 +74,7 @@ public class ServerTCPThread extends Thread implements Runnable
 						s.setId(id_serwera);
 						s.setSerwerById(id_serwera);
 						s.delete();
-						
+						ServerTCP.gotowi = true;
 						out.writeInt(100);
 					}
 					out.writeObject(Bufor.gracze);
