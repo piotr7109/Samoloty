@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import modules.Obrazki;
+import system.Audio;
 import system.SETTINGS;
 
 public class Ustawienia extends JPanel
@@ -37,9 +40,14 @@ public class Ustawienia extends JPanel
 	private JLabel width_label, height_label;
 	private JLabel max_width_label, min_width_label, max_height_label, min_height_label, login_label;
 	private Image tlo;
+	public ExecutorService sound2 = Executors.newCachedThreadPool();
+	public Audio them = new Audio("cantina");
 	
 	public Ustawienia()
 	{
+		
+		sound2.execute(them);
+		
 		this.setLayout(null);
 		
 		width = new JSlider();

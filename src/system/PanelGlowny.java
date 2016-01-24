@@ -151,6 +151,7 @@ public class PanelGlowny extends JFrame
 
 	public void startGra(Serwer serwer)
 	{
+		ustawienia.them.play = false;
 		tab_panel.removeAll();
 		EkranGry(serwer);
 	}
