@@ -6,10 +6,10 @@ import java.sql.Statement;
 
 public class SQLJDBC 
 {
-	private String host = "169.254.30.86";
-	private String database = "samoloty";
-	private String user = "bardzki";
-	private String password = "123"; 
+	private String host = "21659.m.tld.pl";
+	private String database = "baza59_jagielnia";
+	private String user = "admin59_jagielnia";
+	private String password = "Jagielnia123@"; 
 	
 	private Connection c = null;
 	
@@ -26,7 +26,7 @@ public class SQLJDBC
 			Class.forName("com.mysql.jdbc.Driver");
 			c = DriverManager.getConnection("jdbc:mysql://"+host+"/"+database, user, password);
 			c.createStatement().execute("SET NAMES utf8");
-			//System.out.println("Opened database successfully");
+			System.out.println("Opened database successfully");
 			
 			
 		} 
@@ -35,7 +35,7 @@ public class SQLJDBC
 			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 			System.exit(0);
 	    }
-	    //System.out.println("Operation done successfully");
+	    System.out.println("Operation done successfully");
 		
 		
 	}
