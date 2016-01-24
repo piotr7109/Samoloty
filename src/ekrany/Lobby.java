@@ -63,6 +63,8 @@ public class Lobby extends JPanel
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getSerwer();
+		gracze = serwer.getGracze();
 
 	}
 
@@ -74,7 +76,7 @@ public class Lobby extends JPanel
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, SETTINGS.width, SETTINGS.height);
 		g2d.setColor(Color.BLACK);
-		getSerwer();
+		
 		this.setLayout(null);
 		
 		
@@ -103,7 +105,7 @@ public class Lobby extends JPanel
 		graczeNaglowek(width);
 		int i = 1;
 		int start_x = start.x + 300;
-		for (Gracz_mod g : serwer.getGracze())
+		for (Gracz_mod g : gracze)
 		{
 			JLabel id = new JLabel(g.id + "");
 			JLabel login = new JLabel(g.login);
@@ -252,6 +254,8 @@ public class Lobby extends JPanel
 			{
 				removeAll();
 				repaint();
+				getSerwer();
+				gracze = serwer.getGracze();
 				if (serwer.getStart() == 1)
 				{
 					panel_glowny.startGra(serwer);
