@@ -39,9 +39,7 @@ public class Audio implements Runnable
 				clip.loop(10);
 				while(play)
 				{
-					System.out.println("true");
 				}
-				System.out.println("false");
 				clip.stop();
 			}
 
