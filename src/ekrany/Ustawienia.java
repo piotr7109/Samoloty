@@ -40,13 +40,10 @@ public class Ustawienia extends JPanel
 	private JLabel width_label, height_label;
 	private JLabel max_width_label, min_width_label, max_height_label, min_height_label, login_label;
 	private Image tlo;
-	public ExecutorService sound2 = Executors.newCachedThreadPool();
-	public Audio them = new Audio("cantina");
-	
 	public Ustawienia()
 	{
 		
-		sound2.execute(them);
+		
 		
 		this.setLayout(null);
 		

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
@@ -38,9 +39,13 @@ public class PanelGlowny extends JFrame
 	private static Lobby lobby;
 	private Gra gra;
 	private EkranKoniec koniec;
-
+	
+	private ExecutorService sound2 = Executors.newCachedThreadPool();
+	private Audio cantina = new Audio("cantina");
+	
 	public PanelGlowny()
 	{
+		sound2.execute(cantina);
 		this.setTitle("Samoloty");
 		this.setSize(new Dimension(SETTINGS.width, SETTINGS.height));
 		id_gracza = (int) (Math.random() * 1000);
@@ -151,7 +156,7 @@ public class PanelGlowny extends JFrame
 
 	public void startGra(Serwer serwer)
 	{
-		ustawienia.them.play = false;
+		cantina.play = false;
 		tab_panel.removeAll();
 		EkranGry(serwer);
 	}
@@ -328,6 +333,7 @@ public class PanelGlowny extends JFrame
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
 				{
+					
 					Gracz_mod.usunGracza(id_gracza);
 					System.exit(0);
 				}

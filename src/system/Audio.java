@@ -29,7 +29,7 @@ public class Audio implements Runnable
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
-
+			
 			if (type.equals("theme"))
 			{
 				clip.loop(12);
