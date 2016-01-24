@@ -81,6 +81,7 @@ public class TworzenieGry extends JPanel
 		
 		ip_label = new JLabel("IP: "+ip_servera);
 		ip_label.setBounds(0, 0, WIDTH*2, HEIGHT);
+		ip_label.setForeground(SETTINGS.kolorCzcionki);
 		
 		stworz_gre = new JButton("Stwórz grê");
 		stworz_gre.setBounds(start.x+WIDTH*6, start.y, WIDTH, HEIGHT);

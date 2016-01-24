@@ -147,7 +147,7 @@ public class Lobby extends JPanel
 		JLabel pozycja = new JLabel("Pozycja");
 		JLabel gotowy = new JLabel("Gotowy?");
 
-
+		dane_graczy.setForeground(SETTINGS.kolorCzcionki);
 		id.setForeground(SETTINGS.kolorCzcionki);
 		login.setForeground(SETTINGS.kolorCzcionki);
 		druzyna.setForeground(SETTINGS.kolorCzcionki);
@@ -175,7 +175,8 @@ public class Lobby extends JPanel
 		ip_serwera_label = new JLabel("IP: " + serwer.getIpSerwera());
 		typ_gry_label = new JLabel("TYP GRY: " + serwer.getTypGry());
 		tryb_gry_label = new JLabel("TRYB GRY: " + serwer.getTrybGry());
-
+		
+		dane_serwera.setForeground(SETTINGS.kolorCzcionki);
 		ip_serwera_label.setForeground(SETTINGS.kolorCzcionki);
 		typ_gry_label.setForeground(SETTINGS.kolorCzcionki);
 		tryb_gry_label.setForeground(SETTINGS.kolorCzcionki);
