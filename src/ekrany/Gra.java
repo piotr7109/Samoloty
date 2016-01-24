@@ -415,7 +415,7 @@ public class Gra extends JPanel implements KeyListener
 		double x_p = x + CONST.pocisk_width / 2;
 		double y_p = y + CONST.pocisk_height / 2;
 
-		if ((x_p > x1 - 7 && x_p < x1 + CONST.samolot_width * 2 + 7) && (y_p > y1 - 7 && y_p < y1 + CONST.samolot_height * 2 + 7))
+		if ((x_p > x1 - 4 && x_p < x1 + CONST.samolot_width * 2 + 4) && (y_p > y1 - 4 && y_p < y1 + CONST.samolot_height * 2 + 4))
 		{
 
 			return true;
