@@ -415,7 +415,7 @@ public class Gra extends JPanel implements KeyListener
 		double x_p = x + CONST.pocisk_width / 2;
 		double y_p = y + CONST.pocisk_height / 2;
 
-		if ((x_p > x1 - 4 && x_p < x1 + CONST.samolot_width * 2 + 4) && (y_p > y1 - 4 && y_p < y1 + CONST.samolot_height * 2 + 4))
+		if ((x_p > x1 - 4 && x_p < x1 + CONST.samolot_width + 4) && (y_p > y1 - 4 && y_p < y1 + CONST.samolot_height + 4))
 		{
 
 			return true;
@@ -429,7 +429,7 @@ public class Gra extends JPanel implements KeyListener
 		double x_p = x + CONST.pocisk_width / 2;
 		double y_p = y + CONST.pocisk_height / 2;
 
-		if ((x_p > x1 && x_p < x1 + CONST.samolot_width * 2) && (y_p > y1 && y_p < y1 + CONST.samolot_height * 2))
+		if ((x_p > x1 && x_p < x1 + CONST.samolot_width) && (y_p > y1 && y_p < y1 + CONST.samolot_height ))
 		{
 
 			ExecutorService sound = Executors.newCachedThreadPool();
@@ -524,7 +524,7 @@ public class Gra extends JPanel implements KeyListener
 		}
 		if (samolot.x + 60 > map_width)
 		{
-			samolot.x = map_width - 100 - CONST.samolot_width * 2;
+			samolot.x = map_width - 100 - CONST.samolot_width;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
 		if (samolot.y < 0)
@@ -534,7 +534,7 @@ public class Gra extends JPanel implements KeyListener
 		}
 		if (samolot.y + 60 > map_height)
 		{
-			samolot.y = map_height - 100 - CONST.samolot_height * 2;
+			samolot.y = map_height - 100 - CONST.samolot_height;
 			samolot.setPunktyZycia(samolot.getPunktyZycia() - 50);
 		}
 	}
