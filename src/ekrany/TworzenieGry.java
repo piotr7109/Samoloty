@@ -167,7 +167,7 @@ public class TworzenieGry extends JPanel
 
 		
 	
-		g2d.drawImage(tlo, this.getX() , this.getY() , this.getWidth(), this.getHeight(), this);
+		g2d.drawImage(tlo, 0, 0 , this.getWidth(), this.getHeight(), this);
 		
 	
 	}
