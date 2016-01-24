@@ -12,7 +12,6 @@ public class ListaSerwerow
 	public static ArrayList<Serwer> getList()
 	{
 		ArrayList<Serwer> serwery = new ArrayList<Serwer>();
-		
 		SQLJDBC baza = new SQLJDBC();
 		Statement stmt;
 		Connection c = baza.getC(); 

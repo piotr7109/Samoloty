@@ -51,6 +51,7 @@ public class Serwery extends JPanel
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		setListaSerwerow();
 	}
 
 	protected void paintComponent(Graphics g)
@@ -68,7 +69,7 @@ public class Serwery extends JPanel
 		
 		
 		refreshButton();
-		setListaSerwerow();
+		
 
 		dodajListeSerwerow();
 	}
@@ -86,6 +87,7 @@ public class Serwery extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+				setListaSerwerow();
 				removeAll();
 				repaint();
 
