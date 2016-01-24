@@ -22,7 +22,7 @@ public class ServerTCP extends Thread
 			int i = 0;// numer serwera
 			ServerSocket serverSocket = new ServerSocket(4321);
 			System.out.println(InetAddress.getLocalHost() + "");
-			Executor exe = Executors.newFixedThreadPool(10);
+			Executor exe = Executors.newFixedThreadPool(4);
 			while (true)
 			{
 				Socket clientSocket = serverSocket.accept();
