@@ -9,7 +9,7 @@ public class CONST
 	public static final int samolot_height = 30;
 
 	public static int pocisk_dmg = 5;
-	public static int bomb_dmg = 30;
+	public static int bomb_dmg = 10;
 
 	public static String intToString(int numer)
 	{

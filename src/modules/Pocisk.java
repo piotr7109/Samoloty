@@ -11,7 +11,8 @@ public class Pocisk implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	public double x,y, speed, width, height, kat;
-	private String typ;
+	public String typ;
+	
 	private double start_x, start_y;
 	private int max_czas_zycia = 900;
 	

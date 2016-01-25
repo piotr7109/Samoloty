@@ -363,9 +363,20 @@ public class Gra extends JPanel implements KeyListener
 				if (sprawdzKolizje2(p.x, p.y, samolot.x, samolot.y))
 				{
 					if (gracz.flaga)
-						samolot.setPunktyZycia(samolot.getPunktyZycia() - (int) (CONST.pocisk_dmg * 2));
+					{
+						if(p.typ.equals("normalny"))
+							samolot.setPunktyZycia(samolot.getPunktyZycia() - (int) (CONST.pocisk_dmg * 2));
+						else if(p.typ.equals("bomba"))
+							samolot.setPunktyZycia(samolot.getPunktyZycia() - (int) (CONST.bomb_dmg * 2));
+					}
 					else
-						samolot.setPunktyZycia(samolot.getPunktyZycia() - CONST.pocisk_dmg);
+					{
+						if(p.typ.equals("normalny"))
+							samolot.setPunktyZycia(samolot.getPunktyZycia() - CONST.pocisk_dmg);
+						else if(p.typ.equals("bomba"))
+							samolot.setPunktyZycia(samolot.getPunktyZycia() - (int) (CONST.bomb_dmg));
+						System.out.println(samolot.getPunktyZycia());
+					}
 					gracze.get(i).pociski.remove(j);
 					size_pociski--;
 				}
@@ -428,7 +439,7 @@ public class Gra extends JPanel implements KeyListener
 	{
 		double x_p = x + CONST.pocisk_width / 2;
 		double y_p = y + CONST.pocisk_height / 2;
-
+		
 		if ((x_p > x1 && x_p < x1 + CONST.samolot_width * 2) && (y_p > y1 && y_p < y1 + CONST.samolot_height * 2))
 		{
 
@@ -816,7 +827,6 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void strzelBomba()
 	{
-
 		if (bullet_time_bomb_index < bullet_time_bomb)
 		{
 			bullet_time_bomb_index++;
@@ -827,6 +837,7 @@ public class Gra extends JPanel implements KeyListener
 			samolot.dodajPocisk("bomba");
 			ExecutorService sound = Executors.newCachedThreadPool();
 			sound.execute(new Audio("bomba"));
+			samolot.setIloscBomb(samolot.getIloscBomb()-1);
 		}
 
 	}
@@ -905,7 +916,10 @@ public class Gra extends JPanel implements KeyListener
 					}
 					if (key == 17) // lewy CTRL
 					{
-						strzelBomba();
+						if(samolot.getIloscBomb()>0)
+						{
+							strzelBomba();
+						}
 					}
 				}
 

@@ -116,6 +116,7 @@ public class ClientTCP extends Thread
 			p.x = (short)po.x;
 			p.y = (short)po.y;
 			p.kat = (short)po.kat;
+			p.typ = po.typ;
 			pociski_tcp.add(p);
 		}
 		g.pociski = pociski_tcp;
