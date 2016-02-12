@@ -9,44 +9,44 @@ import javax.imageio.ImageIO;
 
 public class Obrazki
 {
-	public static BufferedImage obrazekPocisk;
-	public static BufferedImage obrazekPocisk2;
-	public static BufferedImage obrazekSamolot, obrazekSamolot2;
-	public static BufferedImage obrazekSamolot_dmg, obrazekSamolot2_dmg;
-	public static BufferedImage obrazekSamolot_hard_dmg, obrazekSamolot2_hard_dmg;
+	public BufferedImage obrazekPocisk;
+	public BufferedImage obrazekPocisk2;
+	public BufferedImage obrazekSamolot, obrazekSamolot2;
+	public BufferedImage obrazekSamolot_dmg, obrazekSamolot2_dmg;
+	public BufferedImage obrazekSamolot_hard_dmg, obrazekSamolot2_hard_dmg;
 
-	public static BufferedImage flaga_a;
-	public static BufferedImage flaga_b;
+	public BufferedImage flaga_a;
+	public BufferedImage flaga_b;
 
-	public static BufferedImage tlo;
-	public static Image tlo2;
+	public BufferedImage tlo;
+	public Image tlo2;
 	
-	public static BufferedImage background;
-	public static Image background2;
+	public BufferedImage background;
+	public Image background2;
 
-	public static void ladujObrazki()
+	public void ladujObrazki()
 	{
 		try
 		{
-			obrazekSamolot = ImageIO.read(new File("gfx/wing.png"));
-			obrazekSamolot2 = ImageIO.read(new File("gfx/tie.png"));
+			obrazekSamolot = ImageIO.read(getClass().getResource("/wing.png"));
+			obrazekSamolot2 = ImageIO.read(getClass().getResource("/tie.png"));
 
-			obrazekSamolot_dmg = ImageIO.read(new File("gfx/wing.png"));
-			obrazekSamolot2_dmg = ImageIO.read(new File("gfx/tie.png"));
+			obrazekSamolot_dmg = ImageIO.read(getClass().getResource("/wing.png"));
+			obrazekSamolot2_dmg = ImageIO.read(getClass().getResource("/tie.png"));
 
-			obrazekSamolot_hard_dmg = ImageIO.read(new File("gfx/wing.png"));
-			obrazekSamolot2_hard_dmg = ImageIO.read(new File("gfx/tie.png"));
+			obrazekSamolot_hard_dmg = ImageIO.read(getClass().getResource("/wing.png"));
+			obrazekSamolot2_hard_dmg = ImageIO.read(getClass().getResource("/tie.png"));
 
-			flaga_a = ImageIO.read(new File("gfx/rebel.png"));
-			flaga_b = ImageIO.read(new File("gfx/empire.png"));
+			flaga_a = ImageIO.read(getClass().getResource("/rebel.png"));
+			flaga_b = ImageIO.read(getClass().getResource("/empire.png"));
 
-			obrazekPocisk = ImageIO.read(new File("gfx/red_bullet.png"));
-			obrazekPocisk2 = ImageIO.read(new File("gfx/green_bullet.png"));
+			obrazekPocisk = ImageIO.read(getClass().getResource("/red_bullet.png"));
+			obrazekPocisk2 = ImageIO.read(getClass().getResource("/green_bullet.png"));
 
-			tlo = ImageIO.read(new File("gfx/tlo.png"));
+			tlo = ImageIO.read(getClass().getResource("/tlo.png"));
 			tlo2 = (Image) tlo;
 			
-			background = ImageIO.read(new File("gfx/background.png"));
+			background = ImageIO.read(getClass().getResource("/background.png"));
 		}
 		catch (IOException e)
 		{

@@ -17,7 +17,7 @@ public class Pocisk implements Serializable
 	private int max_czas_zycia = 900;
 	
 	
-	public Pocisk(double x, double y, double kat, String typ)
+	public Pocisk(double x, double y, double kat, String typ, Obrazki o)
 	{
 		this.x = start_x = x;
 		this.y = start_y = y;
@@ -33,8 +33,8 @@ public class Pocisk implements Serializable
 				speed = 4;
 				break;
 		}
-		width = Obrazki.obrazekPocisk.getWidth();
-		height = Obrazki.obrazekPocisk.getHeight();
+		width = o.obrazekPocisk.getWidth();
+		height = o.obrazekPocisk.getHeight();
 	}
 	
 	public boolean aktualizujWspolrzedne()

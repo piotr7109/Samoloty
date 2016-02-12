@@ -17,9 +17,9 @@ public class Gracz implements Serializable
 	private int fragi;
 	public boolean flaga;
 	
-	public Gracz(int x, int y, double kat)
+	public Gracz(int x, int y, double kat, Obrazki o)
 	{
-		Samolot samolot = new Samolot(x, y, kat);
+		Samolot samolot = new Samolot(x, y, kat, o );
 		this.samolot = samolot;
 		flaga = false;
 	}

@@ -13,16 +13,18 @@ public class Samolot implements Serializable
 	public double x, y, width, height, kat;
 	private int punkty_zycia, ilosc_bomb;
 	public ArrayList<Pocisk> pociski;
+	public Obrazki o;
 
 	
 
-	public Samolot(int x, int y, double kat)
+	public Samolot(int x, int y, double kat, Obrazki o)
 	{
 		punkty_zycia = 100;
 		ilosc_bomb = 5;
 		this.kat = kat;
 		this.x = x;
 		this.y = y;
+		this.o = o;
 		pociski = new ArrayList<Pocisk>();
 		ladujObrazek();
 
@@ -72,9 +74,10 @@ public class Samolot implements Serializable
 
 	protected void ladujObrazek()
 	{
-		Obrazki.ladujObrazki();
-		width = Obrazki.obrazekSamolot.getWidth() / 2;
-		height = Obrazki.obrazekSamolot.getHeight() / 2;
+		
+		o.ladujObrazki();
+		width = o.obrazekSamolot.getWidth() / 2;
+		height = o.obrazekSamolot.getHeight() / 2;
 
 	}
 
@@ -85,7 +88,7 @@ public class Samolot implements Serializable
 
 	public void dodajPocisk(String typ)
 	{
-		Pocisk pocisk = new Pocisk(this.x, this.y, this.kat, typ);
+		Pocisk pocisk = new Pocisk(this.x, this.y, this.kat, typ, o);
 		this.pociski.add(pocisk);
 	}
 

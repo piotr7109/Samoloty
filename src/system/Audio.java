@@ -24,7 +24,7 @@ public class Audio implements Runnable
 		{
 			AudioInputStream audioInputStream = null;
 
-			audioInputStream = AudioSystem.getAudioInputStream(new File("audio/" + type + ".wav").getAbsoluteFile());
+			audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("/" + type + ".wav"));
 
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);

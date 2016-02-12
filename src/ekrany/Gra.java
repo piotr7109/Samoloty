@@ -70,6 +70,7 @@ public class Gra extends JPanel implements KeyListener
 
 	protected ClientTCP klient;
 	protected PanelGlowny panel;
+	protected Obrazki o;
 
 	public Gra(int width, int height, int id_gracza, Serwer serwer, PanelGlowny panel_glowny)
 	{
@@ -83,14 +84,14 @@ public class Gra extends JPanel implements KeyListener
 		panel = panel_glowny;
 		this.serwer = serwer;
 		pozycja = getPozycja(id_gracza);
-
+		o = new Obrazki();
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
 		this.setPredkoscGry();
 		this.setPozycjaStartowa();
 
-		gracz = new Gracz(start_x, start_y, start_kat);
+		gracz = new Gracz(start_x, start_y, start_kat, o);
 		gracz.id = id_gracza;
 		gracz.druzyna = druzyna;
 		gracz.login = SETTINGS.login;
@@ -148,6 +149,7 @@ public class Gra extends JPanel implements KeyListener
 	protected void ustawLicznik()
 	{
 		czas_label = new JLabel(CONST.intToTime(czas_do_konca));
+		czas_label.setForeground(Color.GREEN);
 		czas_label.setBounds(WIDTH - 80, 0, 50, 50);
 		add(czas_label);
 	}
@@ -201,14 +203,14 @@ public class Gra extends JPanel implements KeyListener
 
 	protected void rysujTlo(Graphics2D g2d)
 	{
-		g2d.drawImage(Obrazki.tlo2, 0 + rel_x, 0 + rel_y, map_width, map_height, null);
+		g2d.drawImage(o.tlo2, 0 + rel_x, 0 + rel_y, map_width, map_height, null);
 	}
 
 	protected void rysujFlage(Graphics2D g2d)
 	{
-		g2d.drawImage(Obrazki.flaga_a, null, flaga_a.x + rel_x, flaga_a.y + rel_y);
+		g2d.drawImage(o.flaga_a, null, flaga_a.x + rel_x, flaga_a.y + rel_y);
 
-		g2d.drawImage(Obrazki.flaga_b, null, flaga_b.x + rel_x, flaga_b.y + rel_y);
+		g2d.drawImage(o.flaga_b, null, flaga_b.x + rel_x, flaga_b.y + rel_y);
 
 	}
 
@@ -225,20 +227,20 @@ public class Gra extends JPanel implements KeyListener
 		if (gracz.druzyna == 'B')
 		{
 			if (samolot.getPunktyZycia() > 70)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekSamolot2, null), x + rel_x, y + rel_y, null);
 			else if (samolot.getPunktyZycia() > 40)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekSamolot2_dmg, null), x + rel_x, y + rel_y, null);
 			else
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekSamolot2_hard_dmg, null), x + rel_x, y + rel_y, null);
 		}
 		else
 		{
 			if (samolot.getPunktyZycia() > 70)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekSamolot, null), x + rel_x, y + rel_y, null);
 			else if (samolot.getPunktyZycia() > 40)
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekSamolot_dmg, null), x + rel_x, y + rel_y, null);
 			else
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekSamolot_hard_dmg, null), x + rel_x, y + rel_y, null);
 		}
 
 	}
@@ -261,11 +263,11 @@ public class Gra extends JPanel implements KeyListener
 
 			if (gracz.druzyna == 'B')
 			{
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk2, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekPocisk2, null), x + rel_x, y + rel_y, null);
 			}
 			else
 			{
-				g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x + rel_x, y + rel_y, null);
+				g2d.drawImage(transformacja_op.filter(o.obrazekPocisk, null), x + rel_x, y + rel_y, null);
 			}
 		}
 	}
@@ -304,20 +306,20 @@ public class Gra extends JPanel implements KeyListener
 			if (g.druzyna == 'B')
 			{
 				if (g.punkty_zycia > 70)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekSamolot2, null), x + rel_x, y + rel_y, null);
 				else if (g.punkty_zycia > 40)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_dmg, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekSamolot2_dmg, null), x + rel_x, y + rel_y, null);
 				else
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot2_hard_dmg, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekSamolot2_hard_dmg, null), x + rel_x, y + rel_y, null);
 			}
 			else
 			{
 				if (g.punkty_zycia > 70)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekSamolot, null), x + rel_x, y + rel_y, null);
 				else if (g.punkty_zycia > 40)
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_dmg, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekSamolot_dmg, null), x + rel_x, y + rel_y, null);
 				else
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekSamolot_hard_dmg, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekSamolot_hard_dmg, null), x + rel_x, y + rel_y, null);
 			}
 
 			int size_pociski = g.pociski.size();
@@ -333,11 +335,11 @@ public class Gra extends JPanel implements KeyListener
 
 				if (g.druzyna == 'B')
 				{
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk2, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekPocisk2, null), x + rel_x, y + rel_y, null);
 				}
 				else
 				{
-					g2d.drawImage(transformacja_op.filter(Obrazki.obrazekPocisk, null), x + rel_x, y + rel_y, null);
+					g2d.drawImage(transformacja_op.filter(o.obrazekPocisk, null), x + rel_x, y + rel_y, null);
 				}
 			}
 
